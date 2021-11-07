@@ -1,17 +1,17 @@
-import React, { Fragment, useCallback, useEffect } from "react";
-import { CircularProgress, Typography } from "@mui/material";
-import CoursesList from "../components/courses/CoursesList";
-import useHttp from "../hooks/use-http";
+import React, { Fragment, useCallback, useEffect } from 'react';
+import { CircularProgress, Typography } from '@mui/material';
+import CoursesList from '../components/courses/CoursesList';
+import useHttp from '../hooks/use-http';
 
-import NotFound from "./NotFound";
-import { getAllCourse } from "../lib/api";
+import NotFound from './NotFound';
+import { getAllCourse } from '../lib/api';
 
-const AllCourses = (props) => {
+const AllCourses = () => {
   const {
     data: loadedCourses,
     error,
     status,
-    sendRequest:fetchData,
+    sendRequest: fetchData,
   } = useHttp(getAllCourse, true);
 
   useEffect(() => {
@@ -19,11 +19,11 @@ const AllCourses = (props) => {
     return () => {};
   }, [fetchData]);
 
-  const addedCourseHandler =useCallback(()=>{
+  const addedCourseHandler = useCallback(() => {
     fetchData();
-  },[fetchData])
-  
-  if (status === "pending") {
+  }, [fetchData]);
+
+  if (status === 'pending') {
     return <CircularProgress color="inherit" />;
   }
   if (error) {
@@ -31,18 +31,18 @@ const AllCourses = (props) => {
   }
 
   if (
-    status === "completed" &&
-    !(loadedCourses || loadedCourses.length === 0)
+    status === 'completed'
+    && !(loadedCourses || loadedCourses.length === 0)
   ) {
     return <NotFound />;
   }
   return (
-    <Fragment>
+    <>
       <Typography gutterBottom variant="h4" component="div" fontWeight="500">
         All Courses
       </Typography>
-      <CoursesList courses={loadedCourses} onAddedCourse={addedCourseHandler}/>
-    </Fragment>
+      <CoursesList courses={loadedCourses} onAddedCourse={addedCourseHandler} />
+    </>
   );
 };
 

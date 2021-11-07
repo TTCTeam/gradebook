@@ -1,11 +1,5 @@
-export const emailValidate = (email) => {
-    return email.includes('@');
-}
+export const emailValidate = (email) => email.includes('@');
 
-export const passwordValidate = (password) => {
-    return password.length >= 8;
-}
+export const passwordValidate = (password) => password.length >= 8;
 
-export const nameValidate = (name) => {
-    return name.trim() !== "";
-}
+export const nameValidate = (name) => name.trim() !== '';

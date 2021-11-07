@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Grid,
   TextField,
@@ -6,15 +9,15 @@ import {
   Divider,
   Link,
   CircularProgress,
-} from "@mui/material";
-import { Box } from "@mui/system";
+} from '@mui/material';
+import { Box } from '@mui/system';
 
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router";
-import useInput from "../../hooks/use-input";
-import { emailValidate, passwordValidate } from "../../utils/inputValidate";
-import {signIn} from '../../store/auth-actions'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
+import useInput from '../../hooks/use-input';
+import { emailValidate, passwordValidate } from '../../utils/inputValidate';
+import { signIn } from '../../store/auth-actions';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -27,7 +30,7 @@ const SignIn = () => {
     valueHasError: emailHasError,
     onBlurHandler: emailOnBlurHandler,
     onChangeHandler: emailOnChangeHandler,
-    resetValue: emailResetValue,
+
   } = useInput(emailValidate);
 
   const {
@@ -36,24 +39,23 @@ const SignIn = () => {
     valueHasError: passwordHasError,
     onBlurHandler: passwordOnBlurHandler,
     onChangeHandler: passwordOnChangeHandler,
-    resetValue: passwordResetValue,
+
   } = useInput(passwordValidate);
 
   if (auth.token) {
-    return <Redirect to="/"></Redirect>;
+    return <Redirect to="/" />;
   }
 
   const formIsValid = emailIsValid && passwordIsValid;
 
   const submitHandler = (event) => {
-
     event.preventDefault();
 
     if (!formIsValid) {
       return;
     }
 
-    dispatch(signIn({ email: email, password: password }));
+    dispatch(signIn({ email, password }));
 
     /* emailResetValue();
     passwordResetValue(); */
@@ -61,11 +63,11 @@ const SignIn = () => {
 
   return (
     <div>
-      <Grid container style={{ minHeight: "100vh" }}>
-        <Grid item={true} xs={12} sm={6}>
+      <Grid container style={{ minHeight: '100vh' }}>
+        <Grid item xs={12} sm={6}>
           <img
             src="/hcmus2.jpg"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             alt="brand"
           />
         </Grid>
@@ -73,14 +75,14 @@ const SignIn = () => {
           container
           xs={12}
           sm={6}
-          style={{ padding: "2rem" }}
+          style={{ padding: '2rem' }}
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "stretch",
-            flexWrap: "nowrap",
-            justifyContent: "center",
-            "& > :not(style)": { m: 2 },
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            flexWrap: 'nowrap',
+            justifyContent: 'center',
+            '& > :not(style)': { m: 2 },
           }}
           autoComplete="on"
           alignItems="center"
@@ -105,7 +107,7 @@ const SignIn = () => {
               onChange={emailOnChangeHandler}
               value={email}
               helperText={
-                emailHasError ? "Email must not be empty and include '@'" : ""
+                emailHasError ? 'Email must not be empty and include \'@\'' : ''
               }
             />
             <TextField
@@ -122,17 +124,17 @@ const SignIn = () => {
               onChange={passwordOnChangeHandler}
               value={password}
               helperText={
-                passwordHasError ? "Pass must has more than 8 characters." : ""
+                passwordHasError ? 'Pass must has more than 8 characters.' : ''
               }
             />
             <Grid
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "stretch",
-                flexWrap: "nowrap",
-                justifyContent: "center",
-                "& > :not(style)": { m: 2 },
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'stretch',
+                flexWrap: 'nowrap',
+                justifyContent: 'center',
+                '& > :not(style)': { m: 2 },
               }}
             >
               <Button
@@ -143,13 +145,13 @@ const SignIn = () => {
                   borderRadius: 4,
                   height: 50,
                   fontSize: 20,
-                  textTransform: "none",
+                  textTransform: 'none',
                 }}
               >
-                {ui.request === "pending" ? (
+                {ui.request === 'pending' ? (
                   <CircularProgress color="inherit" />
                 ) : (
-                  "Sign In"
+                  'Sign In'
                 )}
               </Button>
               <Grid container>
@@ -160,7 +162,7 @@ const SignIn = () => {
                 </Grid>
                 <Grid item>
                   <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    Don't have an account? Sign Up
                   </Link>
                 </Grid>
               </Grid>
@@ -170,7 +172,7 @@ const SignIn = () => {
                   gutterBottom
                   variant="h7"
                   component="div"
-                  sx={{ opacity: 0.7, fontWeight: 400, marginBottom: "-7px" }}
+                  sx={{ opacity: 0.7, fontWeight: 400, marginBottom: '-7px' }}
                 >
                   Or With
                 </Typography>
@@ -178,20 +180,20 @@ const SignIn = () => {
               <Grid
                 container
                 sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  "& > :not(style)": { m: 2 },
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  '& > :not(style)': { m: 2 },
                 }}
               >
                 <Grid item>
                   <Link href="#" variant="body2">
-                    <img src="/google.png" height="50px" />
+                    <img src="/google.png" height="50px" alt="google icon" />
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="#" variant="body2">
-                    <img src="/facebook.png" height="50px" />
+                    <img src="/facebook.png" height="50px" alt="facebook icon" />
                   </Link>
                 </Grid>
               </Grid>

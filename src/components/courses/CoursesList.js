@@ -1,28 +1,29 @@
-import React, { Fragment } from "react";
-import { Grid, Fab } from "@mui/material";
-import CourseItem from "./CourseItem";
-import { Link, useRouteMatch } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-import BasicModal from "../layouts/BasicModal";
-import CourseForm from "../courses/CourseForm";
+/* eslint-disable react/prop-types */
+import React, { Fragment } from 'react';
+import { Grid, Fab } from '@mui/material';
+import { Link, useRouteMatch } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
+import CourseItem from './CourseItem';
+import BasicModal from '../layouts/BasicModal';
+import CourseForm from './CourseForm';
 
 const fabStyle = {
-  position: "absolute",
+  position: 'absolute',
   bottom: 50,
   right: 16,
 };
 
-const CoursesList = ({onAddedCourse, courses }) => {
+// eslint-disable-next-line react/prop-types
+const CoursesList = ({ onAddedCourse, courses }) => {
   const macth = useRouteMatch();
-  const [openModal,setOpenModal] = React.useState(false);
+  const [openModal, setOpenModal] = React.useState(false);
 
-   const handleCloseModal = ()=>setOpenModal(false);
-  const handleOpenModal = ()=> setOpenModal(true);
-
- 
+  const handleCloseModal = () => setOpenModal(false);
+  const handleOpenModal = () => setOpenModal(true);
 
   return (
-    <Fragment>
+    // eslint-disable-next-line react/jsx-filename-extension
+    <>
 
       <Grid
         container
@@ -38,17 +39,18 @@ const CoursesList = ({onAddedCourse, courses }) => {
           </Grid>
         ))}
       </Grid>
-      <Fab 
-      sx={{ ...fabStyle }} 
-      aria-label="Add Course" 
-      color="primary"
-      onClick={handleOpenModal} >
+      <Fab
+        sx={{ ...fabStyle }}
+        aria-label="Add Course"
+        color="primary"
+        onClick={handleOpenModal}
+      >
         <AddIcon />
       </Fab>
-      <BasicModal open={openModal} handleClose={handleCloseModal} >
-        <CourseForm onAddedCourse={onAddedCourse}/>
+      <BasicModal open={openModal} handleClose={handleCloseModal}>
+        <CourseForm onAddedCourse={onAddedCourse} />
       </BasicModal>
-    </Fragment>
+    </>
   );
 };
 
