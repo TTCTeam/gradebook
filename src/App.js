@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable import/no-named-as-default */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -14,7 +12,6 @@ function App() {
   const auth = useSelector((state) => state.auth);
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <>
       <Switch>
         <Route path="/signin">

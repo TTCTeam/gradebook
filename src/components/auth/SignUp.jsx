@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
@@ -222,12 +221,12 @@ const SignUp = () => {
                   }}
                 >
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="/#" variant="body2">
                       <img src="/google.png" height="50px" alt="google icon" />
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="/#" variant="body2">
                       <img
                         src="/facebook.png"
                         height="50px"

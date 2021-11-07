@@ -1,6 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
   TextField,
@@ -11,10 +11,6 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Box } from '@mui/system';
-
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
 import useInput from '../../hooks/use-input';
 import { emailValidate, passwordValidate } from '../../utils/inputValidate';
 import { signIn } from '../../store/auth-actions';
@@ -156,13 +152,13 @@ const SignIn = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/#" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="/signup" variant="body2">
-                    Don't have an account? Sign Up
+                    Don`&apos;`t have an account? Sign Up
                   </Link>
                 </Grid>
               </Grid>
@@ -187,12 +183,12 @@ const SignIn = () => {
                 }}
               >
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/#" variant="body2">
                     <img src="/google.png" height="50px" alt="google icon" />
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/#" variant="body2">
                     <img src="/facebook.png" height="50px" alt="facebook icon" />
                   </Link>
                 </Grid>

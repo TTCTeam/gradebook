@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { CircularProgress, Typography } from '@mui/material';
 import CoursesList from '../components/courses/CoursesList';
 import useHttp from '../hooks/use-http';

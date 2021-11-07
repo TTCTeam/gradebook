@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Grid, Fab } from '@mui/material';
 import { Link, useRouteMatch } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
@@ -13,7 +12,6 @@ const fabStyle = {
   right: 16,
 };
 
-// eslint-disable-next-line react/prop-types
 const CoursesList = ({ onAddedCourse, courses }) => {
   const macth = useRouteMatch();
   const [openModal, setOpenModal] = React.useState(false);
@@ -22,7 +20,6 @@ const CoursesList = ({ onAddedCourse, courses }) => {
   const handleOpenModal = () => setOpenModal(true);
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <>
 
       <Grid

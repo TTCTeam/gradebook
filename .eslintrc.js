@@ -20,7 +20,7 @@ module.exports = {
   ],
   rules: {
     'no-console': 'off',
-    'react/prop-types': 0,
+    'react/prop-types': 'off',
     'react/destructuring-assignment': [0, 'always'],
     quotes: ['error', 'single'],
     // we want to force semicolons
@@ -30,6 +30,6 @@ module.exports = {
     // we want to avoid extraneous spaces
     'no-multi-spaces': ['error'],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-
+    'react/react-in-jsx-scope': 'off',
   },
 };
