@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import './App.css';
 import SignIn from './components/auth/SigIn';
 import SignUp from './components/auth/SignUp';
+import CourseDetail from './components/courses/CourseDetail';
 import CourseForm from './components/courses/CourseForm';
 import MainNavigation from './components/layouts/MainNavigation';
 import AllCourses from './pages/AllCourses';
@@ -28,12 +28,14 @@ function App() {
         <MainNavigation>
           <Switch>
             <Route path="/" exact>
-              <Redirect to="/courses" />
+              <Redirect to="/courses/1" />
             </Route>
             <Route path="/courses" exact>
               <AllCourses />
             </Route>
-            <Route path="/courses/:id"> </Route>
+            <Route path="/courses/1" exact>
+              <CourseDetail />
+            </Route>
             <Route path="/new-course">
               <CourseForm />
             </Route>
