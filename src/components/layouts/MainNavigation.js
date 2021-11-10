@@ -22,6 +22,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import InputBase from '@mui/material/InputBase';
 import { Menu, MenuItem } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { logoutHandlerAction } from '../../store/auth-services';
 
 const drawerWidth = 240;
 
@@ -136,10 +139,17 @@ const MainNavigation = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleMenuClose = () => {
     setAnchorEl(null);
     /* handleMobileMenuClose(); */
+  };
+
+  const logoutHandler = () => {
+    logoutHandlerAction(dispatch, history);
+    setAnchorEl(null);
   };
 
   const handleProfileMenuOpen = (event) => {
@@ -172,7 +182,7 @@ const MainNavigation = (props) => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={logoutHandler}>Log Out</MenuItem>
     </Menu>
   );
 

@@ -4,19 +4,27 @@ import Typography from '@mui/material/Typography';
 import {
   Button,
   Checkbox,
+  CircularProgress,
   Divider,
   FormControlLabel,
   Grid,
   Link,
   TextField,
 } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import useInput from '../../hooks/use-input';
-import { nameValidate, passwordValidate } from '../../utils/inputValidate';
+import {
+  emailValidate,
+  nameValidate,
+  passwordValidate,
+} from '../../utils/inputValidate';
 import { signUp } from '../../store/auth-actions';
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const ui = useSelector((state) => state.ui);
 
   const {
     value: firstName,
@@ -35,6 +43,14 @@ const SignUp = () => {
   } = useInput(nameValidate);
 
   const {
+    value: email,
+    valueIsValid: emailIsValid,
+    valueHasError: emailHasError,
+    onChangeHandler: emailOnChangeHandler,
+    onBlurHandler: emailOnBlurHandler,
+  } = useInput(emailValidate);
+
+  const {
     value: password,
     valueIsValid: passwordIsValid,
     valueHasError: passwordHasError,
@@ -42,13 +58,11 @@ const SignUp = () => {
     onBlurHandler: passwordOnBlurHandler,
   } = useInput(passwordValidate);
 
-  const formIsValid = firstNameIsValid && lastNameIsValid && passwordIsValid;
+  const formIsValid = firstNameIsValid && lastNameIsValid && emailIsValid && passwordIsValid;
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-
-    if (!formIsValid) {
-      dispatch(signUp({ lastName, firstName, password }));
+  const submitHandler = () => {
+    if (formIsValid) {
+      dispatch(signUp({ lastName, firstName, password }, history));
     }
   };
 
@@ -61,7 +75,7 @@ const SignUp = () => {
           alt="brand"
         />
       </Grid>
-      <Grid item xs={12} sm={6} spacing={2}>
+      <Grid item container xs={12} sm={6} spacing={2}>
         <Box
           sx={{
             marginTop: 8,
@@ -80,7 +94,6 @@ const SignUp = () => {
           <Box
             component="form"
             noValidate
-            onSubmit={submitHandler}
             sx={{ m: 3 }}
           >
             <Grid container spacing={2}>
@@ -127,6 +140,22 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
+                  name="email"
+                  label="Email"
+                  type="email"
+                  id="email"
+                  autoComplete="email"
+                  error={emailHasError}
+                  onBlur={emailOnBlurHandler}
+                  onChange={emailOnChangeHandler}
+                  value={email}
+                  helperText={emailHasError ? 'Email must hace "@".' : ''}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
                   type="password"
@@ -152,6 +181,8 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid
+                container
+                item
                 xs={12}
                 sx={{
                   display: 'flex',
@@ -174,7 +205,7 @@ const SignUp = () => {
                   }}
                 >
                   <Button
-                    type="submit"
+                    onClick={submitHandler}
                     variant="contained"
                     sx={{
                       maxHeight: 80,
@@ -184,8 +215,9 @@ const SignUp = () => {
                       textTransform: 'none',
                       width: 200,
                     }}
+
                   >
-                    Sign Up
+                    {ui.request === 'pending' ? <CircularProgress color="inherit" /> : 'Sign Up'}
                   </Button>
                 </Grid>
                 <Grid container>
