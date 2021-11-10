@@ -11,7 +11,7 @@ import './Post.css';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-export default function Post() {
+export default function Post({ post }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -35,14 +35,12 @@ export default function Post() {
             <MoreVertIcon />
           </IconButton>
         )}
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2015"
+        title={post.author}
+        subheader={post.date}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {post.content}
         </Typography>
       </CardContent>
       <Menu

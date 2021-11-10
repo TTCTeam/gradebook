@@ -25,7 +25,7 @@ export default function CourseDetailPage() {
             <Tab className="tab" label="People" value="people" />
           </TabList>
         </Box>
-        {value === 'stream' ? <Stream /> : <People />}
+        {value === 'stream' ? <Stream id={id} /> : <People />}
       </TabContext>
     </Box>
   );

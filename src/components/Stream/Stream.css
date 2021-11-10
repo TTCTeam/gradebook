@@ -37,3 +37,34 @@
   font-size: 30px;
   font-family: 'Open Sans', sans-serif;
 }
+
+.Stream .contentContainer {
+  margin-top: 20px;
+  display: flex;
+  width: 80%;
+  grid-gap: 20px;
+}
+
+.Stream .contentContainer .left {
+  flex: 2;
+}
+
+.Stream .contentContainer .right {
+  flex: 8;
+}
+
+.Stream .classCode,
+.Upcoming {
+  width: 100%;
+  border: solid 1px rgb(211, 211, 211);
+  margin-bottom: 20px;
+  height: 100px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.Stream .classCode .code {
+  font-weight: bold;
+}

@@ -7,7 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
 const CourseItem = ({ course }) => (
-  <Card sx={{ maxWidth: 300, maxHeight: 300 }}>
+  <Card sx={{ maxWidth: 350, height: 250 }}>
     <CardMedia
       component="img"
       alt="green iguana"
