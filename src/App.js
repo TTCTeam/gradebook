@@ -9,7 +9,10 @@ import SignUp from './components/auth/SignUp';
 import CourseForm from './components/courses/CourseForm';
 import MainNavigation from './components/layouts/MainNavigation';
 import AllCourses from './pages/AllCourses';
+
 import { checkAutoLogin } from './store/auth-services';
+
+import CourseDetailPage from './pages/CourseDetailPage/CourseDetailPage';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -46,7 +49,9 @@ function App() {
             <Route path="/courses" exact>
               <AllCourses />
             </Route>
-            <Route path="/courses/:id"> </Route>
+            <Route path="/courses/:id">
+              <CourseDetailPage />
+            </Route>
             <Route path="/new-course">
               <CourseForm />
             </Route>

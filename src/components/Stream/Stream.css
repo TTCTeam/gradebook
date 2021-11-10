@@ -1,0 +1,70 @@
+.Stream {
+  margin-top: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Stream .coverImgContainer {
+  position: relative;
+  width: 80%;
+}
+
+.Stream .coverPhoto {
+  object-fit: cover;
+  width: 100%;
+  height: 280px;
+  border-radius: 10px;
+}
+
+.Stream .courseName {
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+  color: white;
+  font-size: 40px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+
+.Stream .courseDesc {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  font-size: 30px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.Stream .contentContainer {
+  margin-top: 20px;
+  display: flex;
+  width: 80%;
+  grid-gap: 20px;
+}
+
+.Stream .contentContainer .left {
+  flex: 2;
+}
+
+.Stream .contentContainer .right {
+  flex: 8;
+}
+
+.Stream .classCode,
+.Upcoming {
+  width: 100%;
+  border: solid 1px rgb(211, 211, 211);
+  margin-bottom: 20px;
+  height: 100px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.Stream .classCode .code {
+  font-weight: bold;
+}

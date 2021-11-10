@@ -1,0 +1,27 @@
+.CreatePost {
+  width: 100%;
+  border: solid 1px rgb(211, 211, 211);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.CreatePost:hover {
+  color: #1976d2;
+}
+
+.CreatePostForm {
+  border: solid 1px rgb(211, 211, 211);
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.CreatePostForm .button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  grid-gap: 20px;
+}

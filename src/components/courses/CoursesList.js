@@ -8,8 +8,8 @@ import CourseForm from './CourseForm';
 
 const fabStyle = {
   position: 'absolute',
-  bottom: 50,
-  right: 16,
+  top: 75,
+  right: 20,
 };
 
 const CoursesList = ({ onAddedCourse, courses }) => {
@@ -20,16 +20,10 @@ const CoursesList = ({ onAddedCourse, courses }) => {
   const handleOpenModal = () => setOpenModal(true);
 
   return (
-    <>
-
-      <Grid
-        container
-        spacing={{ xs: 2, md: 6 }}
-        columns={{ xs: 2, sm: 8, md: 10 }}
-
-      >
+    <div className="CourseList">
+      <Grid container spacing={3} alignItems="stretch">
         {courses.map((course) => (
-          <Grid item xs={2} sm={4} md={2} key={course.id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
             <Link to={`${macth.path}/${course.id}`}>
               <CourseItem course={course} />
             </Link>
@@ -47,7 +41,7 @@ const CoursesList = ({ onAddedCourse, courses }) => {
       <BasicModal open={openModal} handleClose={handleCloseModal}>
         <CourseForm onAddedCourse={onAddedCourse} />
       </BasicModal>
-    </>
+    </div>
   );
 };
 
