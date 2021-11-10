@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { /* Redirect, */ useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
@@ -18,7 +18,8 @@ import { signIn } from '../../store/auth-actions';
 const SignIn = () => {
   const dispatch = useDispatch();
   const ui = useSelector((state) => state.ui);
-  const auth = useSelector((state) => state.auth);
+  // const auth = useSelector((state) => state.auth);
+  const history = useHistory();
 
   const {
     value: email,
@@ -38,9 +39,9 @@ const SignIn = () => {
 
   } = useInput(passwordValidate);
 
-  if (auth.token) {
+  /* if (auth.token) {
     return <Redirect to="/" />;
-  }
+  } */
 
   const formIsValid = emailIsValid && passwordIsValid;
 
@@ -51,7 +52,7 @@ const SignIn = () => {
       return;
     }
 
-    dispatch(signIn({ email, password }));
+    dispatch(signIn({ email, password }, history));
 
     /* emailResetValue();
     passwordResetValue(); */

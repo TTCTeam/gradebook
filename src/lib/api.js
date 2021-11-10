@@ -32,3 +32,20 @@ export async function addCourse(newCourse) {
       */
   return data;
 }
+
+export async function checkExistCredential(credentials) {
+  const url = `${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_NEWCOURSE}`;
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      email: credentials.email,
+      password: credentials.password,
+      returnToken: true,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  return data;
+}
