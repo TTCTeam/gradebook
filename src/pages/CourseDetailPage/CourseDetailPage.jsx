@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
+import Box from '@mui/material/Box';
 import TabList from '@mui/lab/TabList';
 import { useParams } from 'react-router-dom';
 import './CourseDetailPage.css';
@@ -17,16 +17,22 @@ export default function CourseDetailPage() {
   };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={value}>
-        <Box className="tabs" sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange}>
+    <div className="CourseDetailPage">
+      <Box
+        className="CourseDetailPageTop"
+        sx={{ borderBottom: 1, borderColor: 'divider' }}
+      >
+        <TabContext className="tabContext" value={value}>
+          <TabList className="tabList" onChange={handleChange}>
             <Tab className="tab" label="Stream" value="stream" />
             <Tab className="tab" label="People" value="people" />
           </TabList>
-        </Box>
+        </TabContext>
+      </Box>
+
+      <div className="subPage">
         {value === 'stream' ? <Stream id={id} /> : <People />}
-      </TabContext>
-    </Box>
+      </div>
+    </div>
   );
 }

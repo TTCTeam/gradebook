@@ -7,7 +7,7 @@ let logoutTimer;
 export function runLogoutTimer(dispatch, timer, history) {
   logoutTimer = setTimeout(() => {
     dispatch(signOut(history));
-  }, timer);
+  }, timer * 1000);
 }
 export function checkAutoLogin(dispatch, history) {
   const tokenData = retrieveStoredToken();

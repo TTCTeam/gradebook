@@ -1,0 +1,31 @@
+.People {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.People .container {
+  width: 80%;
+}
+
+.People .title {
+  margin: 0;
+  color: #1976d2;
+  font-size: 40px;
+}
+
+.People .container .teachers,
+.People .container .students {
+  margin-bottom: 50px;
+}
+
+.People .container .teachers .top,
+.People .container .students .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  padding: 10px 20px;
+  border-bottom: #1976d2 solid 1px;
+}

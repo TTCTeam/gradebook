@@ -13,6 +13,13 @@ const data = [
     content:
       'This impressive paella is a perfect party dish and a fun meal to cook together',
   },
+  {
+    id: 2,
+    author: 'Ha Minh Cuong',
+    date: 'September 14, 2015',
+    content:
+      'This impressive paella is a perfect party dish and a fun meal to cook together',
+  },
 ];
 
 function Stream({ id }) {
