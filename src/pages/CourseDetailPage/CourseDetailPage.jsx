@@ -25,13 +25,15 @@ export default function CourseDetailPage() {
         <TabContext className="tabContext" value={value}>
           <TabList className="tabList" onChange={handleChange}>
             <Tab className="tab" label="Stream" value="stream" />
+            <Tab className="tab" label="Grade" value="grade" />
             <Tab className="tab" label="People" value="people" />
           </TabList>
         </TabContext>
       </Box>
 
       <div className="subPage">
-        {value === 'stream' ? <Stream id={id} /> : <People />}
+        {value === 'people' && <People />}
+        {value === 'stream' && <Stream id={id} />}
       </div>
     </div>
   );
