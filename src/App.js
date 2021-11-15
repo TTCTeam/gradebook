@@ -13,6 +13,7 @@ import AllCourses from './pages/AllCourses';
 import { checkAutoLogin } from './store/auth-services';
 
 import CourseDetailPage from './pages/CourseDetailPage/CourseDetailPage';
+import ManageProfilePage from './pages/ManageProfilePage/ManageProfilePage';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -49,8 +50,11 @@ function App() {
             <Route path="/courses" exact>
               <AllCourses />
             </Route>
-            <Route path="/courses/:id">
+            <Route path="/courses/:id" exact>
               <CourseDetailPage />
+            </Route>
+            <Route path="/profile" exact>
+              <ManageProfilePage />
             </Route>
             <Route path="/new-course">
               <CourseForm />

@@ -9,6 +9,7 @@ import Stream from '../../components/Stream/Stream';
 import People from '../../components/People/People';
 
 export default function CourseDetailPage() {
+  const isTeacher = true;
   const [value, setValue] = React.useState('stream');
   const { id } = useParams();
   console.log(id);
@@ -32,8 +33,8 @@ export default function CourseDetailPage() {
       </Box>
 
       <div className="subPage">
-        {value === 'people' && <People />}
-        {value === 'stream' && <Stream id={id} />}
+        {value === 'people' && <People isTeacher={isTeacher} id={id} />}
+        {value === 'stream' && <Stream isTeacher={isTeacher} id={id} />}
       </div>
     </div>
   );

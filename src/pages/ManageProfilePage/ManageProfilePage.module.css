@@ -1,0 +1,38 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  grid-gap: 30px;
+  position: relative;
+}
+
+.page .title {
+  font-size: 35px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 5px;
+  z-index: 1000000;
+  color: white;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+}
+
+.field .fieldTitle {
+  font-size: 18px;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+}

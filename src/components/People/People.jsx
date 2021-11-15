@@ -5,8 +5,8 @@ import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import PeopleItem from './PeopleItem';
 
-function People() {
-  const isTeacher = true;
+function People({ isTeacher, id }) {
+  console.log(id);
   return (
     <div className="People">
       <div className="container">
