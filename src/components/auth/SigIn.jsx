@@ -14,6 +14,7 @@ import { Box } from '@mui/system';
 import useInput from '../../hooks/use-input';
 import { emailValidate, passwordValidate } from '../../utils/inputValidate';
 import { signIn } from '../../store/auth-actions';
+import GoogleSignin from './GoogleSignin';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ const SignIn = () => {
     valueHasError: emailHasError,
     onBlurHandler: emailOnBlurHandler,
     onChangeHandler: emailOnChangeHandler,
-
   } = useInput(emailValidate);
 
   const {
@@ -36,7 +36,6 @@ const SignIn = () => {
     valueHasError: passwordHasError,
     onBlurHandler: passwordOnBlurHandler,
     onChangeHandler: passwordOnChangeHandler,
-
   } = useInput(passwordValidate);
 
   /* if (auth.token) {
@@ -183,8 +182,8 @@ const SignIn = () => {
                   '& > :not(style)': { m: 2 },
                 }}
               >
-                <Grid item>
-                  <Link href="/#" variant="body2">
+                {/* <Grid item>
+                  <Link href="/courses" variant="body2">
                     <img src="/google.png" height="50px" alt="google icon" />
                   </Link>
                 </Grid>
@@ -192,7 +191,8 @@ const SignIn = () => {
                   <Link href="/#" variant="body2">
                     <img src="/facebook.png" height="50px" alt="facebook icon" />
                   </Link>
-                </Grid>
+                </Grid> */}
+                <GoogleSignin />
               </Grid>
             </Grid>
           </Box>
