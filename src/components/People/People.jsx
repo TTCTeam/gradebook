@@ -5,7 +5,7 @@ import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import PeopleItem from './PeopleItem';
 
-function People({ isTeacher, id }) {
+function People({ isLecturer, id }) {
   console.log(id);
   return (
     <div className="People">
@@ -13,7 +13,7 @@ function People({ isTeacher, id }) {
         <div className="teachers">
           <div className="top">
             <p className="title">Teachers</p>
-            {isTeacher && (
+            {isLecturer && (
               <Tooltip title="Invite teachers" arrow>
                 <IconButton color="primary" sx={{ width: 50, height: 50 }}>
                   <PersonAddOutlinedIcon sx={{ fontSize: 30 }} />
@@ -23,14 +23,14 @@ function People({ isTeacher, id }) {
           </div>
 
           <div className="listPeople">
-            <PeopleItem isTeacher={isTeacher} />
-            <PeopleItem isTeacher={isTeacher} />
+            <PeopleItem isLecturer={isLecturer} />
+            <PeopleItem isLecturer={isLecturer} />
           </div>
         </div>
         <div className="students">
           <div className="top">
             <p className="title">Students</p>
-            {isTeacher && (
+            {isLecturer && (
               <Tooltip title="Invite students" arrow>
                 <IconButton color="primary" sx={{ width: 50, height: 50 }}>
                   <PersonAddOutlinedIcon sx={{ fontSize: 30 }} />
@@ -39,10 +39,10 @@ function People({ isTeacher, id }) {
             )}
           </div>
           <div className="listPeople">
-            <PeopleItem isTeacher={isTeacher} />
-            <PeopleItem isTeacher={isTeacher} />
-            <PeopleItem isTeacher={isTeacher} />
-            <PeopleItem isTeacher={isTeacher} />
+            <PeopleItem isLecturer={isLecturer} />
+            <PeopleItem isLecturer={isLecturer} />
+            <PeopleItem isLecturer={isLecturer} />
+            <PeopleItem isLecturer={isLecturer} />
           </div>
         </div>
       </div>

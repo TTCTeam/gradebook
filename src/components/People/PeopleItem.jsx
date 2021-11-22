@@ -7,7 +7,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import './PeopleItem.css';
 
-export default function PeopleItem({ isTeacher }) {
+export default function PeopleItem({ isLecturer }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,7 +24,7 @@ export default function PeopleItem({ isTeacher }) {
           <div className="name">Ha Minh Cuong</div>
         </div>
         <div className="right">
-          {isTeacher && (
+          {isLecturer && (
             <IconButton
               id="basic-button"
               aria-controls="basic-menu"

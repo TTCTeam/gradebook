@@ -14,25 +14,23 @@ import { addCourse } from '../../lib/api';
 
 const CourseForm = ({ onAddedCourse }) => {
   const {
-    value: namecourse,
+    value: name,
     valueIsValid: nameIsValid,
     valueHasError: namelHasError,
     onBlurHandler: nameOnBlurHandler,
     onChangeHandler: nameOnChangeHandler,
-
   } = useInput(nameValidate);
 
   const {
-    value: teacher,
+    value: lecturer,
     valueIsValid: teacherIsValid,
     valueHasError: teacherlHasError,
     onBlurHandler: teacherOnBlurHandler,
     onChangeHandler: teacherOnChangeHandler,
-
   } = useInput(nameValidate);
 
   const {
-    value: descourse,
+    value: description,
     valueIsValid: desIsValid,
     valueHasError: deslHasError,
     onBlurHandler: desOnBlurHandler,
@@ -55,7 +53,7 @@ const CourseForm = ({ onAddedCourse }) => {
       return;
     }
 
-    sendRequest({ coursename: namecourse, teacher, coursedes: descourse });
+    sendRequest({ name, lecturer, coursedes: description });
   };
   const formContent = (
     <Box
@@ -73,7 +71,7 @@ const CourseForm = ({ onAddedCourse }) => {
         error={namelHasError}
         onBlur={nameOnBlurHandler}
         onChange={nameOnChangeHandler}
-        value={namecourse}
+        value={name}
         helperText={namelHasError ? 'Name must be not empty.' : ''}
       />
       <TextField
@@ -83,7 +81,7 @@ const CourseForm = ({ onAddedCourse }) => {
         error={teacherlHasError}
         onBlur={teacherOnBlurHandler}
         onChange={teacherOnChangeHandler}
-        value={teacher}
+        value={lecturer}
         helperText={teacherlHasError ? 'Teacher must be not empty.' : ''}
       />
       <TextField
@@ -93,10 +91,15 @@ const CourseForm = ({ onAddedCourse }) => {
         error={deslHasError}
         onBlur={desOnBlurHandler}
         onChange={desOnChangeHandler}
-        value={descourse}
+        value={description}
         helperText={deslHasError ? 'Description must be not empty.' : ''}
       />
-      <Button disabled={!formIsValid} onClick={onSubmitHandler} variant="contained" sx={{ maxWidth: 80 }}>
+      <Button
+        disabled={!formIsValid}
+        onClick={onSubmitHandler}
+        variant="contained"
+        sx={{ maxWidth: 80 }}
+      >
         Create
       </Button>
     </Box>
@@ -109,7 +112,11 @@ const CourseForm = ({ onAddedCourse }) => {
           NEW COURSE
         </Typography>
       </CardContent>
-      {status === 'pending' ? <CircularProgress color="primary" /> : formContent}
+      {status === 'pending' ? (
+        <CircularProgress color="primary" />
+      ) : (
+        formContent
+      )}
     </>
   );
 };

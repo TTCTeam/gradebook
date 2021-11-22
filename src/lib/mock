@@ -1,0 +1,112 @@
+BASE_URL: http://localhost:5000
+
+- API get all courses of student by (user id/email)
+    URL: http://localhost:5000/courses/
+    Method: GET
+    Response: [
+      {
+        "id": 1,
+        "name": "Web nâng cao",
+        "lecturer": "Phan Nhật Ánh",
+        "description": "Khóa học lập trình web nâng cao",
+      },
+      {
+        "id": 2,
+        "name": "Lập trình NodeJS",
+        "lecturer": "Trần Minh Tuấn",
+        "description": "Khóa học lập trình NodeJS",
+      }
+    ]
+
+- API create new courses
+    URL: http://localhost:5000/courses/
+    Method: POST
+    Body: {
+      "name": "Web nâng cao",
+      "lecturer": "Phan Nhật Ánh",
+      "description": "Khóa học lập trình web nâng cao",
+    }
+    Response: {
+      "id": 3,
+      "name": "Web nâng cao",
+      "lecturer": "Phan Nhật Ánh",
+      "description": "Khóa học lập trình web nâng cao",
+    }
+
+- API get course by id
+    URL: http://localhost:5000/courses/1
+    Method: GET
+    Response: {
+      "id": 1,
+      "name": "Web nâng cao",
+      "lecturer": "Phan Nhật Ánh",
+      "description": "Khóa học lập trình web nâng cao",
+    }
+
+- API get all lecturers of course
+    URL: http://localhost:5000/courses/1/teachers
+    Method: GET
+    Response: [
+      {
+        "id": 1,
+        "name": "Phan Nhật Ánh",
+        "avatar": "link hinh"
+        "role": "lecturer"
+      },
+      {
+        "id": 2,
+        "name": "Trần Minh Tuấn",
+        "avatar": "link hinh"
+        "role": "lecturer"
+      }
+    ]
+
+- API get all students of course
+    URL: http://localhost:5000/courses/1/students
+    Method: GET
+    Response: [
+      {
+        "id": 1,
+        "name": "Nguyễn Văn A",
+        "avatar": "link hinh",
+        "role": "student"
+      },
+      {
+        "id": 2,
+        "name": "Nguyễn Văn B",
+        "avatar": "link hinh",
+        "role": "student"
+      }
+    ]
+
+- API get link invite student to course
+    URL: http://localhost:5000/courses/1/invite-link
+    Method: GET
+    Response: {
+      "link": "link"
+    }
+
+- API get user by username
+    URL: http://localhost:5000/users/
+    Method: GET
+    Response: {
+      "id": 1,
+      "email": "email",
+      "name": "Nguyễn Văn A",
+      "avatar": "link hinh",
+      "role": "student"
+    }
+
+- API get user by email
+    URL: http://localhost:5000/users
+    Method: GET
+    Response: {
+      "id": 1,
+      "email": "email",
+      "name": "Nguyễn Văn A",
+      "avatar": "link hinh",
+      "role": "student"
+    }
+
+
+
