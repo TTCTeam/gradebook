@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Switch, Route, Redirect, useHistory,
 } from 'react-router-dom';
-import './App.css';
 import SignIn from './components/auth/SigIn';
 import SignUp from './components/auth/SignUp';
 import CourseForm from './components/courses/CourseForm';

@@ -1,0 +1,36 @@
+.InviteLinkModal {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  grid-gap: 20px;
+}
+
+.InviteLinkModal .progress {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.InviteLinkModal .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.InviteLinkModal .expire {
+  color: #1976d2;
+}
+
+.InviteLinkModal .field {
+  width: 100%;
+}
+
+.InviteLinkModal .copylinkBtn {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+}

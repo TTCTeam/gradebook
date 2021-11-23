@@ -1,9 +1,12 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import CreatePost from '../CreatePost/CreatePost';
 import Post from '../Post/Post';
 import './Stream.css';
+import BasicModal from '../layouts/BasicModal';
+import InviteLinkModal from '../InviteLinkModal/InviteLinkModal';
 
 const data = [
   {
@@ -24,6 +27,11 @@ const data = [
 
 function Stream({ id }) {
   const [listPost, setListPost] = React.useState(data);
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleCloseModal = () => setOpenModal(false);
+  const handleOpenModal = () => setOpenModal(true);
+  console.log(id);
 
   React.useEffect(() => {
     console.log('render');
@@ -47,14 +55,13 @@ function Stream({ id }) {
       </div>
       <div className="contentContainer">
         <div className="left">
-          <Card className="classCode">
-            <Typography variant="h6" color="black">
-              Class code
-            </Typography>
-            <Typography className="code" variant="h5" color="#1976d2">
-              {id}
-            </Typography>
-          </Card>
+          <Button
+            className="classCode"
+            variant="contained"
+            onClick={handleOpenModal}
+          >
+            Create invite link
+          </Button>
           <Card className="Upcoming">
             <Typography variant="h6" color="Black">
               Upcoming
@@ -71,6 +78,9 @@ function Stream({ id }) {
           ))}
         </div>
       </div>
+      <BasicModal open={openModal} handleClose={handleCloseModal}>
+        <InviteLinkModal />
+      </BasicModal>
     </div>
   );
 }
