@@ -1,7 +1,6 @@
 import React from 'react';
 import './People.css';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import IconButton from '@mui/material/IconButton';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import Tooltip from '@mui/material/Tooltip';
@@ -9,6 +8,7 @@ import PeopleItem from './PeopleItem';
 import BasicModal from '../layouts/BasicModal';
 import InviteByEmailsModal from '../InviteByEmailsModal/InviteByEmailsModal';
 import MemberRoles from '../../constrain/course';
+import { baseAxios } from '../../lib/api';
 
 function People({ classroom }) {
   const [listStudent, setListStudent] = React.useState([]);
@@ -20,7 +20,7 @@ function People({ classroom }) {
 
   React.useEffect(() => {
     const fetchCourse = async (courseId) => {
-      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/students`);
+      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/students`);
       setListStudent(res.data);
     };
 
@@ -29,7 +29,7 @@ function People({ classroom }) {
 
   React.useEffect(() => {
     const fetchCourse = async (courseId) => {
-      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/lecturers`);
+      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/lecturers`);
       setListLecturer(res.data);
     };
 

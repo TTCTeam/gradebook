@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
-import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Tooltip from '@mui/material/Tooltip';
@@ -9,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useParams } from 'react-router-dom';
 import './InviteLinkModal.css';
+import { baseAxios } from '../../lib/api';
 
 export default function InviteLinkModal() {
   const [open, setOpen] = React.useState(false);
@@ -24,7 +24,7 @@ export default function InviteLinkModal() {
 
   useEffect(() => {
     const fetchLink = async (courseId) => {
-      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/invite-link`);
+      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/invite-link`);
       setInvitation(res.data);
     };
 

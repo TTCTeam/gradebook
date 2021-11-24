@@ -1,9 +1,19 @@
+import axios from 'axios';
+
 require('dotenv').config();
+
+const token = localStorage.getItem('token');
+
+export const baseAxios = axios.create({
+  headers: {
+    'Content-Type': 'application/json',
+    'x-access-token': token,
+  },
+});
 
 export async function getAllCourse() {
   const url = `${process.env.REACT_APP_BASE_URL}/courses`;
-
-  const token = localStorage.getItem('token');
+  console.log(token);
   const response = await fetch(url, {
     method: 'GET',
     headers: {
@@ -27,6 +37,7 @@ export async function addCourse(newCourse) {
     body: JSON.stringify(newCourse),
     headers: {
       'Content-Type': 'application/json',
+      'x-access-token': token,
     },
   });
   const data = await response.json();
@@ -51,6 +62,7 @@ export async function checkExistCredential(credentials) {
     }),
     headers: {
       'Content-Type': 'application/json',
+      'x-access-token': token,
     },
   });
   const data = await response.json();

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import Box from '@mui/material/Box';
@@ -8,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import './CourseDetailPage.css';
 import Stream from '../../components/Stream/Stream';
 import People from '../../components/People/People';
+import { baseAxios } from '../../lib/api';
 
 export default function CourseDetailPage() {
   const [course, setCourse] = useState({});
@@ -20,7 +20,7 @@ export default function CourseDetailPage() {
 
   useEffect(() => {
     const fetchCourse = async (courseId) => {
-      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}`);
+      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}`);
       setCourse(res.data);
       console.log(res.data);
     };
