@@ -4,11 +4,11 @@ import IconButton from '@mui/material/IconButton';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import PeopleItem from './PeopleItem';
-import InviteLecturersModal from '../InviteLecturersModal/InviteLecturersModal';
 import BasicModal from '../layouts/BasicModal';
-import InviteStudentsModal from '../InviteStudentsModal/InviteStudentsModal';
+import InviteByEmailsModal from '../InviteByEmailsModal/InviteByEmailsModal';
+import MemberRoles from '../../constrain/course';
 
-function People({ isLecturer, id }) {
+function People() {
   // const [listStudent, setListStudent] = React.useState([]);
   // const [listLecturer, setListLecturer] = React.useState([]);
   const [openLecturerModal, setOpenLecturerModal] = React.useState(false);
@@ -18,7 +18,7 @@ function People({ isLecturer, id }) {
   const handleCloseStudentModal = () => setOpenStudentModal(false);
   const handleOpenLecturerModal = () => setOpenLecturerModal(true);
   const handleOpenStudentModal = () => setOpenStudentModal(true);
-  console.log(id);
+  const isLecturer = true;
   return (
     <div className="People">
       <div className="container">
@@ -70,10 +70,13 @@ function People({ isLecturer, id }) {
         open={openLecturerModal}
         handleClose={handleCloseLecturerModal}
       >
-        <InviteLecturersModal handleClose={handleCloseLecturerModal} />
+        <InviteByEmailsModal handleClose={handleCloseLecturerModal} role={MemberRoles.LECTURER} />
       </BasicModal>
-      <BasicModal open={openStudentModal} handleClose={handleCloseStudentModal}>
-        <InviteStudentsModal handleClose={handleCloseStudentModal} />
+      <BasicModal
+        open={openStudentModal}
+        handleClose={handleCloseStudentModal}
+      >
+        <InviteByEmailsModal handleClose={handleCloseStudentModal} role={MemberRoles.STUDENT} />
       </BasicModal>
     </div>
   );

@@ -16,25 +16,25 @@ const CourseForm = ({ onAddedCourse }) => {
   const {
     value: name,
     valueIsValid: nameIsValid,
-    valueHasError: namelHasError,
+    valueHasError: nameHasError,
     onBlurHandler: nameOnBlurHandler,
     onChangeHandler: nameOnChangeHandler,
   } = useInput(nameValidate);
 
   const {
     value: lecturer,
-    valueIsValid: teacherIsValid,
-    valueHasError: teacherlHasError,
-    onBlurHandler: teacherOnBlurHandler,
-    onChangeHandler: teacherOnChangeHandler,
+    valueIsValid: lecturerIsValid,
+    valueHasError: lecturerHasError,
+    onBlurHandler: lecturerOnBlurHandler,
+    onChangeHandler: lecturerOnChangeHandler,
   } = useInput(nameValidate);
 
   const {
     value: description,
-    valueIsValid: desIsValid,
-    valueHasError: deslHasError,
-    onBlurHandler: desOnBlurHandler,
-    onChangeHandler: desOnChangeHandler,
+    valueIsValid: descriptionIsValid,
+    valueHasError: descriptionHasError,
+    onBlurHandler: descriptionOnBlurHandler,
+    onChangeHandler: descriptionOnChangeHandler,
   } = useInput(nameValidate);
 
   const { status, error, sendRequest } = useHttp(addCourse);
@@ -45,7 +45,7 @@ const CourseForm = ({ onAddedCourse }) => {
     }
   }, [status, error, onAddedCourse]);
 
-  const formIsValid = nameIsValid && teacherIsValid && desIsValid;
+  const formIsValid = nameIsValid && lecturerIsValid && descriptionIsValid;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -53,7 +53,7 @@ const CourseForm = ({ onAddedCourse }) => {
       return;
     }
 
-    sendRequest({ name, lecturer, coursedes: description });
+    sendRequest({ name, lecturer, description });
   };
   const formContent = (
     <Box
@@ -68,31 +68,31 @@ const CourseForm = ({ onAddedCourse }) => {
         label="Name"
         color="primary"
         type="name"
-        error={namelHasError}
+        error={nameHasError}
         onBlur={nameOnBlurHandler}
         onChange={nameOnChangeHandler}
         value={name}
-        helperText={namelHasError ? 'Name must be not empty.' : ''}
+        helperText={nameHasError ? 'Name must be not empty.' : ''}
       />
       <TextField
         label="Teacher"
         color="primary"
         type="teacher"
-        error={teacherlHasError}
-        onBlur={teacherOnBlurHandler}
-        onChange={teacherOnChangeHandler}
+        error={lecturerHasError}
+        onBlur={lecturerOnBlurHandler}
+        onChange={lecturerOnChangeHandler}
         value={lecturer}
-        helperText={teacherlHasError ? 'Teacher must be not empty.' : ''}
+        helperText={lecturerHasError ? 'Teacher must be not empty.' : ''}
       />
       <TextField
         label="Description"
         color="primary"
         type="description"
-        error={deslHasError}
-        onBlur={desOnBlurHandler}
-        onChange={desOnChangeHandler}
+        error={descriptionHasError}
+        onBlur={descriptionOnBlurHandler}
+        onChange={descriptionOnChangeHandler}
         value={description}
-        helperText={deslHasError ? 'Description must be not empty.' : ''}
+        helperText={descriptionHasError ? 'Description must be not empty.' : ''}
       />
       <Button
         disabled={!formIsValid}

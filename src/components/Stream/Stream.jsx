@@ -25,13 +25,12 @@ const data = [
   },
 ];
 
-function Stream({ id }) {
+function Stream({ course }) {
   const [listPost, setListPost] = React.useState(data);
   const [openModal, setOpenModal] = React.useState(false);
 
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => setOpenModal(true);
-  console.log(id);
 
   React.useEffect(() => {
     console.log('render');
@@ -50,8 +49,8 @@ function Stream({ id }) {
           alt="coverPhoto"
           src="https://www.gstatic.com/classroom/themes/img_backtoschool.jpg"
         />
-        <div className="courseName">PTUDWNC - 18_3</div>
-        <div className="courseDesc">PTUDWNC</div>
+        <div className="courseName">{course.name}</div>
+        <div className="courseDesc">{course.description}</div>
       </div>
       <div className="contentContainer">
         <div className="left">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './InviteLinkModal.css';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
@@ -7,11 +7,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function InviteLinkModal() {
   const [open, setOpen] = React.useState(false);
-  const [link, setLink] = React.useState('This is link');
+  const [invitation, setInvitation] = React.useState({});
   const [progress, setProgress] = React.useState(true);
+  const { id } = useParams();
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -19,9 +22,14 @@ export default function InviteLinkModal() {
     }, 1500);
   }, [progress]);
 
-  const handleChangeLink = (e) => {
-    setLink(e.target.value);
-  };
+  useEffect(() => {
+    const fetchLink = async (courseId) => {
+      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/invite-link`);
+      setInvitation(res.data);
+    };
+
+    fetchLink(id);
+  }, []);
 
   const handleClick = () => {
     setOpen(true);
@@ -45,13 +53,12 @@ export default function InviteLinkModal() {
           <div className="container">
             <TextField
               className="field"
-              value={link}
+              value={invitation?.invitationLink}
               label="Invite Link"
               variant="filled"
-              onChange={(e) => handleChangeLink(e)}
             />
 
-            <CopyToClipboard text={link}>
+            <CopyToClipboard text={invitation?.invitationLink}>
               <Tooltip title="Copy link to clipboard" arrow>
                 <IconButton
                   className="copylinkBtn"
@@ -64,7 +71,10 @@ export default function InviteLinkModal() {
             </CopyToClipboard>
           </div>
 
-          <div className="expire">This link will be expired at</div>
+          <div className="expire">
+            This link will be expired at
+            <span>{invitation?.expiredDate}</span>
+          </div>
         </>
       )}
 

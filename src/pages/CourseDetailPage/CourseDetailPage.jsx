@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import Box from '@mui/material/Box';
@@ -9,13 +10,23 @@ import Stream from '../../components/Stream/Stream';
 import People from '../../components/People/People';
 
 export default function CourseDetailPage() {
-  const isLecturer = true;
-  const [value, setValue] = React.useState('stream');
+  const [course, setCourse] = useState({});
+  const [value, setValue] = useState('stream');
   const { id } = useParams();
   console.log(id);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    const fetchCourse = async (courseId) => {
+      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}`);
+      setCourse(res.data);
+      console.log(res.data);
+    };
+
+    fetchCourse(id);
+  }, []);
 
   return (
     <div className="CourseDetailPage">
@@ -33,8 +44,8 @@ export default function CourseDetailPage() {
       </Box>
 
       <div className="subPage">
-        {value === 'people' && <People isLecturer={isLecturer} id={id} />}
-        {value === 'stream' && <Stream isLecturer={isLecturer} id={id} />}
+        {value === 'people' && <People course={course} />}
+        {value === 'stream' && <Stream course={course} />}
       </div>
     </div>
   );

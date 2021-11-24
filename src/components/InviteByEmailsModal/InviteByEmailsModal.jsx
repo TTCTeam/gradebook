@@ -3,17 +3,21 @@ import { TextField } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import './InviteLecturersModal.css';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
 }
 
-export default function InviteLecturersModal({ handleClose }) {
+export default function InviteByEmailsModal({ handleClose, role }) {
   const [email, setEmail] = React.useState('');
   const [listEmail, setListEmail] = React.useState([]);
   const [disableAdd, setDisableAdd] = React.useState(true);
   const [progress, setProgress] = React.useState(false);
+
+  const { id } = useParams();
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -33,12 +37,11 @@ export default function InviteLecturersModal({ handleClose }) {
     setDisableAdd(true);
   };
 
-  const handleSubmitInvite = () => {
-    console.log(listEmail);
+  const handleSubmitInvite = async () => {
     setProgress(true);
-    setTimeout(() => {
-      handleClose();
-    }, 2000);
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/courses/${id}/invite`, { emails: listEmail, role });
+    console.log(res.data);
+    handleClose();
   };
 
   return (
