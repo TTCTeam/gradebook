@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 
 export default function InviteLinkModal() {
   const [open, setOpen] = React.useState(false);
@@ -71,7 +72,7 @@ export default function InviteLinkModal() {
 
           <div className="expire">
             This link will be expired at
-            <span>{invitation?.expiredDate}</span>
+            <span>{` ${moment(invitation?.expiredDatemoment).add(1, 'day').format('LLL')}`}</span>
           </div>
         </>
       )}
