@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import './InviteLecturersModal.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import MemberRoles from '../../constrain/course';
 
 function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
@@ -16,6 +17,7 @@ export default function InviteByEmailsModal({ handleClose, role }) {
   const [listEmail, setListEmail] = React.useState([]);
   const [disableAdd, setDisableAdd] = React.useState(true);
   const [progress, setProgress] = React.useState(false);
+  const isLecturer = role === MemberRoles.LECTURER;
 
   const { id } = useParams();
 
@@ -46,7 +48,12 @@ export default function InviteByEmailsModal({ handleClose, role }) {
 
   return (
     <div className="InviteLecturersModal">
-      <div className="title">Invite Lecturers</div>
+      {isLecturer ? (
+        <div className="title">Invite Lecturers</div>
+      ) : (
+        <div className="title">Invite Students</div>
+      )}
+
       <div className="listEmail">
         {listEmail.map((item) => (
           <div key={item} className="email">
@@ -71,9 +78,12 @@ export default function InviteByEmailsModal({ handleClose, role }) {
       >
         Add
       </Button>
-      <div className="desc">
-        Lecturers you add can do everything you can, except delete the course.
-      </div>
+      {isLecturer && (
+        <div className="desc">
+          Lecturers you add can do everything you can, except delete the course.
+        </div>
+      )}
+
       <Button
         className="inviteBtn"
         disabled={listEmail.length === 0}
