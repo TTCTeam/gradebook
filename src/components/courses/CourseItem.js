@@ -12,7 +12,7 @@ const CourseItem = ({ course }) => (
       component="img"
       alt="green iguana"
       height="140"
-      image="/img_backtoschool.jpg"
+      image="https://www.gstatic.com/classroom/themes/img_backtoschool.jpg"
     />
     <CardContent>
       <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 500 }}>
