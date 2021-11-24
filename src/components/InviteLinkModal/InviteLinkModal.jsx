@@ -72,7 +72,7 @@ export default function InviteLinkModal() {
 
           <div className="expire">
             This link will be expired at
-            <span>{` ${moment(invitation?.expiredDatemoment).add(1, 'day').format('LLL')}`}</span>
+            <span>{` ${moment(invitation?.expiredDate).format('LLL')}`}</span>
           </div>
         </>
       )}
