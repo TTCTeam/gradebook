@@ -2,15 +2,16 @@
 import { pending, success } from './ui-actions';
 // eslint-disable-next-line import/no-cycle
 import { runLogoutTimer } from './auth-services';
+import { showModal } from './modal-action';
 
 export const LOGOUT_ACTION = 'LOGOUT';
 export const LOGIN_SUCCESS_ACTION = 'LOGIN_SUCCESS';
 export const REGISTER_SUCCCESS_ACTION = 'REGISTER_SUCCESS';
 
-export function loginConfirmAction(token) {
+export function loginConfirmAction(user) {
   return {
     type: LOGIN_SUCCESS_ACTION,
-    token: token || 'SSDFGHJU6TRDSAQWSDFVBGYUJHBGF',
+    user,
   };
 }
 
@@ -29,30 +30,71 @@ export function signIn(credentials, history) {
     console.log(credentials);
     // check pass and username from request to BE
     // const data = await checkExistCredential(credentials);
-    const data = { token: 'SSDFGHJU6TRDSAQWSDFVBGYUJHBGF', expiresIn: '6000' };
-    const expirationTime = new Date(
-      new Date().getTime() + +data.expiresIn * 1000,
-    );
+    const url = `${process.env.REACT_APP_BASE_URL}/auth/signin`;
 
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('expirationTime', expirationTime.toISOString());
+    const cre = `username=${credentials.username}&password=${credentials.password}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      body: cre,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+    });
 
-    setTimeout(() => {
-      runLogoutTimer(dispatch, 5000, history);
-      dispatch(loginConfirmAction(data.token));
+    console.log(response);
+    const data = await response.json();
+
+    if (response.status === 200) {
+      const expirationTime = new Date(
+        new Date().getTime() + +data.expiresIn * 1000,
+      );
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('expirationTime', expirationTime.toISOString());
+
+      setTimeout(() => {
+        runLogoutTimer(dispatch, 5000, history);
+        dispatch(loginConfirmAction(data.token));
+        dispatch(success());
+        history.replace('/');
+      }, 1000);
+    } else {
       dispatch(success());
-      history.replace('/');
-    }, 1000);
+    }
   };
 }
 
 export function signUp(credentials, history) {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(pending());
     console.log(credentials);
     // post account to BE
     // recieve response data below
-    const data = { token: 'SSDFGHJU6TRDSAQWSDFVBGYUJHBGF', expiresIn: '6000' };
+
+    const url = `${process.env.REACT_APP_BASE_URL}/auth/signup`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const { status } = response;
+
+    const data = await response.json();
+    console.log(response);
+    console.log(data);
+
+    if (status === 200) {
+      history.replace('/');
+    }
+    if (status === 400) {
+      dispatch(showModal(data.message));
+    }
+    dispatch(success());
+
+    /* const data = { token: 'SSDFGHJU6TRDSAQWSDFVBGYUJHBGF', expiresIn: '6000' };
     const expirationTime = new Date(
       new Date().getTime() + +data.expiresIn * 1000,
     );
@@ -64,6 +106,47 @@ export function signUp(credentials, history) {
       dispatch(loginConfirmAction(data.token));
       dispatch(success());
       history.replace('/');
-    }, 1000);
+    }, 1000); */
+  };
+}
+
+export function signInByGoogle(idToken, history) {
+  return async (dispatch) => {
+    dispatch(pending());
+
+    // check pass and username from request to BE
+    // const data = await checkExistCredential(credentials);
+    const url = `${process.env.REACT_APP_BASE_URL}/auth/signin_google`;
+
+    const respone = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'x-goog-iap-jwt-assertion': idToken,
+      },
+    });
+
+    console.log(respone, 'google login respone');
+
+    const data = await respone.json();
+    console.log(data, 'data response');
+
+    if (respone.status === 400) {
+      dispatch(showModal(data.message));
+      dispatch(success());
+    } else {
+      const expirationTime = new Date(
+        new Date().getTime() + +data.expiresIn * 1000,
+      );
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('expirationTime', expirationTime.toISOString());
+
+      setTimeout(() => {
+        runLogoutTimer(dispatch, 5000, history);
+        dispatch(loginConfirmAction(data));
+        dispatch(success());
+        history.replace('/');
+      }, 1000);
+    }
   };
 }

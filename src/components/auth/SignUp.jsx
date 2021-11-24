@@ -8,11 +8,10 @@ import {
   Divider,
   FormControlLabel,
   Grid,
-  Link,
   TextField,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import useInput from '../../hooks/use-input';
 import {
   emailValidate,
@@ -20,6 +19,7 @@ import {
   passwordValidate,
 } from '../../utils/inputValidate';
 import { signUp } from '../../store/auth-actions';
+import GoogleSign from './GoogleSignin';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -58,11 +58,26 @@ const SignUp = () => {
     onBlurHandler: passwordOnBlurHandler,
   } = useInput(passwordValidate);
 
-  const formIsValid = firstNameIsValid && lastNameIsValid && emailIsValid && passwordIsValid;
+  const {
+    value: studentID,
+    valueIsValid: studentIDIsValid,
+    valueHasError: studentIDHasError,
+    onChangeHandler: studentIDOnChangeHandler,
+    onBlurHandler: studentIDOnBlurHandler,
+  } = useInput(nameValidate);
+
+  const formIsValid = firstNameIsValid && lastNameIsValid
+  && emailIsValid && passwordIsValid && studentIDIsValid;
 
   const submitHandler = () => {
     if (formIsValid) {
-      dispatch(signUp({ lastName, firstName, password }, history));
+      dispatch(signUp({
+        lastname: lastName,
+        firstname: firstName,
+        password,
+        email,
+        username: studentID,
+      }, history));
     }
   };
 
@@ -173,6 +188,26 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="studentId"
+                  label="StudentID"
+                  type="number"
+                  id="studentId"
+                  autoComplete="studentId"
+                  error={studentIDHasError}
+                  onBlur={studentIDOnBlurHandler}
+                  onChange={studentIDOnChangeHandler}
+                  value={studentID}
+                  helperText={
+                    studentIDHasError
+                      ? 'StudentID must not empty'
+                      : ''
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
@@ -227,7 +262,7 @@ const SignUp = () => {
                     </Link> */}
                   </Grid>
                   <Grid item>
-                    <Link href="/signin" variant="body2">
+                    <Link to="/signin">
                       Already have an account? Sign In
                     </Link>
                   </Grid>
@@ -253,18 +288,7 @@ const SignUp = () => {
                   }}
                 >
                   <Grid item>
-                    <Link href="/#" variant="body2">
-                      <img src="/google.png" height="50px" alt="google icon" />
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href="/#" variant="body2">
-                      <img
-                        src="/facebook.png"
-                        height="50px"
-                        alt="facebook icon"
-                      />
-                    </Link>
+                    <GoogleSign username={studentID} />
                   </Grid>
                 </Grid>
               </Grid>

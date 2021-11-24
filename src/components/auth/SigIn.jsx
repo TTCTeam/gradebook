@@ -1,5 +1,5 @@
 import React from 'react';
-import { /* Redirect, */ useHistory } from 'react-router-dom';
+import { /* Redirect, */ useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
@@ -7,7 +7,6 @@ import {
   Button,
   Typography,
   Divider,
-  Link,
   CircularProgress,
 } from '@mui/material';
 import { Box } from '@mui/system';
@@ -51,7 +50,7 @@ const SignIn = () => {
       return;
     }
 
-    dispatch(signIn({ email, password }, history));
+    dispatch(signIn({ username: email, password }, history));
 
     /* emailResetValue();
     passwordResetValue(); */
@@ -152,13 +151,13 @@ const SignIn = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="/#" variant="body2">
+                  <Link to="/">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
-                    Don`&apos;`t have an account? Sign Up
+                  <Link to="/signup">
+                    Don&apos;t have an account? Sign Up
                   </Link>
                 </Grid>
               </Grid>
@@ -182,17 +181,8 @@ const SignIn = () => {
                   '& > :not(style)': { m: 2 },
                 }}
               >
-                {/* <Grid item>
-                  <Link href="/courses" variant="body2">
-                    <img src="/google.png" height="50px" alt="google icon" />
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/#" variant="body2">
-                    <img src="/facebook.png" height="50px" alt="facebook icon" />
-                  </Link>
-                </Grid> */}
-                <GoogleSignin />
+
+                <GoogleSignin isSignIn />
               </Grid>
             </Grid>
           </Box>

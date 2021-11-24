@@ -1,25 +1,43 @@
 import React from 'react';
-import { GoogleLogin } from 'react-google-login';
+import GoogleLogin from 'react-google-login';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signIn } from '../../store/auth-actions';
+import { signInByGoogle, signUp } from '../../store/auth-actions';
+import { showModal } from '../../store/modal-action';
 
 require('dotenv').config();
 
 const clientId = '657202594687-9bi5bovau03kobm94cnhbhgcnsf1cpjb.apps.googleusercontent.com';
 
-export default function GoogleSign() {
+export default function GoogleSign({ isSignIn, username }) {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const onLoginSuccess = (res) => {
-    dispatch(signIn({ res }, history));
-    console.log('Login Success:', res);
+    const idToken = res.tokenId;
+    console.log(res);
+    if (isSignIn) {
+      dispatch(signInByGoogle(idToken, history));
+    }
+    if (username) {
+      const user = {
+        firstname: res.profileObj.givenName,
+        lastname: res.profileObj.familyName,
+        email: res.profileObj.email,
+        password: null,
+        username,
+      };
+
+      dispatch(signUp(user, history));
+    } else if (!isSignIn) {
+      dispatch(showModal('Please enter StudentID before.'));
+    }
   };
 
   const onLoginFailure = (res) => {
     console.log('Login Failed:', res);
   };
-  console.log(clientId);
+
   // const onSignoutSuccess = () => {
   //     alert("You have been logged out successfully");
   //     console.clear();

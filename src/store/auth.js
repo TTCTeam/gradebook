@@ -1,11 +1,13 @@
+import { LOGIN_SUCCESS_ACTION } from './auth-actions';
+
 const initialState = { authError: null, token: null, isLoggedIn: false };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-  case 'LOGIN_SUCCESS':
+  case LOGIN_SUCCESS_ACTION:
     return {
       ...state,
-      token: action.token,
+      token: action.user.token,
       isLoggedIn: true,
     };
   case 'LOGIN_ERROR':
