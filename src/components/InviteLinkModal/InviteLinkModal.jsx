@@ -6,7 +6,6 @@ import Tooltip from '@mui/material/Tooltip';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -31,7 +30,8 @@ export default function InviteLinkModal() {
     fetchLink(id);
   }, []);
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    await navigator.clipboard.writeText(invitation?.invitationLink);
     setOpen(true);
   };
 
@@ -58,17 +58,15 @@ export default function InviteLinkModal() {
               variant="filled"
             />
 
-            <CopyToClipboard text={invitation?.invitationLink}>
-              <Tooltip title="Copy link to clipboard" arrow>
-                <IconButton
-                  className="copylinkBtn"
-                  variant="text"
-                  onClick={handleClick}
-                >
-                  <ContentCopyIcon />
-                </IconButton>
-              </Tooltip>
-            </CopyToClipboard>
+            <Tooltip title="Copy link to clipboard" arrow>
+              <IconButton
+                className="copylinkBtn"
+                variant="text"
+                onClick={handleClick}
+              >
+                <ContentCopyIcon />
+              </IconButton>
+            </Tooltip>
           </div>
 
           <div className="expire">

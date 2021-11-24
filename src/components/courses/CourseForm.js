@@ -75,14 +75,14 @@ const CourseForm = ({ onAddedCourse }) => {
         helperText={nameHasError ? 'Name must be not empty.' : ''}
       />
       <TextField
-        label="Teacher"
+        label="Owner"
         color="primary"
         type="teacher"
         error={lecturerHasError}
         onBlur={lecturerOnBlurHandler}
         onChange={lecturerOnChangeHandler}
         value={lecturer}
-        helperText={lecturerHasError ? 'Teacher must be not empty.' : ''}
+        helperText={lecturerHasError ? 'Owner must be not empty.' : ''}
       />
       <TextField
         label="Description"

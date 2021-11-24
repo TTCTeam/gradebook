@@ -1,5 +1,7 @@
 import React from 'react';
 import './People.css';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import IconButton from '@mui/material/IconButton';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import Tooltip from '@mui/material/Tooltip';
@@ -8,17 +10,38 @@ import BasicModal from '../layouts/BasicModal';
 import InviteByEmailsModal from '../InviteByEmailsModal/InviteByEmailsModal';
 import MemberRoles from '../../constrain/course';
 
-function People() {
-  // const [listStudent, setListStudent] = React.useState([]);
-  // const [listLecturer, setListLecturer] = React.useState([]);
+function People({ classroom }) {
+  const [listStudent, setListStudent] = React.useState([]);
+  const [listLecturer, setListLecturer] = React.useState([]);
   const [openLecturerModal, setOpenLecturerModal] = React.useState(false);
   const [openStudentModal, setOpenStudentModal] = React.useState(false);
+
+  const { id } = useParams();
+
+  React.useEffect(() => {
+    const fetchCourse = async (courseId) => {
+      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/students`);
+      setListStudent(res.data);
+    };
+
+    fetchCourse(id);
+  }, []);
+
+  React.useEffect(() => {
+    const fetchCourse = async (courseId) => {
+      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/lecturers`);
+      setListLecturer(res.data);
+    };
+
+    fetchCourse(id);
+  }, []);
 
   const handleCloseLecturerModal = () => setOpenLecturerModal(false);
   const handleCloseStudentModal = () => setOpenStudentModal(false);
   const handleOpenLecturerModal = () => setOpenLecturerModal(true);
   const handleOpenStudentModal = () => setOpenStudentModal(true);
-  const isLecturer = true;
+  const isLecturer = ((classroom.role === MemberRoles.LECTURER)
+    || (classroom.role === MemberRoles.OWNER));
   return (
     <div className="People">
       <div className="container">
@@ -39,8 +62,9 @@ function People() {
           </div>
 
           <div className="listPeople">
-            <PeopleItem isLecturer={isLecturer} />
-            <PeopleItem isLecturer={isLecturer} />
+            {listLecturer.map((lecturer) => (
+              <PeopleItem people={lecturer} role={classroom.role} />
+            ))}
           </div>
         </div>
         <div className="students">
@@ -59,10 +83,9 @@ function People() {
             )}
           </div>
           <div className="listPeople">
-            <PeopleItem isLecturer={isLecturer} />
-            <PeopleItem isLecturer={isLecturer} />
-            <PeopleItem isLecturer={isLecturer} />
-            <PeopleItem isLecturer={isLecturer} />
+            {listStudent.map((student) => (
+              <PeopleItem people={student} role={classroom.role} />
+            ))}
           </div>
         </div>
       </div>
@@ -70,13 +93,16 @@ function People() {
         open={openLecturerModal}
         handleClose={handleCloseLecturerModal}
       >
-        <InviteByEmailsModal handleClose={handleCloseLecturerModal} role={MemberRoles.LECTURER} />
+        <InviteByEmailsModal
+          handleClose={handleCloseLecturerModal}
+          role={MemberRoles.LECTURER}
+        />
       </BasicModal>
-      <BasicModal
-        open={openStudentModal}
-        handleClose={handleCloseStudentModal}
-      >
-        <InviteByEmailsModal handleClose={handleCloseStudentModal} role={MemberRoles.STUDENT} />
+      <BasicModal open={openStudentModal} handleClose={handleCloseStudentModal}>
+        <InviteByEmailsModal
+          handleClose={handleCloseStudentModal}
+          role={MemberRoles.STUDENT}
+        />
       </BasicModal>
     </div>
   );

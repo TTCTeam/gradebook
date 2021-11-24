@@ -6,10 +6,13 @@ import { deepOrange } from '@mui/material/colors';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import './PeopleItem.css';
+import MemberRoles from '../../constrain/course';
 
-export default function PeopleItem({ isLecturer }) {
+export default function PeopleItem({ people, role }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const isLecturer = role === MemberRoles.LECTURER || role === MemberRoles.OWNER;
+  console.log(isLecturer);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -21,7 +24,7 @@ export default function PeopleItem({ isLecturer }) {
       <div className="PeopleItem">
         <div className="left">
           <Avatar sx={{ bgcolor: deepOrange[500] }}>M</Avatar>
-          <div className="name">Ha Minh Cuong</div>
+          <div className="name">{`${people.firstname} ${people.lastname}`}</div>
         </div>
         <div className="right">
           {isLecturer && (

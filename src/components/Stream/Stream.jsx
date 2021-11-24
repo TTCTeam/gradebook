@@ -7,6 +7,7 @@ import Post from '../Post/Post';
 import './Stream.css';
 import BasicModal from '../layouts/BasicModal';
 import InviteLinkModal from '../InviteLinkModal/InviteLinkModal';
+import MemberRoles from '../../constrain/course';
 
 const data = [
   {
@@ -25,9 +26,12 @@ const data = [
   },
 ];
 
-function Stream({ course }) {
+function Stream({ classroom }) {
   const [listPost, setListPost] = React.useState(data);
   const [openModal, setOpenModal] = React.useState(false);
+
+  const { course, role } = classroom;
+  console.log('role: ', role);
 
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => setOpenModal(true);
@@ -49,18 +53,21 @@ function Stream({ course }) {
           alt="coverPhoto"
           src="https://www.gstatic.com/classroom/themes/img_backtoschool.jpg"
         />
-        <div className="courseName">{course.name}</div>
-        <div className="courseDesc">{course.description}</div>
+        <div className="courseName">{course?.name}</div>
+        <div className="courseDesc">{course?.description}</div>
       </div>
       <div className="contentContainer">
         <div className="left">
-          <Button
-            className="classCode"
-            variant="contained"
-            onClick={handleOpenModal}
-          >
-            Create invite link
-          </Button>
+          {(role === MemberRoles.OWNER || role === MemberRoles.LECTURER) && (
+            <Button
+              className="classCode"
+              variant="contained"
+              onClick={handleOpenModal}
+            >
+              Create invite link
+            </Button>
+          )}
+
           <Card className="Upcoming">
             <Typography variant="h6" color="Black">
               Upcoming

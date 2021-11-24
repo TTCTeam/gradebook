@@ -44,8 +44,8 @@ export default function CourseDetailPage() {
       </Box>
 
       <div className="subPage">
-        {value === 'people' && <People course={course} />}
-        {value === 'stream' && <Stream course={course} />}
+        {value === 'people' && <People classroom={course} />}
+        {value === 'stream' && <Stream classroom={course} />}
       </div>
     </div>
   );
