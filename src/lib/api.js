@@ -3,7 +3,14 @@ require('dotenv').config();
 export async function getAllCourse() {
   const url = `${process.env.REACT_APP_BASE_URL}/courses`;
 
-  const response = await fetch(url);
+  const token = localStorage.getItem('token');
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  });
   const data = await response.json();
 
   if (!response.ok) {
