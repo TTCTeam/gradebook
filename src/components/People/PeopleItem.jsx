@@ -23,7 +23,7 @@ export default function PeopleItem({ people, role }) {
     <div>
       <div className="PeopleItem">
         <div className="left">
-          <Avatar sx={{ bgcolor: deepOrange[500] }}>M</Avatar>
+          <Avatar sx={{ bgcolor: deepOrange[500] }} />
           <div className="name">{`${people.firstname} ${people.lastname}`}</div>
         </div>
         <div className="right">

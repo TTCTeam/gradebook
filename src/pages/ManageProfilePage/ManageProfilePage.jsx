@@ -7,7 +7,7 @@ import styles from './ManageProfilePage.module.css';
 const profile = {
   name: 'Ha Minh Cuong',
   username: 'haminhcuong2k',
-  avt: 'https://i.ytimg.com/vi/1dv2vmwQz9g/maxresdefault.jpg',
+  avt: '',
   studentID: '18120297',
   gmail: 'cuongha2k@gmail.com',
 };
