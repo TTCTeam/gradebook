@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   Switch, Route, Redirect, useHistory,
 } from 'react-router-dom';
-import './App.css';
-import SignIn from './components/auth/SigIn';
-import SignUp from './components/auth/SignUp';
+import { useDispatch, useSelector } from 'react-redux';
 import CourseForm from './components/courses/CourseForm';
 import MainNavigation from './components/layouts/MainNavigation';
 import AllCourses from './pages/AllCourses';
-
-import { checkAutoLogin } from './store/auth-services';
-
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
 import CourseDetailPage from './pages/CourseDetailPage/CourseDetailPage';
 import ManageProfilePage from './pages/ManageProfilePage/ManageProfilePage';
+
 import Message from './components/UI/Message';
+import { checkAutoLogin } from './store/auth-services';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -22,7 +20,7 @@ function App() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  let logoutTimer;
+  // let logoutTimer;
 
   useEffect(() => {
     checkAutoLogin(dispatch, history);
@@ -43,7 +41,7 @@ function App() {
   );
 
   const routerWithSignIn = (
-    <MainNavigation logoutTimer={logoutTimer}>
+    <MainNavigation>
       <Switch>
         <Route path="/" exact>
           <Redirect to="/courses" />

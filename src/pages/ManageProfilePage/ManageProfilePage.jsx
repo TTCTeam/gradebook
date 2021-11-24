@@ -7,7 +7,7 @@ import styles from './ManageProfilePage.module.css';
 const profile = {
   name: 'Ha Minh Cuong',
   username: 'haminhcuong2k',
-  avt: 'https://i.ytimg.com/vi/1dv2vmwQz9g/maxresdefault.jpg',
+  avt: '',
   studentID: '18120297',
   gmail: 'cuongha2k@gmail.com',
 };
@@ -54,7 +54,7 @@ export default function ManageProfilePage() {
             hiddenLabel
             defaultValue={name}
             variant="outlined"
-            disabled={!isEdit}
+            disabled
             size="small"
             sx={{ width: 700, height: 40 }}
             onChange={(e) => setName(e.target.value)}
@@ -66,7 +66,7 @@ export default function ManageProfilePage() {
             hiddenLabel
             defaultValue={username}
             variant="outlined"
-            disabled={!isEdit}
+            disabled
             size="small"
             sx={{ width: 700, height: 40 }}
             onChange={(e) => setUsername(e.target.value)}

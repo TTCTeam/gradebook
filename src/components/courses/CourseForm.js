@@ -14,29 +14,27 @@ import { addCourse } from '../../lib/api';
 
 const CourseForm = ({ onAddedCourse }) => {
   const {
-    value: namecourse,
+    value: name,
     valueIsValid: nameIsValid,
-    valueHasError: namelHasError,
+    valueHasError: nameHasError,
     onBlurHandler: nameOnBlurHandler,
     onChangeHandler: nameOnChangeHandler,
-
   } = useInput(nameValidate);
 
   const {
-    value: teacher,
-    valueIsValid: teacherIsValid,
-    valueHasError: teacherlHasError,
-    onBlurHandler: teacherOnBlurHandler,
-    onChangeHandler: teacherOnChangeHandler,
-
+    value: lecturer,
+    valueIsValid: lecturerIsValid,
+    valueHasError: lecturerHasError,
+    onBlurHandler: lecturerOnBlurHandler,
+    onChangeHandler: lecturerOnChangeHandler,
   } = useInput(nameValidate);
 
   const {
-    value: descourse,
-    valueIsValid: desIsValid,
-    valueHasError: deslHasError,
-    onBlurHandler: desOnBlurHandler,
-    onChangeHandler: desOnChangeHandler,
+    value: description,
+    valueIsValid: descriptionIsValid,
+    valueHasError: descriptionHasError,
+    onBlurHandler: descriptionOnBlurHandler,
+    onChangeHandler: descriptionOnChangeHandler,
   } = useInput(nameValidate);
 
   const { status, error, sendRequest } = useHttp(addCourse);
@@ -47,7 +45,7 @@ const CourseForm = ({ onAddedCourse }) => {
     }
   }, [status, error, onAddedCourse]);
 
-  const formIsValid = nameIsValid && teacherIsValid && desIsValid;
+  const formIsValid = nameIsValid && lecturerIsValid && descriptionIsValid;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -55,7 +53,7 @@ const CourseForm = ({ onAddedCourse }) => {
       return;
     }
 
-    sendRequest({ coursename: namecourse, teacher, coursedes: descourse });
+    sendRequest({ name, lecturer, description });
   };
   const formContent = (
     <Box
@@ -70,33 +68,38 @@ const CourseForm = ({ onAddedCourse }) => {
         label="Name"
         color="primary"
         type="name"
-        error={namelHasError}
+        error={nameHasError}
         onBlur={nameOnBlurHandler}
         onChange={nameOnChangeHandler}
-        value={namecourse}
-        helperText={namelHasError ? 'Name must be not empty.' : ''}
+        value={name}
+        helperText={nameHasError ? 'Name must be not empty.' : ''}
       />
       <TextField
-        label="Teacher"
+        label="Owner"
         color="primary"
         type="teacher"
-        error={teacherlHasError}
-        onBlur={teacherOnBlurHandler}
-        onChange={teacherOnChangeHandler}
-        value={teacher}
-        helperText={teacherlHasError ? 'Teacher must be not empty.' : ''}
+        error={lecturerHasError}
+        onBlur={lecturerOnBlurHandler}
+        onChange={lecturerOnChangeHandler}
+        value={lecturer}
+        helperText={lecturerHasError ? 'Owner must be not empty.' : ''}
       />
       <TextField
         label="Description"
         color="primary"
         type="description"
-        error={deslHasError}
-        onBlur={desOnBlurHandler}
-        onChange={desOnChangeHandler}
-        value={descourse}
-        helperText={deslHasError ? 'Description must be not empty.' : ''}
+        error={descriptionHasError}
+        onBlur={descriptionOnBlurHandler}
+        onChange={descriptionOnChangeHandler}
+        value={description}
+        helperText={descriptionHasError ? 'Description must be not empty.' : ''}
       />
-      <Button disabled={!formIsValid} onClick={onSubmitHandler} variant="contained" sx={{ maxWidth: 80 }}>
+      <Button
+        disabled={!formIsValid}
+        onClick={onSubmitHandler}
+        variant="contained"
+        sx={{ maxWidth: 80 }}
+      >
         Create
       </Button>
     </Box>
@@ -109,7 +112,11 @@ const CourseForm = ({ onAddedCourse }) => {
           NEW COURSE
         </Typography>
       </CardContent>
-      {status === 'pending' ? <CircularProgress color="primary" /> : formContent}
+      {status === 'pending' ? (
+        <CircularProgress color="primary" />
+      ) : (
+        formContent
+      )}
     </>
   );
 };

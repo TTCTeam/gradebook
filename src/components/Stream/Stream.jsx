@@ -1,9 +1,13 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import CreatePost from '../CreatePost/CreatePost';
 import Post from '../Post/Post';
 import './Stream.css';
+import BasicModal from '../layouts/BasicModal';
+import InviteLinkModal from '../InviteLinkModal/InviteLinkModal';
+import MemberRoles from '../../constrain/course';
 
 const data = [
   {
@@ -22,8 +26,15 @@ const data = [
   },
 ];
 
-function Stream({ id }) {
+function Stream({ classroom }) {
   const [listPost, setListPost] = React.useState(data);
+  const [openModal, setOpenModal] = React.useState(false);
+
+  const { course, role } = classroom;
+  console.log('role: ', role);
+
+  const handleCloseModal = () => setOpenModal(false);
+  const handleOpenModal = () => setOpenModal(true);
 
   React.useEffect(() => {
     console.log('render');
@@ -42,19 +53,21 @@ function Stream({ id }) {
           alt="coverPhoto"
           src="https://www.gstatic.com/classroom/themes/img_backtoschool.jpg"
         />
-        <div className="courseName">PTUDWNC - 18_3</div>
-        <div className="courseDesc">PTUDWNC</div>
+        <div className="courseName">{course?.name}</div>
+        <div className="courseDesc">{course?.description}</div>
       </div>
       <div className="contentContainer">
         <div className="left">
-          <Card className="classCode">
-            <Typography variant="h6" color="black">
-              Class code
-            </Typography>
-            <Typography className="code" variant="h5" color="#1976d2">
-              {id}
-            </Typography>
-          </Card>
+          {(role === MemberRoles.OWNER || role === MemberRoles.LECTURER) && (
+            <Button
+              className="classCode"
+              variant="contained"
+              onClick={handleOpenModal}
+            >
+              Create invite link
+            </Button>
+          )}
+
           <Card className="Upcoming">
             <Typography variant="h6" color="Black">
               Upcoming
@@ -71,6 +84,9 @@ function Stream({ id }) {
           ))}
         </div>
       </div>
+      <BasicModal open={openModal} handleClose={handleCloseModal}>
+        <InviteLinkModal />
+      </BasicModal>
     </div>
   );
 }
