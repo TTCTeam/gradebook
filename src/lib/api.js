@@ -2,7 +2,7 @@ import axios from 'axios';
 
 require('dotenv').config();
 
-const token = localStorage.getItem('token');
+export const token = localStorage.getItem('token');
 
 export const baseAxios = axios.create({
   headers: {
