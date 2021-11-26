@@ -14,11 +14,13 @@ export const baseAxios = axios.create({
 export async function getAllCourse() {
   const url = `${process.env.REACT_APP_BASE_URL}/courses`;
   console.log(token);
+  const tokenNew = token || localStorage.getItem('token');
+
   const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': token,
+      'x-access-token': tokenNew,
     },
   });
   const data = await response.json();

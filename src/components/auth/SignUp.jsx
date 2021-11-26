@@ -288,7 +288,7 @@ const SignUp = () => {
                   }}
                 >
                   <Grid item>
-                    <GoogleSign username={studentID} />
+                    <GoogleSign />
                   </Grid>
                 </Grid>
               </Grid>

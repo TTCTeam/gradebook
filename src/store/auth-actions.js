@@ -52,12 +52,10 @@ export function signIn(credentials, history) {
       localStorage.setItem('token', data.token);
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
-      setTimeout(() => {
-        runLogoutTimer(dispatch, 5000, history);
-        dispatch(loginConfirmAction(data.token));
-        dispatch(success());
-        history.replace('/');
-      }, 1000);
+      runLogoutTimer(dispatch, 5000, history);
+      dispatch(loginConfirmAction(data.token));
+      dispatch(success());
+      history.replace('/');
     } else {
       dispatch(success());
     }
@@ -87,26 +85,21 @@ export function signUp(credentials, history) {
     console.log(data);
 
     if (status === 200) {
-      history.replace('/');
-    }
-    if (status === 400) {
-      dispatch(showModal(data.message));
-    }
-    dispatch(success());
+      const expirationTime = new Date(
+        new Date().getTime() + +data.expiresIn * 1000,
+      );
 
-    /* const data = { token: 'SSDFGHJU6TRDSAQWSDFVBGYUJHBGF', expiresIn: '6000' };
-    const expirationTime = new Date(
-      new Date().getTime() + +data.expiresIn * 1000,
-    );
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('expirationTime', expirationTime.toISOString());
 
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('expirationTime', expirationTime.toISOString());
-    setTimeout(() => {
       runLogoutTimer(dispatch, 5000, history);
       dispatch(loginConfirmAction(data.token));
       dispatch(success());
       history.replace('/');
-    }, 1000); */
+    } else {
+      dispatch(showModal(data.message));
+    }
+    dispatch(success());
   };
 }
 

@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import useInput from '../../hooks/use-input';
-import { emailValidate, passwordValidate } from '../../utils/inputValidate';
+import { nameValidate, passwordValidate } from '../../utils/inputValidate';
 import { signIn } from '../../store/auth-actions';
 import GoogleSignin from './GoogleSignin';
 
@@ -27,7 +27,7 @@ const SignIn = () => {
     valueHasError: emailHasError,
     onBlurHandler: emailOnBlurHandler,
     onChangeHandler: emailOnChangeHandler,
-  } = useInput(emailValidate);
+  } = useInput(nameValidate);
 
   const {
     value: password,
@@ -102,7 +102,7 @@ const SignIn = () => {
               onChange={emailOnChangeHandler}
               value={email}
               helperText={
-                emailHasError ? 'Email must not be empty and include \'@\'' : ''
+                emailHasError ? 'Username must not be empty and include \'@\' if it is email and is a number if it is your studentID' : ''
               }
             />
             <TextField
@@ -182,7 +182,7 @@ const SignIn = () => {
                 }}
               >
 
-                <GoogleSignin isSignIn />
+                <GoogleSignin />
               </Grid>
             </Grid>
           </Box>

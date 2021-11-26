@@ -2,36 +2,21 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signInByGoogle, signUp } from '../../store/auth-actions';
-import { showModal } from '../../store/modal-action';
+import { signInByGoogle } from '../../store/auth-actions';
 
 require('dotenv').config();
 
 const clientId = '657202594687-9bi5bovau03kobm94cnhbhgcnsf1cpjb.apps.googleusercontent.com';
 
-export default function GoogleSign({ isSignIn, username }) {
+export default function GoogleSign() {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const onLoginSuccess = (res) => {
     const idToken = res.tokenId;
     console.log(res);
-    if (isSignIn) {
-      dispatch(signInByGoogle(idToken, history));
-    }
-    if (username) {
-      const user = {
-        firstname: res.profileObj.givenName,
-        lastname: res.profileObj.familyName,
-        email: res.profileObj.email,
-        password: null,
-        username,
-      };
 
-      dispatch(signUp(user, history));
-    } else if (!isSignIn) {
-      dispatch(showModal('Please enter StudentID before.'));
-    }
+    dispatch(signInByGoogle(idToken, history));
   };
 
   const onLoginFailure = (res) => {
