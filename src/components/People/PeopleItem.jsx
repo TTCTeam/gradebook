@@ -12,7 +12,6 @@ export default function PeopleItem({ people, role }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const isLecturer = role === MemberRoles.LECTURER || role === MemberRoles.OWNER;
-  console.log(isLecturer);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

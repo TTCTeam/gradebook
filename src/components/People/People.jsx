@@ -1,6 +1,5 @@
 import React from 'react';
 import './People.css';
-import { useParams } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import Tooltip from '@mui/material/Tooltip';
@@ -8,40 +7,17 @@ import PeopleItem from './PeopleItem';
 import BasicModal from '../layouts/BasicModal';
 import InviteByEmailsModal from '../InviteByEmailsModal/InviteByEmailsModal';
 import MemberRoles from '../../constrain/course';
-import { baseAxios } from '../../lib/api';
 
-function People({ classroom }) {
-  const [listStudent, setListStudent] = React.useState([]);
-  const [listLecturer, setListLecturer] = React.useState([]);
+function People({ classroom, listLecturer, listStudent }) {
   const [openLecturerModal, setOpenLecturerModal] = React.useState(false);
   const [openStudentModal, setOpenStudentModal] = React.useState(false);
-
-  const { id } = useParams();
-
-  React.useEffect(() => {
-    const fetchCourse = async (courseId) => {
-      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/students`);
-      setListStudent(res.data);
-    };
-
-    fetchCourse(id);
-  }, []);
-
-  React.useEffect(() => {
-    const fetchCourse = async (courseId) => {
-      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/lecturers`);
-      setListLecturer(res.data);
-    };
-
-    fetchCourse(id);
-  }, []);
 
   const handleCloseLecturerModal = () => setOpenLecturerModal(false);
   const handleCloseStudentModal = () => setOpenStudentModal(false);
   const handleOpenLecturerModal = () => setOpenLecturerModal(true);
   const handleOpenStudentModal = () => setOpenStudentModal(true);
-  const isLecturer = ((classroom.role === MemberRoles.LECTURER)
-    || (classroom.role === MemberRoles.OWNER));
+  const isLecturer = classroom.role === MemberRoles.LECTURER
+    || classroom.role === MemberRoles.OWNER;
   return (
     <div className="People">
       <div className="container">
@@ -63,7 +39,7 @@ function People({ classroom }) {
 
           <div className="listPeople">
             {listLecturer.map((lecturer) => (
-              <PeopleItem people={lecturer} role={classroom.role} />
+              <PeopleItem key={lecturer} people={lecturer} role={classroom.role} />
             ))}
           </div>
         </div>
@@ -84,7 +60,7 @@ function People({ classroom }) {
           </div>
           <div className="listPeople">
             {listStudent.map((student) => (
-              <PeopleItem people={student} role={classroom.role} />
+              <PeopleItem key={student} people={student} role={classroom.role} />
             ))}
           </div>
         </div>
