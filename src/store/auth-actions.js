@@ -1,5 +1,5 @@
 // import { checkExistCredential } from '../lib/api';
-import { pending, success } from './ui-actions';
+import { pending, showError, success } from './ui-actions';
 // eslint-disable-next-line import/no-cycle
 import { runLogoutTimer } from './auth-services';
 import { showModal } from './modal-action';
@@ -42,9 +42,9 @@ export function signIn(credentials, history) {
     });
 
     console.log(response);
-    const data = await response.json();
 
-    if (response.status === 200) {
+    if (response.ok) {
+      const data = await response.json();
       const expirationTime = new Date(
         new Date().getTime() + +data.expiresIn * 1000,
       );
@@ -57,7 +57,8 @@ export function signIn(credentials, history) {
       dispatch(success());
       history.replace('/');
     } else {
-      dispatch(success());
+      console.log('ạkfbklhfdbsd');
+      dispatch(showError('Your account has not been registered!'));
     }
   };
 }

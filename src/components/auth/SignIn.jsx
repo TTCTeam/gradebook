@@ -8,6 +8,7 @@ import {
   Typography,
   Divider,
   CircularProgress,
+  FormHelperText,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import useInput from '../../hooks/use-input';
@@ -122,6 +123,7 @@ const SignIn = () => {
                 passwordHasError ? 'Pass must has more than 8 characters.' : ''
               }
             />
+            <FormHelperText error={ui.request === 'error'}>{ui.message}</FormHelperText>
             <Grid
               sx={{
                 display: 'flex',

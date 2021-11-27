@@ -1,6 +1,6 @@
 import { PENDING_ACTION, SUCCESS_ACTION } from './ui-actions';
 
-const initialState = { request: null };
+const initialState = { request: null, message: null };
 
 const uiReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -21,6 +21,7 @@ const uiReducer = (state = initialState, action) => {
     return {
       ...state,
       request: 'error',
+      message: action.message,
     };
   default:
     return { ...state };
