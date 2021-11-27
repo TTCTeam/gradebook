@@ -12,8 +12,9 @@ import { baseAxios } from '../../lib/api';
 export default function CourseDetailPage() {
   const [course, setCourse] = useState({});
   const [value, setValue] = useState('stream');
+  const [listStudent, setListStudent] = useState([]);
+  const [listLecturer, setListLecturer] = useState([]);
   const { id } = useParams();
-  console.log(id);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -22,18 +23,32 @@ export default function CourseDetailPage() {
     const fetchCourse = async (courseId) => {
       const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}`);
       setCourse(res.data);
-      console.log(res.data);
     };
 
     fetchCourse(id);
   }, []);
 
+  useEffect(() => {
+    const fetchStudents = async (courseId) => {
+      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/students`);
+      setListStudent(res.data);
+    };
+
+    fetchStudents(id);
+  }, []);
+
+  useEffect(() => {
+    const fetchLecturers = async (courseId) => {
+      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/lecturers`);
+      setListLecturer(res.data);
+    };
+
+    fetchLecturers(id);
+  }, []);
+
   return (
     <div className="CourseDetailPage">
-      <Box
-        className="CourseDetailPageTop"
-        sx={{ borderBottom: 1, borderColor: 'divider' }}
-      >
+      <Box className="CourseDetailPageTop" sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <TabContext className="tabContext" value={value}>
           <TabList className="tabList" onChange={handleChange}>
             <Tab className="tab" label="Stream" value="stream" />
@@ -44,7 +59,7 @@ export default function CourseDetailPage() {
       </Box>
 
       <div className="subPage">
-        {value === 'people' && <People classroom={course} />}
+        {value === 'people' && <People classroom={course} listStudent={listStudent} listLecturer={listLecturer} />}
         {value === 'stream' && <Stream classroom={course} />}
       </div>
     </div>

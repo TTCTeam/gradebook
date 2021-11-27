@@ -68,7 +68,7 @@ const SignIn = () => {
           />
         </Grid>
         <Grid
-          container
+          item
           xs={12}
           sm={6}
           style={{ padding: '2rem' }}
