@@ -7,13 +7,13 @@ let logoutTimer;
 export function runLogoutTimer(dispatch, timer, history) {
   logoutTimer = setTimeout(() => {
     dispatch(signOut(history));
-  }, timer * 1000);
+  }, timer);
 }
 export function checkAutoLogin(dispatch, history) {
   const tokenData = retrieveStoredToken();
   if (tokenData) {
     dispatch(loginConfirmAction(tokenData.token));
-    runLogoutTimer(dispatch, 5000, history);
+    runLogoutTimer(dispatch, tokenData.duration, history);
     history.replace('/');
   }
 }

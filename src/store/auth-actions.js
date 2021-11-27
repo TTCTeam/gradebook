@@ -52,7 +52,7 @@ export function signIn(credentials, history) {
       localStorage.setItem('token', data.token);
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
-      runLogoutTimer(dispatch, 5000, history);
+      runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
       dispatch(loginConfirmAction(data.token));
       dispatch(success());
       history.replace('/');
@@ -93,7 +93,7 @@ export function signUp(credentials, history) {
       localStorage.setItem('token', data.token);
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
-      runLogoutTimer(dispatch, 5000, history);
+      runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
       dispatch(loginConfirmAction(data.token));
       dispatch(success());
       history.replace('/');
@@ -135,12 +135,10 @@ export function signInByGoogle(idToken, history) {
       localStorage.setItem('token', data.token);
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
-      setTimeout(() => {
-        runLogoutTimer(dispatch, 5000, history);
-        dispatch(loginConfirmAction(data));
-        dispatch(success());
-        history.replace('/');
-      }, 1000);
+      runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
+      dispatch(loginConfirmAction(data));
+      dispatch(success());
+      history.replace('/');
     }
   };
 }

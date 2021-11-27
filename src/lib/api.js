@@ -14,7 +14,7 @@ export const baseAxios = axios.create({
 export async function getAllCourse() {
   const url = `${process.env.REACT_APP_BASE_URL}/courses`;
   console.log(token);
-  const tokenNew = token || localStorage.getItem('token');
+  const tokenNew = localStorage.getItem('token');
 
   const response = await fetch(url, {
     method: 'GET',
@@ -34,12 +34,13 @@ export async function getAllCourse() {
 
 export async function addCourse(newCourse) {
   const url = `${process.env.REACT_APP_BASE_URL}/courses`;
+  const tokenNew = localStorage.getItem('token');
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify(newCourse),
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': token,
+      'x-access-token': tokenNew,
     },
   });
   const data = await response.json();
