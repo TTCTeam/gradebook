@@ -7,7 +7,7 @@ import Post from '../Post/Post';
 import './Stream.css';
 import BasicModal from '../layouts/BasicModal';
 import InviteLinkModal from '../InviteLinkModal/InviteLinkModal';
-import MemberRoles from '../../constrain/course';
+import MemberRoles from '../../constant/course';
 
 const data = [
   {
