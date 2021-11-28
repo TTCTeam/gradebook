@@ -36,9 +36,9 @@ function App() {
       <Route path="/signup">
         <SignUp />
       </Route>
-      {/* <Route path="*">
+      <Route path="*">
         <Redirect to="/signin" />
-      </Route> */}
+      </Route>
     </>
   );
 
