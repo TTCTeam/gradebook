@@ -6,7 +6,7 @@ import { deepOrange } from '@mui/material/colors';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import './PeopleItem.css';
-import MemberRoles from '../../constrain/course';
+import MemberRoles from '../../constant/course';
 
 export default function PeopleItem({ people, role }) {
   const [anchorEl, setAnchorEl] = React.useState(null);

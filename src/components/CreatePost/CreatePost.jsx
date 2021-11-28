@@ -5,7 +5,7 @@ import React from 'react';
 import { red } from '@mui/material/colors';
 import './CreatePost.css';
 
-export default function CreatePost({ createPostClick }) {
+export default function CreatePost() {
   const [open, setOpen] = React.useState(false);
   const [disable, setDisable] = React.useState(true);
   const [content, setContent] = React.useState('');
@@ -23,7 +23,8 @@ export default function CreatePost({ createPostClick }) {
       content,
     };
 
-    createPostClick(newPost);
+    console.log(newPost);
+
     setOpen(false);
     setDisable(true);
     setContent('');

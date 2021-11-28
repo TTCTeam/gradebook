@@ -6,7 +6,7 @@ import Tooltip from '@mui/material/Tooltip';
 import PeopleItem from './PeopleItem';
 import BasicModal from '../layouts/BasicModal';
 import InviteByEmailsModal from '../InviteByEmailsModal/InviteByEmailsModal';
-import MemberRoles from '../../constrain/course';
+import MemberRoles from '../../constant/course';
 
 function People({ classroom, listLecturer, listStudent }) {
   const [openLecturerModal, setOpenLecturerModal] = React.useState(false);

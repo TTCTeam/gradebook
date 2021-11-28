@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import './CourseDetailPage.css';
 import Stream from '../../components/Stream/Stream';
 import People from '../../components/People/People';
-import { baseAxios } from '../../lib/api';
+import { getCourse, getLecturers, getStudents } from '../../api/courseAPI';
 
 export default function CourseDetailPage() {
   const [course, setCourse] = useState({});
@@ -21,8 +21,8 @@ export default function CourseDetailPage() {
 
   useEffect(() => {
     const fetchCourse = async (courseId) => {
-      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}`);
-      setCourse(res.data);
+      const res = await getCourse(courseId);
+      setCourse(res);
     };
 
     fetchCourse(id);
@@ -30,25 +30,26 @@ export default function CourseDetailPage() {
 
   useEffect(() => {
     const fetchStudents = async (courseId) => {
-      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/students`);
-      setListStudent(res.data);
+      const res = await getStudents(courseId);
+      setListStudent(res);
     };
-
     fetchStudents(id);
   }, []);
 
   useEffect(() => {
     const fetchLecturers = async (courseId) => {
-      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/lecturers`);
-      setListLecturer(res.data);
+      const res = await getLecturers(courseId);
+      setListLecturer(res);
     };
-
     fetchLecturers(id);
   }, []);
 
   return (
     <div className="CourseDetailPage">
-      <Box className="CourseDetailPageTop" sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box
+        className="CourseDetailPageTop"
+        sx={{ borderBottom: 1, borderColor: 'divider' }}
+      >
         <TabContext className="tabContext" value={value}>
           <TabList className="tabList" onChange={handleChange}>
             <Tab className="tab" label="Stream" value="stream" />
@@ -59,7 +60,13 @@ export default function CourseDetailPage() {
       </Box>
 
       <div className="subPage">
-        {value === 'people' && <People classroom={course} listStudent={listStudent} listLecturer={listLecturer} />}
+        {value === 'people' && (
+          <People
+            classroom={course}
+            listStudent={listStudent}
+            listLecturer={listLecturer}
+          />
+        )}
         {value === 'stream' && <Stream classroom={course} />}
       </div>
     </div>

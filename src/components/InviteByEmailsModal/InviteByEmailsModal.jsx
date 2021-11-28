@@ -4,7 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import './InviteLecturersModal.css';
 import { useParams } from 'react-router-dom';
-import MemberRoles from '../../constrain/course';
+import MemberRoles from '../../constant/course';
 import { baseAxios } from '../../lib/api';
 
 function validateEmail(email) {
