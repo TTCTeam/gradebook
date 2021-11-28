@@ -1,49 +1,39 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
+import { Link, useRouteMatch } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CreatePost from '../CreatePost/CreatePost';
-import Post from '../Post/Post';
 import './Stream.css';
 import BasicModal from '../layouts/BasicModal';
 import InviteLinkModal from '../InviteLinkModal/InviteLinkModal';
 import MemberRoles from '../../constant/course';
 
-const data = [
-  {
-    id: 1,
-    author: 'Ha Minh Cuong',
-    date: 'September 14, 2015',
-    content:
-      'This impressive paella is a perfect party dish and a fun meal to cook together',
-  },
-  {
-    id: 2,
-    author: 'Ha Minh Cuong',
-    date: 'September 14, 2015',
-    content:
-      'This impressive paella is a perfect party dish and a fun meal to cook together',
-  },
-];
-
 function Stream({ classroom }) {
-  const [listPost, setListPost] = React.useState(data);
+  const init = [
+    {
+      id: '1',
+      title: 'title1',
+      detail: 'Item 1',
+    },
+    {
+      id: '2',
+      title: 'title2',
+      detail: 'Item 2',
+    },
+    {
+      id: '3',
+      title: 'title3',
+      detail: 'Item 3',
+    },
+  ];
   const [openModal, setOpenModal] = React.useState(false);
+  const items = init;
+  const { url } = useRouteMatch();
 
   const { course, role } = classroom;
-  console.log('role: ', role);
 
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => setOpenModal(true);
-
-  React.useEffect(() => {
-    console.log('render');
-  }, [listPost]);
-
-  const createPostClick = (post) => {
-    console.log(post);
-    setListPost([...listPost, post]);
-  };
 
   return (
     <div className="Stream">
@@ -67,21 +57,24 @@ function Stream({ classroom }) {
               Create invite link
             </Button>
           )}
-
-          <Card className="Upcoming">
-            <Typography variant="h6" color="Black">
-              Upcoming
-            </Typography>
-            <Typography variant="body2" color="rgba(0,0,0,0.549)">
-              No work due soon
-            </Typography>
-          </Card>
+          <Link to={`${url}/grade/edit`}>
+            <Card className="Upcoming">
+              <h4>Grade Structure</h4>
+              <div className="listStructure">
+                {items.map((item) => (
+                  <div className="item" key={item.id}>
+                    <p>
+                      {`${item.title}: `}
+                      <span>{item.detail}</span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </Link>
         </div>
         <div className="right">
-          <CreatePost createPostClick={createPostClick} />
-          {listPost.reverse().map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
+          <CreatePost />
         </div>
       </div>
       <BasicModal open={openModal} handleClose={handleCloseModal}>
