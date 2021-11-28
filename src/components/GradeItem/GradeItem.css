@@ -1,0 +1,61 @@
+.GradeItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.GradeItem .left {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.GradeItem .right {
+  width: 30px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.GradeItem .right .listBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.GradeItem .right .listBtn .saveBtn {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: green;
+  width: 100%;
+}
+
+.GradeItem .right .listBtn .editBtn {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: blue;
+  width: 100%;
+}
+
+.GradeItem .right .listBtn .removeBtn {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: red;
+  width: 100%;
+}
