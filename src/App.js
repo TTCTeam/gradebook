@@ -25,20 +25,21 @@ function App() {
 
   useEffect(() => {
     checkAutoLogin(dispatch, history);
+    console.log('Initite...');
   }, []);
 
   const routeWithoutSignIn = (
-    <Switch>
+    <>
       <Route path="/signin">
         <SignIn />
       </Route>
       <Route path="/signup">
         <SignUp />
       </Route>
-      <Route path="*">
+      {/* <Route path="*">
         <Redirect to="/signin" />
-      </Route>
-    </Switch>
+      </Route> */}
+    </>
   );
 
   const routerWithSignIn = (
@@ -69,7 +70,9 @@ function App() {
   const routeContent = auth.token !== null ? routerWithSignIn : routeWithoutSignIn;
   return (
     <>
-      {routeContent}
+      <Switch>
+        {routeContent}
+      </Switch>
       {modal.isShown && <Message message={modal.message} />}
     </>
   );
