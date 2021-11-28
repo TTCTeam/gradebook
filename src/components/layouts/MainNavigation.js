@@ -206,9 +206,11 @@ const MainNavigation = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            GRADE BOOK
-          </Typography>
+          <Link to="/courses" style={{ color: 'white' }}>
+            <Typography variant="h6" noWrap component="div">
+              GRADE BOOK
+            </Typography>
+          </Link>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <Search>

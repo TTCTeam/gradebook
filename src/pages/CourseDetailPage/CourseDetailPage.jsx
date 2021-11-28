@@ -53,7 +53,6 @@ export default function CourseDetailPage() {
         <TabContext className="tabContext" value={value}>
           <TabList className="tabList" onChange={handleChange}>
             <Tab className="tab" label="Stream" value="stream" />
-            <Tab className="tab" label="Grade" value="grade" />
             <Tab className="tab" label="People" value="people" />
           </TabList>
         </TabContext>
