@@ -8,7 +8,7 @@ import CourseForm from './CourseForm';
 
 const fabStyle = {
   position: 'absolute',
-  top: 75,
+  top: '85vh',
   right: 20,
 };
 
