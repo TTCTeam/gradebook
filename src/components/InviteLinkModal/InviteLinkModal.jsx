@@ -3,32 +3,36 @@ import moment from 'moment';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Tooltip from '@mui/material/Tooltip';
-import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useParams } from 'react-router-dom';
 import './InviteLinkModal.css';
-import { baseAxios } from '../../lib/api';
+import { getInvitation } from '../../api/courseAPI';
 
 export default function InviteLinkModal() {
   const [open, setOpen] = React.useState(false);
-  const [invitation, setInvitation] = React.useState({});
+  const [invitation, setInvitation] = React.useState({
+    invitationLink: '',
+    expirationDate: '',
+  });
   const [progress, setProgress] = React.useState(true);
   const { id } = useParams();
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      setProgress(false);
-    }, 1500);
-  }, [progress]);
-
   useEffect(() => {
     const fetchLink = async (courseId) => {
-      const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${courseId}/invite-link`);
-      setInvitation(res.data);
+      const res = await getInvitation(courseId);
+      setProgress(false);
+      setInvitation(res);
     };
 
     fetchLink(id);
+    return () => {
+      setInvitation({
+        invitationLink: '',
+        expirationDate: '',
+      });
+    };
   }, []);
 
   const handleClick = async () => {
@@ -46,16 +50,14 @@ export default function InviteLinkModal() {
   return (
     <div className="InviteLinkModal">
       {progress ? (
-        <div className="progress">
-          <CircularProgress />
-        </div>
+        <CircularProgress />
       ) : (
         <>
           <div className="container">
             <TextField
               className="field"
-              value={invitation?.invitationLink}
-              label="Invite Link"
+              hiddenLabel
+              value={invitation.invitationLink}
               variant="filled"
             />
 
@@ -72,7 +74,7 @@ export default function InviteLinkModal() {
 
           <div className="expire">
             This link will be expired at
-            <span>{` ${moment(invitation?.expiredDate).format('LLL')}`}</span>
+            <span>{` ${moment(invitation.expiredDate).format('LLL')}`}</span>
           </div>
         </>
       )}
