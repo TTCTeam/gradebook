@@ -11,10 +11,12 @@ export function runLogoutTimer(dispatch, timer, history) {
 }
 export function checkAutoLogin(dispatch, history) {
   const tokenData = retrieveStoredToken();
+  const user = {};
+  user.token = tokenData.token;
   if (tokenData) {
-    dispatch(loginConfirmAction(tokenData.token));
+    dispatch(loginConfirmAction(user));
     runLogoutTimer(dispatch, tokenData.duration, history);
-    history.replace('/');
+    // history.replace('/');
   }
 }
 
