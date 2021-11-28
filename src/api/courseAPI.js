@@ -43,3 +43,17 @@ export async function getLecturers(courseId) {
 
   return response.data;
 }
+
+export async function getInvitation(courseId) {
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/invite-link`;
+  const tokenNew = localStorage.getItem('token');
+
+  const response = await axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': tokenNew,
+    },
+  });
+
+  return response.data;
+}
