@@ -2,6 +2,7 @@ import React from 'react';
 import { Droppable, DragDropContext, Draggable } from 'react-beautiful-dnd';
 import GradeItem from '../GradeItem/GradeItem';
 import './DragDrop.css';
+import { reorderGradeMockApi } from '../../pages/GradePage/mock';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
@@ -23,10 +24,22 @@ export default function DragDrop({ items, updateItems }) {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-    const newItems = [...items];
-    const item = newItems.splice(source.index, 1);
-    newItems.splice(destination.index, 0, ...item);
 
+    const newItems = [...items];
+    if (destination.index > source.index) {
+      const changeItems = newItems.slice(source.index, destination.index + 1);
+      changeItems.forEach((item, index) => { changeItems[index].order = item.order - 1; });
+      changeItems[0].order = changeItems[changeItems.length - 1].order + 1;
+      // replace
+      reorderGradeMockApi(changeItems);
+    } else {
+      const changeItems = newItems.slice(destination.index, source.index + 1);
+      changeItems.forEach((item, index) => { changeItems[index].order = item.order + 1; });
+      changeItems[changeItems.length - 1].order = changeItems[0].order - 1;
+      // replace
+      reorderGradeMockApi(changeItems);
+    }
+    console.log(newItems);
     updateItems(newItems);
   };
 
@@ -56,8 +69,8 @@ export default function DragDrop({ items, updateItems }) {
               {...provide.droppableProps}
               ref={provide.innerRef}
             >
-              {items.map((item) => (
-                <Draggable key={item.id} draggableId={item.id} index={items.indexOf(item)}>
+              {items.sort((a, b) => a.order - b.order).map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}

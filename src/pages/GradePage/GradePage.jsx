@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -6,14 +6,17 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import './GradePage.css';
 import DragDrop from '../../components/DragDrop/DragDrop';
+import { getListGrade, createGradeMockApi } from './mock';
+
+function findMaxOrder(list) {
+  return list.reduce((initOrder, item) => Math.max(initOrder, item.order), 1);
+}
 
 export default function GradePage() {
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
   const { id } = useParams();
-
-  console.log(items);
 
   const updateItems = (newItems) => {
     setItems(newItems);
@@ -30,15 +33,22 @@ export default function GradePage() {
   const createNewGrade = () => {
     if (detail.length > 0 && title.length > 0) {
       const newData = {
-        id: Math.floor(Math.random() * 10000).toString(),
         title,
         detail,
+        order: findMaxOrder(items) + 1,
       };
+      // call api create new grade
+      const newGrade = createGradeMockApi(newData);
+      setItems(items.concat(newGrade));
       setTitle('');
       setDetail('');
-      setItems([...items, newData]);
     }
   };
+
+  useEffect(async () => {
+    const listGrade = getListGrade();
+    setItems(listGrade);
+  }, []);
 
   return (
     <div className="GradePage">
