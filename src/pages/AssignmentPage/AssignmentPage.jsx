@@ -40,7 +40,7 @@ export default function AssignmentPage() {
       };
       // call api create new Assignment
       const newAssignment = createAssignmentMockApi(newData);
-      setItems(items.concat(newAssignment));
+      updateItems(items.concat(newAssignment));
       setName('');
       setPoint('');
     }
