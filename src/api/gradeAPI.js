@@ -13,7 +13,7 @@ export async function getAllGrade(courseId) {
     },
   });
 
-  return response.data;
+  return response;
 }
 
 export async function createGrade(courseId, newGrade) {
@@ -27,7 +27,7 @@ export async function createGrade(courseId, newGrade) {
     },
   });
 
-  return response.data;
+  return response;
 }
 
 export async function updateGrade(courseId, gradeId, newGrade) {
@@ -41,7 +41,7 @@ export async function updateGrade(courseId, gradeId, newGrade) {
     },
   });
 
-  return response.data;
+  return response;
 }
 
 export async function deleteGrade(courseId, gradeId) {
@@ -55,5 +55,5 @@ export async function deleteGrade(courseId, gradeId) {
     },
   });
 
-  return response.data;
+  return response;
 }
