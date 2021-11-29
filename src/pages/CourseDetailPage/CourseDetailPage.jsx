@@ -22,7 +22,7 @@ export default function CourseDetailPage() {
   useEffect(() => {
     const fetchCourse = async (courseId) => {
       const res = await getCourse(courseId);
-      setCourse(res);
+      setCourse(res.data);
     };
 
     fetchCourse(id);
@@ -31,7 +31,7 @@ export default function CourseDetailPage() {
   useEffect(() => {
     const fetchStudents = async (courseId) => {
       const res = await getStudents(courseId);
-      setListStudent(res);
+      setListStudent(res.data);
     };
     fetchStudents(id);
   }, []);
@@ -39,7 +39,7 @@ export default function CourseDetailPage() {
   useEffect(() => {
     const fetchLecturers = async (courseId) => {
       const res = await getLecturers(courseId);
-      setListLecturer(res);
+      setListLecturer(res.data);
     };
     fetchLecturers(id);
   }, []);
