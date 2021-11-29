@@ -23,7 +23,7 @@ export default function InviteLinkModal() {
     const fetchLink = async (courseId) => {
       const res = await getInvitation(courseId);
       setProgress(false);
-      setInvitation(res);
+      setInvitation(res.data);
     };
 
     fetchLink(id);
