@@ -4,24 +4,24 @@ import TextField from '@mui/material/TextField';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
-import './GradeItem.css';
+import './AssignmentItem.css';
 
-export default function GradeItem({ item, onEdit, onDelete }) {
-  const [title, setTitle] = useState(item.title);
-  const [detail, setDetail] = useState(item.detail);
+export default function AssignmentItem({ item, onEdit, onDelete }) {
+  const [name, setName] = useState(item.name);
+  const [point, setPoint] = useState(item.point);
   const [edit, setEdit] = useState(false);
 
-  const handleChangeTitle = (e) => {
-    setTitle(e.target.value);
+  const handleChangeName = (e) => {
+    setName(e.target.value);
   };
 
-  const handleChangeDetail = (e) => {
-    setDetail(e.target.value);
+  const handleChangePoint = (e) => {
+    setPoint(e.target.value);
   };
 
   const submitEdit = () => {
     setEdit(false);
-    onEdit(item.id, title, detail);
+    onEdit(item.id, name, point);
   };
 
   const submitDelete = () => {
@@ -29,21 +29,21 @@ export default function GradeItem({ item, onEdit, onDelete }) {
   };
 
   return (
-    <div className="GradeItem">
+    <div className="AssignmentItem">
       <div className="left">
         <TextField
           disabled={!edit}
-          value={'' || title}
-          label="Grade Title"
+          value={'' || name}
+          label="Name"
           variant="filled"
-          onChange={(e) => handleChangeTitle(e)}
+          onChange={(e) => handleChangeName(e)}
         />
         <TextField
           disabled={!edit}
-          value={'' || detail}
-          label="Grade Detail"
+          value={'' || point}
+          label="Point"
           variant="filled"
-          onChange={(e) => handleChangeDetail(e)}
+          onChange={(e) => handleChangePoint(e)}
         />
       </div>
       <div className="right">

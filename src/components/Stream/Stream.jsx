@@ -12,18 +12,18 @@ function Stream({ classroom }) {
   const init = [
     {
       id: '1',
-      title: 'title1',
-      detail: 'Item 1',
+      name: 'name1',
+      point: 'Item 1',
     },
     {
       id: '2',
-      title: 'title2',
-      detail: 'Item 2',
+      name: 'name2',
+      point: 'Item 2',
     },
     {
       id: '3',
-      title: 'title3',
-      detail: 'Item 3',
+      name: 'name3',
+      point: 'Item 3',
     },
   ];
   const [openModal, setOpenModal] = React.useState(false);
@@ -57,15 +57,15 @@ function Stream({ classroom }) {
               Create invite link
             </Button>
           )}
-          <Link to={`${url}/grade/edit`}>
+          <Link to={`${url}/assignment/edit`}>
             <Card className="Upcoming">
-              <h4>Grade Structure</h4>
+              <h4>Assignment Structure</h4>
               <div className="listStructure">
                 {items.map((item) => (
                   <div className="item" key={item.id}>
                     <p>
-                      {`${item.title}: `}
-                      <span>{item.detail}</span>
+                      {`${item.name}: `}
+                      <span>{item.point}</span>
                     </p>
                   </div>
                 ))}

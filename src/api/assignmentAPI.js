@@ -2,8 +2,8 @@ import axios from 'axios';
 
 require('dotenv').config();
 
-export async function getAllGrade(courseId) {
-  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/grades`;
+export async function getAllAssignment(courseId) {
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/assignments`;
   const token = localStorage.getItem('token');
 
   const response = await axios.get(url, {
@@ -16,11 +16,11 @@ export async function getAllGrade(courseId) {
   return response;
 }
 
-export async function createGrade(courseId, newGrade) {
-  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/grades`;
+export async function createAssignment(courseId, newAssignment) {
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/assignments`;
   const token = localStorage.getItem('token');
 
-  const response = await axios.post(url, newGrade, {
+  const response = await axios.post(url, newAssignment, {
     headers: {
       'Content-Type': 'application/json',
       'x-access-token': token,
@@ -30,11 +30,11 @@ export async function createGrade(courseId, newGrade) {
   return response;
 }
 
-export async function updateGrade(courseId, gradeId, newGrade) {
-  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/grades/${gradeId}`;
+export async function updateAssignment(courseId, assignmentId, newAssignment) {
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/assignments/${assignmentId}`;
   const token = localStorage.getItem('token');
 
-  const response = await axios.put(url, newGrade, {
+  const response = await axios.put(url, newAssignment, {
     headers: {
       'Content-Type': 'application/json',
       'x-access-token': token,
@@ -44,8 +44,8 @@ export async function updateGrade(courseId, gradeId, newGrade) {
   return response;
 }
 
-export async function deleteGrade(courseId, gradeId) {
-  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/grades/${gradeId}`;
+export async function deleteAssignment(courseId, assignmentId) {
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/assignments/${assignmentId}`;
   const token = localStorage.getItem('token');
 
   const response = await axios.delete(url, {

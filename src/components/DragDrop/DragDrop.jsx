@@ -1,8 +1,8 @@
 import React from 'react';
 import { Droppable, DragDropContext, Draggable } from 'react-beautiful-dnd';
-import GradeItem from '../GradeItem/GradeItem';
+import AssignmentItem from '../AssignmentItem/AssignmentItem';
 import './DragDrop.css';
-import { reorderGradeMockApi } from '../../pages/GradePage/mock';
+import { reorderAssignmentMockApi } from '../../pages/AssignmentPage/mock';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
@@ -31,23 +31,23 @@ export default function DragDrop({ items, updateItems }) {
       changeItems.forEach((item, index) => { changeItems[index].order = item.order - 1; });
       changeItems[0].order = changeItems[changeItems.length - 1].order + 1;
       // replace
-      reorderGradeMockApi(changeItems);
+      reorderAssignmentMockApi(changeItems);
     } else {
       const changeItems = newItems.slice(destination.index, source.index + 1);
       changeItems.forEach((item, index) => { changeItems[index].order = item.order + 1; });
       changeItems[changeItems.length - 1].order = changeItems[0].order - 1;
       // replace
-      reorderGradeMockApi(changeItems);
+      reorderAssignmentMockApi(changeItems);
     }
     console.log(newItems);
     updateItems(newItems);
   };
 
-  const onEdit = (id, title, detail) => {
+  const onEdit = (id, name, point) => {
     const newItems = [...items];
     const item = newItems.find((i) => i.id === id);
-    item.title = title;
-    item.detail = detail;
+    item.name = name;
+    item.point = point;
     updateItems(newItems);
   };
 
@@ -78,7 +78,7 @@ export default function DragDrop({ items, updateItems }) {
                       {...provided.draggableProps}
                       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
-                      <GradeItem item={item} onEdit={onEdit} onDelete={onDelete} />
+                      <AssignmentItem item={item} onEdit={onEdit} onDelete={onDelete} />
                     </div>
                   )}
                 </Draggable>

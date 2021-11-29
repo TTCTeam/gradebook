@@ -13,7 +13,7 @@ import ManageProfilePage from './pages/ManageProfilePage/ManageProfilePage';
 
 import Message from './components/UI/Message';
 import { checkAutoLogin } from './store/auth-services';
-import GradePage from './pages/GradePage/GradePage';
+import AssignmentPage from './pages/AssignmentPage/AssignmentPage';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -57,8 +57,8 @@ function App() {
         <Route path="/profile" exact>
           <ManageProfilePage />
         </Route>
-        <Route path="/courses/:id/grade/edit" exact>
-          <GradePage />
+        <Route path="/courses/:id/assignment/edit" exact>
+          <AssignmentPage />
         </Route>
         <Route path="/new-course">
           <CourseForm />

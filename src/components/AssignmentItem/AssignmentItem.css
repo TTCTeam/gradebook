@@ -1,4 +1,4 @@
-.GradeItem {
+.AssignmentItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -7,7 +7,7 @@
   width: 100%;
 }
 
-.GradeItem .left {
+.AssignmentItem .left {
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -15,14 +15,14 @@
   padding: 20px;
 }
 
-.GradeItem .right {
+.AssignmentItem .right {
   width: 30px;
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-.GradeItem .right .listBtn {
+.AssignmentItem .right .listBtn {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,7 +30,7 @@
   height: 100%;
 }
 
-.GradeItem .right .listBtn .saveBtn {
+.AssignmentItem .right .listBtn .saveBtn {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -40,7 +40,7 @@
   width: 100%;
 }
 
-.GradeItem .right .listBtn .editBtn {
+.AssignmentItem .right .listBtn .editBtn {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -50,7 +50,7 @@
   width: 100%;
 }
 
-.GradeItem .right .listBtn .removeBtn {
+.AssignmentItem .right .listBtn .removeBtn {
   flex: 1;
   display: flex;
   justify-content: center;

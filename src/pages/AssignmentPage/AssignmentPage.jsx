@@ -4,61 +4,62 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import './GradePage.css';
+import './AssignmentPage.css';
 import DragDrop from '../../components/DragDrop/DragDrop';
-import { getListGrade, createGradeMockApi } from './mock';
+import { getListAssignment, createAssignmentMockApi } from './mock';
 
 function findMaxOrder(list) {
   return list.reduce((initOrder, item) => Math.max(initOrder, item.order), 1);
 }
 
-export default function GradePage() {
+export default function AssignmentPage() {
   const [items, setItems] = useState([]);
-  const [title, setTitle] = useState('');
-  const [detail, setDetail] = useState('');
+  const [name, setName] = useState('');
+  const [point, setPoint] = useState('');
   const { id } = useParams();
 
   const updateItems = (newItems) => {
+    console.log(newItems);
     setItems(newItems);
   };
 
-  const handleChangeTitle = (e) => {
-    setTitle(e.target.value);
+  const handleChangeName = (e) => {
+    setName(e.target.value);
   };
 
-  const handleChangeDetail = (e) => {
-    setDetail(e.target.value);
+  const handleChangePoint = (e) => {
+    setPoint(e.target.value);
   };
 
-  const createNewGrade = () => {
-    if (detail.length > 0 && title.length > 0) {
+  const createNewAssignment = () => {
+    if (point.length > 0 && name.length > 0) {
       const newData = {
-        title,
-        detail,
+        name,
+        point,
         order: findMaxOrder(items) + 1,
       };
-      // call api create new grade
-      const newGrade = createGradeMockApi(newData);
-      setItems(items.concat(newGrade));
-      setTitle('');
-      setDetail('');
+      // call api create new Assignment
+      const newAssignment = createAssignmentMockApi(newData);
+      setItems(items.concat(newAssignment));
+      setName('');
+      setPoint('');
     }
   };
 
   useEffect(async () => {
-    const listGrade = getListGrade();
-    setItems(listGrade);
+    const listAssignment = getListAssignment();
+    setItems(listAssignment);
   }, []);
 
   return (
-    <div className="GradePage">
+    <div className="AssignmentPage">
       <Link className="link" to={`/courses/${id}`}>
         <CancelOutlinedIcon style={{ fill: 'red' }} />
       </Link>
 
       <div className="title">
-        <h1>Grade Structure</h1>
-        <p>Edit your classroom grade structure</p>
+        <h1>Assignment Structure</h1>
+        <p>Edit your classroom assignment structure</p>
       </div>
 
       <DragDrop items={items} updateItems={updateItems} />
@@ -67,20 +68,20 @@ export default function GradePage() {
         <div className="left">
           <h2>Form Creator</h2>
           <TextField
-            value={'' || title}
-            label="Grade Title"
+            value={'' || name}
+            label="Name"
             variant="filled"
-            onChange={(e) => handleChangeTitle(e)}
+            onChange={(e) => handleChangeName(e)}
           />
           <TextField
-            value={'' || detail}
-            label="Grade Detail"
+            value={'' || point}
+            label="Point"
             variant="filled"
-            onChange={(e) => handleChangeDetail(e)}
+            onChange={(e) => handleChangePoint(e)}
           />
         </div>
         <div className="right">
-          <Box className="button" onClick={createNewGrade}>
+          <Box className="button" onClick={createNewAssignment}>
             <AddCircleOutlineIcon style={{ fill: 'white' }} />
           </Box>
         </div>
