@@ -25,6 +25,7 @@ import { Menu, MenuItem } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { logoutHandlerAction } from '../../store/auth/auth-services';
+import classes from './MainNavigation.module.css';
 
 const drawerWidth = 240;
 
@@ -206,10 +207,11 @@ const MainNavigation = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            GRADE BOOK
-          </Typography>
-
+          <Link to="/" className={classes['home-link']}>
+            <Typography variant="h6" noWrap component="div">
+              GRADE BOOK
+            </Typography>
+          </Link>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <Search>
               <SearchIconWrapper>
