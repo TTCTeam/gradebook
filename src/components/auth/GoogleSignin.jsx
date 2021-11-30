@@ -6,7 +6,7 @@ import { signInByGoogle } from '../../store/auth/auth-actions';
 
 require('dotenv').config();
 
-const clientId = '657202594687-hhehs6r8k72uo6jir8q6lfouutnt6e7e.apps.googleusercontent.com';
+const clientId = '657202594687-9bi5bovau03kobm94cnhbhgcnsf1cpjb.apps.googleusercontent.com';
 
 export default function GoogleSign() {
   const dispatch = useDispatch();
