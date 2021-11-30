@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { baseAxios } from '../lib/api';
+import axios from 'axios';
 
 function JoinCourse() {
   const { id } = useParams();
@@ -10,7 +10,13 @@ function JoinCourse() {
   const query = new URLSearchParams(search);
   console.log(query);
   useEffect(async () => {
-    const res = await baseAxios.get(`${process.env.REACT_APP_BASE_URL}/courses/${id}/join?${query}`);
+    const token = localStorage.getItem('token');
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/courses/${id}/join?${query}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+    });
     if (res.status === 200) {
       history.replace(`/courses/${id}`);
     }

@@ -5,8 +5,10 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import './AssignmentPage.css';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Backdrop } from '@mui/material';
 import DragDrop from '../../components/DragDrop/DragDrop';
-import { getListAssignment, createAssignmentMockApi } from './mock';
+import { createAssignment, getAllAssignment } from '../../api/assignmentAPI';
 
 function findMaxOrder(list) {
   return list.reduce((initOrder, item) => Math.max(initOrder, item.order), 1);
@@ -16,6 +18,7 @@ export default function AssignmentPage() {
   const [items, setItems] = useState([]);
   const [name, setName] = useState('');
   const [point, setPoint] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
 
   const updateItems = (newItems) => {
@@ -31,28 +34,45 @@ export default function AssignmentPage() {
     setPoint(e.target.value);
   };
 
-  const createNewAssignment = () => {
+  const createNewAssignment = async () => {
     if (point.length > 0 && name.length > 0) {
-      const newData = {
+      const newAssignment = {
         name,
         point,
         order: findMaxOrder(items) + 1,
       };
-      // call api create new Assignment
-      const newAssignment = createAssignmentMockApi(newData);
-      updateItems(items.concat(newAssignment));
-      setName('');
-      setPoint('');
+      const res = await createAssignment(id, newAssignment);
+      if (res.status === 201) {
+        updateItems(items.concat(res.data));
+        setName('');
+        setPoint('');
+      } else {
+        alert('Create failed!');
+      }
     }
   };
 
-  useEffect(async () => {
-    const listAssignment = getListAssignment();
-    setItems(listAssignment);
+  useEffect(() => {
+    const fetchAssignments = async (courseId) => {
+      setIsLoading(true);
+      const res = await getAllAssignment(courseId);
+      if (res.status === 200) {
+        setItems(res.data);
+      }
+      setIsLoading(false);
+    };
+
+    fetchAssignments(id);
   }, []);
 
   return (
     <div className="AssignmentPage">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 999 }}
+        open={isLoading}
+      >
+        <CircularProgress />
+      </Backdrop>
       <Link className="link" to={`/courses/${id}`}>
         <CancelOutlinedIcon style={{ fill: 'red' }} />
       </Link>

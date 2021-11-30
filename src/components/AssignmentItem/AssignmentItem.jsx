@@ -29,7 +29,7 @@ export default function AssignmentItem({ item, onEdit, onDelete }) {
   };
 
   return (
-    <div className="AssignmentItem">
+    <div className="assignment">
       <div className="left">
         <TextField
           disabled={!edit}
@@ -47,7 +47,7 @@ export default function AssignmentItem({ item, onEdit, onDelete }) {
         />
       </div>
       <div className="right">
-        <div className="listBtn">
+        <div className="group-btn">
           {edit ? (
             <Box className="saveBtn" onClick={submitEdit}>
               <SaveIcon style={{ fill: 'white' }} />

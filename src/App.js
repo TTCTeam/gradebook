@@ -15,6 +15,7 @@ import Message from './components/UI/Message';
 import AssignmentPage from './pages/AssignmentPage/AssignmentPage';
 import { checkAutoLogin } from './store/auth/auth-services';
 import { startAt } from './store/location/loc-actions';
+import JoinCourse from './pages/JoinCourse';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -68,6 +69,9 @@ function App() {
         </Route>
         <Route path="/new-course">
           <CourseForm />
+        </Route>
+        <Route path="/courses/:id/join">
+          <JoinCourse />
         </Route>
       </Switch>
     </MainNavigation>

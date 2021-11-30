@@ -1,39 +1,39 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import { Link, useRouteMatch } from 'react-router-dom';
-import Button from '@mui/material/Button';
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
+import { Backdrop, Button } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import CreatePost from '../CreatePost/CreatePost';
 import './Stream.css';
 import BasicModal from '../layouts/BasicModal';
 import InviteLinkModal from '../InviteLinkModal/InviteLinkModal';
 import MemberRoles from '../../constant/course';
+import { getAllAssignment } from '../../api/assignmentAPI';
+import { sortByField } from '../../utils/common';
 
 function Stream({ classroom }) {
-  const init = [
-    {
-      id: '1',
-      name: 'name1',
-      point: 'Item 1',
-    },
-    {
-      id: '2',
-      name: 'name2',
-      point: 'Item 2',
-    },
-    {
-      id: '3',
-      name: 'name3',
-      point: 'Item 3',
-    },
-  ];
-  const [openModal, setOpenModal] = React.useState(false);
-  const items = init;
+  const [assignments, setAssignments] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { id } = useParams();
   const { url } = useRouteMatch();
-
   const { course, role } = classroom;
 
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => setOpenModal(true);
+
+  useEffect(() => {
+    const fetchAssignments = async (courseId) => {
+      setIsLoading(true);
+      const res = await getAllAssignment(courseId);
+      if (res.status === 200) {
+        setAssignments(res.data);
+      }
+      setIsLoading(false);
+    };
+
+    fetchAssignments(id);
+  }, []);
 
   return (
     <div className="Stream">
@@ -46,6 +46,12 @@ function Stream({ classroom }) {
         <div className="courseName">{course?.name}</div>
         <div className="courseDesc">{course?.description}</div>
       </div>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 999 }}
+        open={isLoading}
+      >
+        <CircularProgress />
+      </Backdrop>
       <div className="contentContainer">
         <div className="left">
           {(role === MemberRoles.OWNER || role === MemberRoles.LECTURER) && (
@@ -61,11 +67,11 @@ function Stream({ classroom }) {
             <Card className="Upcoming">
               <h4>Assignment Structure</h4>
               <div className="listStructure">
-                {items.map((item) => (
-                  <div className="item" key={item.id}>
+                {sortByField(assignments, 'order').map((assignment) => (
+                  <div className="item" key={assignment.id}>
                     <p>
-                      {`${item.name}: `}
-                      <span>{item.point}</span>
+                      {`${assignment.name}: `}
+                      <span>{assignment.point}</span>
                     </p>
                   </div>
                 ))}

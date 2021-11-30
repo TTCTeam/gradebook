@@ -4,6 +4,7 @@ require('dotenv').config();
 
 export async function getAllAssignment(courseId) {
   const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/assignments`;
+  console.log(url);
   const token = localStorage.getItem('token');
 
   const response = await axios.get(url, {
@@ -49,6 +50,20 @@ export async function deleteAssignment(courseId, assignmentId) {
   const token = localStorage.getItem('token');
 
   const response = await axios.delete(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  });
+
+  return response;
+}
+
+export async function reorderAssignment(courseId, assignments) {
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/assignments`;
+  const token = localStorage.getItem('token');
+
+  const response = await axios.put(url, assignments, {
     headers: {
       'Content-Type': 'application/json',
       'x-access-token': token,

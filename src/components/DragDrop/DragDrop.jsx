@@ -1,8 +1,10 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { Droppable, DragDropContext, Draggable } from 'react-beautiful-dnd';
 import AssignmentItem from '../AssignmentItem/AssignmentItem';
 import './DragDrop.css';
-import { reorderAssignmentMockApi } from '../../pages/AssignmentPage/mock';
+import { deleteAssignment, reorderAssignment, updateAssignment } from '../../api/assignmentAPI';
+import { sortByField } from '../../utils/common';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
@@ -16,6 +18,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 });
 
 export default function DragDrop({ items, updateItems }) {
+  const { id } = useParams();
+
   const onDragEnd = (result) => {
     const { destination, source } = result;
     if (!destination) {
@@ -31,31 +35,41 @@ export default function DragDrop({ items, updateItems }) {
       changeItems.forEach((item, index) => { changeItems[index].order = item.order - 1; });
       changeItems[0].order = changeItems[changeItems.length - 1].order + 1;
       // replace
-      reorderAssignmentMockApi(changeItems);
+      reorderAssignment(id, changeItems);
     } else {
       const changeItems = newItems.slice(destination.index, source.index + 1);
       changeItems.forEach((item, index) => { changeItems[index].order = item.order + 1; });
       changeItems[changeItems.length - 1].order = changeItems[0].order - 1;
       // replace
-      reorderAssignmentMockApi(changeItems);
+      reorderAssignment(id, changeItems);
     }
     console.log(newItems);
     updateItems(newItems);
   };
 
-  const onEdit = (id, name, point) => {
+  const onEdit = async (assignmentId, name, point) => {
     const newItems = [...items];
-    const item = newItems.find((i) => i.id === id);
+    const item = newItems.find((i) => i.id === assignmentId);
     item.name = name;
     item.point = point;
-    updateItems(newItems);
+    const res = await updateAssignment(id, assignmentId, item);
+    if (res.status === 200) {
+      updateItems(newItems);
+    } else {
+      alert('Edit failed!');
+    }
   };
 
-  const onDelete = (id) => {
+  const onDelete = async (assignmentId) => {
     const newItems = [...items];
-    const item = newItems.find((i) => i.id === id);
+    const item = newItems.find((i) => i.id === assignmentId);
     newItems.splice(newItems.indexOf(item), 1);
-    updateItems(newItems);
+    const res = await deleteAssignment(id, assignmentId);
+    if (res.status === 200) {
+      updateItems(newItems);
+    } else {
+      alert('Delete failed!');
+    }
   };
 
   return (
@@ -69,7 +83,7 @@ export default function DragDrop({ items, updateItems }) {
               {...provide.droppableProps}
               ref={provide.innerRef}
             >
-              {items.sort((a, b) => a.order - b.order).map((item, index) => (
+              {sortByField(items, 'order').map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                   {(provided, snapshot) => (
                     <div

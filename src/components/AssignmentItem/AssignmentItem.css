@@ -1,4 +1,4 @@
-.AssignmentItem {
+.assignment {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -7,7 +7,7 @@
   width: 100%;
 }
 
-.AssignmentItem .left {
+.assignment .left {
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -15,14 +15,14 @@
   padding: 20px;
 }
 
-.AssignmentItem .right {
+.assignment .right {
   width: 30px;
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-.AssignmentItem .right .listBtn {
+.assignment .right .group-btn {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,7 +30,7 @@
   height: 100%;
 }
 
-.AssignmentItem .right .listBtn .saveBtn {
+.assignment .right .group-btn .saveBtn {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -40,7 +40,7 @@
   width: 100%;
 }
 
-.AssignmentItem .right .listBtn .editBtn {
+.assignment .right .group-btn .editBtn {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -50,7 +50,7 @@
   width: 100%;
 }
 
-.AssignmentItem .right .listBtn .removeBtn {
+.assignment .right .group-btn .removeBtn {
   flex: 1;
   display: flex;
   justify-content: center;
