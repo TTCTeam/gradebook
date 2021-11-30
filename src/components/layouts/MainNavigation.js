@@ -24,7 +24,7 @@ import InputBase from '@mui/material/InputBase';
 import { Menu, MenuItem } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-import { logoutHandlerAction } from '../../store/auth-services';
+import { logoutHandlerAction } from '../../store/auth/auth-services';
 
 const drawerWidth = 240;
 

@@ -1,5 +1,5 @@
-import { retrieveStoredToken } from '../utils/calc';
-// eslint-disable-next-line import/no-cycle
+/* eslint-disable import/no-cycle */
+import { retrieveStoredToken } from '../../utils/calc';
 import { loginConfirmAction, signOut } from './auth-actions';
 
 let logoutTimer;
@@ -9,15 +9,14 @@ export function runLogoutTimer(dispatch, timer, history) {
     dispatch(signOut(history));
   }, timer);
 }
-export function checkAutoLogin(dispatch, history) {
+export function checkAutoLogin(dispatch, history, location) {
   const tokenData = retrieveStoredToken();
-
   if (tokenData) {
     const user = {};
     user.token = tokenData.token;
     dispatch(loginConfirmAction(user));
     runLogoutTimer(dispatch, tokenData.duration, history);
-    // history.replace('/');
+    history.replace(location.pathname + location.search);
   }
 }
 

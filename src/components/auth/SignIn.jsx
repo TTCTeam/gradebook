@@ -13,12 +13,13 @@ import {
 import { Box } from '@mui/system';
 import useInput from '../../hooks/use-input';
 import { nameValidate, passwordValidate } from '../../utils/inputValidate';
-import { signIn } from '../../store/auth-actions';
+import { signIn } from '../../store/auth/auth-actions';
 import GoogleSignin from './GoogleSignin';
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const ui = useSelector((state) => state.ui);
+  const preLocation = useSelector((state) => state.location.location);
   // const auth = useSelector((state) => state.auth);
   const history = useHistory();
 
@@ -51,7 +52,7 @@ const SignIn = () => {
       return;
     }
 
-    dispatch(signIn({ username: email, password }, history));
+    dispatch(signIn({ username: email, password }, history, preLocation));
 
     /* emailResetValue();
     passwordResetValue(); */

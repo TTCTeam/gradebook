@@ -1,8 +1,8 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { signInByGoogle } from '../../store/auth-actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInByGoogle } from '../../store/auth/auth-actions';
 
 require('dotenv').config();
 
@@ -11,12 +11,13 @@ const clientId = '657202594687-9bi5bovau03kobm94cnhbhgcnsf1cpjb.apps.googleuserc
 export default function GoogleSign() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const preLocation = useSelector((state) => state.location.location);
 
   const onLoginSuccess = (res) => {
     const idToken = res.tokenId;
     console.log(res);
 
-    dispatch(signInByGoogle(idToken, history));
+    dispatch(signInByGoogle(idToken, history, preLocation));
   };
 
   const onLoginFailure = (res) => {
