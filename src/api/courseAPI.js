@@ -13,7 +13,7 @@ export async function getCourse(courseId) {
     },
   });
 
-  return response.data;
+  return response;
 }
 
 export async function getStudents(courseId) {
@@ -27,7 +27,7 @@ export async function getStudents(courseId) {
     },
   });
 
-  return response.data;
+  return response;
 }
 
 export async function getLecturers(courseId) {
@@ -41,7 +41,7 @@ export async function getLecturers(courseId) {
     },
   });
 
-  return response.data;
+  return response;
 }
 
 export async function getInvitation(courseId) {
@@ -55,5 +55,25 @@ export async function getInvitation(courseId) {
     },
   });
 
-  return response.data;
+  return response;
+}
+
+export async function sendInvitationByEmail(courseId, listEmail, role) {
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/invite`;
+  const tokenNew = localStorage.getItem('token');
+
+  const response = await axios.post(
+    url,
+    {
+      emails: listEmail,
+      role,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': tokenNew,
+      },
+    },
+  );
+  return response;
 }

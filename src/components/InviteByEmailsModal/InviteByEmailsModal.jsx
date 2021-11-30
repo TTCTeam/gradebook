@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import './InviteLecturersModal.css';
 import { useParams } from 'react-router-dom';
 import MemberRoles from '../../constant/course';
-import { baseAxios } from '../../lib/api';
+import { sendInvitationByEmail } from '../../api/courseAPI';
 
 function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
@@ -41,7 +41,7 @@ export default function InviteByEmailsModal({ handleClose, role }) {
 
   const handleSubmitInvite = async () => {
     setProgress(true);
-    const res = await baseAxios.post(`${process.env.REACT_APP_BASE_URL}/courses/${id}/invite`, { emails: listEmail, role });
+    const res = await sendInvitationByEmail(id, listEmail, role);
     console.log(res.data);
     handleClose();
   };
