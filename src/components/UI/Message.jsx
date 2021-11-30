@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { closeModal } from '../../store/modal-action';
+import { closeModal } from '../../store/modal/modal-action';
 import Modal from './Modal';
 
 const Message = ({ message }) => {

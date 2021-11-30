@@ -18,13 +18,14 @@ import {
   nameValidate,
   passwordValidate,
 } from '../../utils/inputValidate';
-import { signUp } from '../../store/auth-actions';
+import { signUp } from '../../store/auth/auth-actions';
 import GoogleSign from './GoogleSignin';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const ui = useSelector((state) => state.ui);
+  const preLocation = useSelector((state) => state.location.location);
 
   const {
     value: firstName,
@@ -77,7 +78,7 @@ const SignUp = () => {
         password,
         email,
         username: studentID,
-      }, history));
+      }, history, preLocation));
     }
   };
 

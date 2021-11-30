@@ -1,8 +1,8 @@
 // import { checkExistCredential } from '../lib/api';
-import { pending, showError, success } from './ui-actions';
+import { pending, showError, success } from '../ui/ui-actions';
 // eslint-disable-next-line import/no-cycle
 import { runLogoutTimer } from './auth-services';
-import { showModal } from './modal-action';
+import { showModal } from '../modal/modal-action';
 
 export const LOGOUT_ACTION = 'LOGOUT';
 export const LOGIN_SUCCESS_ACTION = 'LOGIN_SUCCESS';
@@ -24,7 +24,7 @@ export function signOut(history) {
   };
 }
 
-export function signIn(credentials, history) {
+export function signIn(credentials, history, preLocation) {
   return async (dispatch) => {
     dispatch(pending());
     console.log(credentials);
@@ -55,7 +55,11 @@ export function signIn(credentials, history) {
       runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
       dispatch(loginConfirmAction(data.token));
       dispatch(success());
-      history.replace('/');
+      if (preLocation) {
+        history.replace(preLocation);
+      } else {
+        history.replace('/');
+      }
     } else {
       console.log('ạkfbklhfdbsd');
       dispatch(showError('Your account has not been registered!'));
@@ -63,7 +67,7 @@ export function signIn(credentials, history) {
   };
 }
 
-export function signUp(credentials, history) {
+export function signUp(credentials, history, preLocation) {
   return async (dispatch) => {
     dispatch(pending());
     console.log(credentials);
@@ -96,7 +100,11 @@ export function signUp(credentials, history) {
       runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
       dispatch(loginConfirmAction(data.token));
       dispatch(success());
-      history.replace('/');
+      if (preLocation) {
+        history.replace(preLocation);
+      } else {
+        history.replace('/');
+      }
     } else {
       dispatch(showModal(data.message));
     }
@@ -104,7 +112,7 @@ export function signUp(credentials, history) {
   };
 }
 
-export function signInByGoogle(idToken, history) {
+export function signInByGoogle(idToken, history, preLocation) {
   return async (dispatch) => {
     dispatch(pending());
 
@@ -124,7 +132,7 @@ export function signInByGoogle(idToken, history) {
     const data = await respone.json();
     console.log(data, 'data response');
 
-    if (respone.status === 400) {
+    if (!respone.ok) {
       dispatch(showModal(data.message));
       dispatch(success());
     } else {
@@ -138,7 +146,11 @@ export function signInByGoogle(idToken, history) {
       runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
       dispatch(loginConfirmAction(data));
       dispatch(success());
-      history.replace('/');
+      if (preLocation) {
+        history.replace(preLocation);
+      } else {
+        history.replace('/');
+      }
     }
   };
 }
