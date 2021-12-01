@@ -8,6 +8,7 @@ import MainNavigation from './components/layouts/MainNavigation';
 import AllCourses from './pages/AllCourses';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
+import JoinCourse from './pages/JoinCourse';
 import CourseDetailPage from './pages/CourseDetailPage/CourseDetailPage';
 import ManageProfilePage from './pages/ManageProfilePage/ManageProfilePage';
 
@@ -66,7 +67,7 @@ function App() {
           <CourseDetailPage />
         </Route>
         <Route path="/courses/:id/join">
-          <div>Olalala</div>
+          <JoinCourse />
         </Route>
 
         <Route>
