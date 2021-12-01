@@ -11,6 +11,6 @@ export function startAt(location) {
 
 export function arrivedStartLocation() {
   return {
-    type: LOCATION_START_AT,
+    type: LOCATION_ARRIVED,
   };
 }

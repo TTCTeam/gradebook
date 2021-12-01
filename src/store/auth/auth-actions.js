@@ -3,15 +3,16 @@ import { pending, showError, success } from '../ui/ui-actions';
 // eslint-disable-next-line import/no-cycle
 import { runLogoutTimer } from './auth-services';
 import { showModal } from '../modal/modal-action';
+import { arrivedStartLocation } from '../location/loc-actions';
 
 export const LOGOUT_ACTION = 'LOGOUT';
 export const LOGIN_SUCCESS_ACTION = 'LOGIN_SUCCESS';
 export const REGISTER_SUCCCESS_ACTION = 'REGISTER_SUCCESS';
 
-export function loginConfirmAction(user) {
+export function loginConfirmAction(token) {
   return {
     type: LOGIN_SUCCESS_ACTION,
-    user,
+    token,
   };
 }
 
@@ -55,6 +56,7 @@ export function signIn(credentials, history, preLocation) {
       dispatch(loginConfirmAction(data.token));
       dispatch(success());
       if (preLocation) {
+        dispatch(arrivedStartLocation());
         history.replace(preLocation);
       } else {
         history.replace('/');
@@ -98,6 +100,7 @@ export function signUp(credentials, history, preLocation) {
       dispatch(loginConfirmAction(data.token));
       dispatch(success());
       if (preLocation) {
+        dispatch(arrivedStartLocation());
         history.replace(preLocation);
       } else {
         history.replace('/');
@@ -141,9 +144,10 @@ export function signInByGoogle(idToken, history, preLocation) {
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
       runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
-      dispatch(loginConfirmAction(data));
+      dispatch(loginConfirmAction(data.token));
       dispatch(success());
       if (preLocation) {
+        dispatch(arrivedStartLocation());
         history.replace(preLocation);
       } else {
         history.replace('/');
