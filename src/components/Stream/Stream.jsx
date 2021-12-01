@@ -55,30 +55,44 @@ function Stream({ classroom }) {
       <div className="contentContainer">
         <div className="left">
           {(role === MemberRoles.OWNER || role === MemberRoles.LECTURER) && (
-            <>
-              <Button
-                className="classCode"
-                variant="contained"
-                onClick={handleOpenModal}
-              >
-                Create invite link
-              </Button>
-              <Link to={`${url}/assignment/edit`}>
-                <Card className="Upcoming">
-                  <h4>Assignment Structure</h4>
-                  <div className="listStructure">
-                    {sortByField(assignments, 'order').map((assignment) => (
-                      <div className="item" key={assignment.id}>
-                        <p>
-                          {`${assignment.name}: `}
-                          <span>{assignment.point}</span>
-                        </p>
-                      </div>
-                    ))}
+            <Button
+              className="classCode"
+              variant="contained"
+              onClick={handleOpenModal}
+            >
+              Create invite link
+            </Button>
+          )}
+          {role === MemberRoles.STUDENT ? (
+            <Card className="Upcoming">
+              <h4>Assignment Structure</h4>
+              <div className="listStructure">
+                {sortByField(assignments, 'order').map((assignment) => (
+                  <div className="item" key={assignment.id}>
+                    <p>
+                      {`${assignment.name}: `}
+                      <span>{assignment.point}</span>
+                    </p>
                   </div>
-                </Card>
-              </Link>
-            </>
+                ))}
+              </div>
+            </Card>
+          ) : (
+            <Link to={`${url}/assignment/edit`}>
+              <Card className="Upcoming">
+                <h4>Assignment Structure</h4>
+                <div className="listStructure">
+                  {sortByField(assignments, 'order').map((assignment) => (
+                    <div className="item" key={assignment.id}>
+                      <p>
+                        {`${assignment.name}: `}
+                        <span>{assignment.point}</span>
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </Link>
           )}
         </div>
         <div className="right">
