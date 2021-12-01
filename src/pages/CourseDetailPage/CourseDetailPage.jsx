@@ -25,24 +25,17 @@ export default function CourseDetailPage() {
       console.log(res.data);
       setCourse(res.data);
     };
-    console.log(id);
-
-    fetchCourse(id);
-  }, []);
-
-  useEffect(() => {
     const fetchStudents = async (courseId) => {
       const res = await getStudents(courseId);
       setListStudent(res.data);
     };
-    fetchStudents(id);
-  }, []);
-
-  useEffect(() => {
     const fetchLecturers = async (courseId) => {
       const res = await getLecturers(courseId);
       setListLecturer(res.data);
     };
+
+    fetchCourse(id);
+    fetchStudents(id);
     fetchLecturers(id);
   }, []);
 
