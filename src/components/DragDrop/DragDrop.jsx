@@ -56,6 +56,7 @@ export default function DragDrop({ items, updateItems }) {
     if (res.status === 200) {
       updateItems(newItems);
     } else {
+      // eslint-disable-next-line
       alert('Edit failed!');
     }
   };
@@ -68,6 +69,7 @@ export default function DragDrop({ items, updateItems }) {
     if (res.status === 200) {
       updateItems(newItems);
     } else {
+      // eslint-disable-next-line
       alert('Delete failed!');
     }
   };

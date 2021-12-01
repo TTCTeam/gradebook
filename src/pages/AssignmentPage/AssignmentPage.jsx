@@ -47,6 +47,7 @@ export default function AssignmentPage() {
         setName('');
         setPoint('');
       } else {
+        // eslint-disable-next-line
         alert('Create failed!');
       }
     }
