@@ -1,4 +1,4 @@
-import { PENDING_ACTION, SUCCESS_ACTION } from './ui-actions';
+import { PENDING_ACTION, SUCCESS_ACTION, ERROR_ACTION } from './ui-actions';
 
 const initialState = { request: null, message: null };
 
@@ -16,7 +16,7 @@ const uiReducer = (state = initialState, action) => {
       ...state,
       request: 'success',
     };
-  case 'ERROR':
+  case ERROR_ACTION:
     console.log('Request is failed.!');
     return {
       ...state,

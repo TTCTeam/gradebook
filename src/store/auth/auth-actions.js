@@ -27,7 +27,6 @@ export function signOut(history) {
 export function signIn(credentials, history, preLocation) {
   return async (dispatch) => {
     dispatch(pending());
-    console.log(credentials);
     // check pass and username from request to BE
     // const data = await checkExistCredential(credentials);
     const url = `${process.env.REACT_APP_BASE_URL}/auth/signin`;
@@ -70,7 +69,7 @@ export function signIn(credentials, history, preLocation) {
 export function signUp(credentials, history, preLocation) {
   return async (dispatch) => {
     dispatch(pending());
-    console.log(credentials);
+
     // post account to BE
     // recieve response data below
 
@@ -86,8 +85,6 @@ export function signUp(credentials, history, preLocation) {
     const { status } = response;
 
     const data = await response.json();
-    console.log(response);
-    console.log(data);
 
     if (status === 200) {
       const expirationTime = new Date(
