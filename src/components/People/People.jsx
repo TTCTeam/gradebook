@@ -39,7 +39,7 @@ function People({ classroom, listLecturer, listStudent }) {
 
           <div className="listPeople">
             {listLecturer.map((lecturer) => (
-              <PeopleItem key={lecturer} people={lecturer} role={classroom.role} />
+              <PeopleItem key={lecturer.id} people={lecturer} role={classroom.role} />
             ))}
           </div>
         </div>
@@ -60,7 +60,7 @@ function People({ classroom, listLecturer, listStudent }) {
           </div>
           <div className="listPeople">
             {listStudent.map((student) => (
-              <PeopleItem key={student} people={student} role={classroom.role} />
+              <PeopleItem key={student.id} people={student} role={classroom.role} />
             ))}
           </div>
         </div>
