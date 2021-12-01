@@ -37,6 +37,12 @@ function Stream({ classroom }) {
 
   return (
     <div className="Stream">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress />
+      </Backdrop>
       <div className="coverImgContainer">
         <img
           className="coverPhoto"
@@ -46,12 +52,6 @@ function Stream({ classroom }) {
         <div className="courseName">{course?.name}</div>
         <div className="courseDesc">{course?.description}</div>
       </div>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 999 }}
-        open={isLoading}
-      >
-        <CircularProgress />
-      </Backdrop>
       <div className="contentContainer">
         <div className="left">
           {(role === MemberRoles.OWNER || role === MemberRoles.LECTURER) && (

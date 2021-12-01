@@ -36,6 +36,7 @@ export default function AssignmentPage() {
 
   const createNewAssignment = async () => {
     if (point.length > 0 && name.length > 0) {
+      setIsLoading(true);
       const newAssignment = {
         name,
         point,
@@ -49,6 +50,7 @@ export default function AssignmentPage() {
       } else {
         alert('Create failed!');
       }
+      setIsLoading(false);
     }
   };
 
@@ -68,7 +70,7 @@ export default function AssignmentPage() {
   return (
     <div className="AssignmentPage">
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 999 }}
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
       >
         <CircularProgress />
@@ -88,13 +90,14 @@ export default function AssignmentPage() {
         <div className="left">
           <h2>Form Creator</h2>
           <TextField
-            value={'' || name}
+            value={name}
             label="Name"
             variant="filled"
             onChange={(e) => handleChangeName(e)}
           />
           <TextField
-            value={'' || point}
+            value={point}
+            type="number"
             label="Point"
             variant="filled"
             onChange={(e) => handleChangePoint(e)}
