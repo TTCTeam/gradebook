@@ -9,6 +9,7 @@ import AllCourses from './pages/AllCourses';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import JoinCourse from './pages/JoinCourse';
+import AssignmentPage from './pages/AssignmentPage/AssignmentPage';
 import CourseDetailPage from './pages/CourseDetailPage/CourseDetailPage';
 import ManageProfilePage from './pages/ManageProfilePage/ManageProfilePage';
 
@@ -69,7 +70,9 @@ function App() {
         <Route path="/courses/:id/join">
           <JoinCourse />
         </Route>
-
+        <Route path="/courses/:id/assignment/edit">
+          <AssignmentPage />
+        </Route>
         <Route>
           <div>Page not found</div>
         </Route>
