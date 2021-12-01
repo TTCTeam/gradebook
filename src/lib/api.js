@@ -13,7 +13,6 @@ export const baseAxios = axios.create({
 
 export async function getAllCourse() {
   const url = `${process.env.REACT_APP_BASE_URL}/courses`;
-  console.log(token);
   const tokenNew = localStorage.getItem('token');
 
   const response = await fetch(url, {

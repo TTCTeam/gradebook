@@ -8,14 +8,13 @@ import MainNavigation from './components/layouts/MainNavigation';
 import AllCourses from './pages/AllCourses';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
+import JoinCourse from './pages/JoinCourse';
 import CourseDetailPage from './pages/CourseDetailPage/CourseDetailPage';
 import ManageProfilePage from './pages/ManageProfilePage/ManageProfilePage';
 
 import Message from './components/UI/Message';
-import AssignmentPage from './pages/AssignmentPage/AssignmentPage';
 import { checkAutoLogin } from './store/auth/auth-services';
 import { startAt } from './store/location/loc-actions';
-import JoinCourse from './pages/JoinCourse';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -52,29 +51,31 @@ function App() {
   const routerWithSignIn = (
     <MainNavigation>
       <Switch>
-        <Route path="/" exact>
+        <Route exact path="/">
           <Redirect to="/courses" />
         </Route>
-        <Route path="/courses" exact>
-          <AllCourses />
-        </Route>
-        <Route path="/courses/:id" exact>
-          <CourseDetailPage />
-        </Route>
-        <Route path="/profile" exact>
+        <Route path="/profile">
           <ManageProfilePage />
-        </Route>
-        <Route path="/courses/:id/assignment/edit" exact>
-          <AssignmentPage />
         </Route>
         <Route path="/new-course">
           <CourseForm />
         </Route>
+        <Route exact path="/courses">
+          <AllCourses />
+        </Route>
+        <Route exact path="/courses/:id">
+          <CourseDetailPage />
+        </Route>
         <Route path="/courses/:id/join">
           <JoinCourse />
         </Route>
+
+        <Route>
+          <div>Page not found</div>
+        </Route>
       </Switch>
     </MainNavigation>
+
   );
 
   const routeContent = auth.token !== null ? routerWithSignIn : routeWithoutSignIn;

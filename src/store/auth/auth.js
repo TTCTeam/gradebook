@@ -8,7 +8,7 @@ const authReducer = (state = initialState, action) => {
     console.log(action);
     return {
       ...state,
-      token: action.user.token,
+      token: action.token,
       isLoggedIn: true,
     };
   case 'LOGIN_ERROR':

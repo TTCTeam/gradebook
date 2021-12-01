@@ -13,7 +13,7 @@ const modalReducer = (state = initialState, action) => {
   case CLOSE_MODAL:
     return initialState;
   default:
-    return initialState;
+    return { ...state };
   }
 };
 
