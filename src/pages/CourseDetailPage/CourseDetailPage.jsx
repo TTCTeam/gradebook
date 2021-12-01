@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import TabList from '@mui/lab/TabList';
 import { useParams } from 'react-router-dom';
@@ -14,6 +16,7 @@ export default function CourseDetailPage() {
   const [value, setValue] = useState('stream');
   const [listStudent, setListStudent] = useState([]);
   const [listLecturer, setListLecturer] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -24,28 +27,29 @@ export default function CourseDetailPage() {
       const res = await getCourse(courseId);
       setCourse(res.data);
     };
-
-    fetchCourse(id);
-  }, []);
-
-  useEffect(() => {
     const fetchStudents = async (courseId) => {
       const res = await getStudents(courseId);
       setListStudent(res.data);
     };
-    fetchStudents(id);
-  }, []);
-
-  useEffect(() => {
     const fetchLecturers = async (courseId) => {
       const res = await getLecturers(courseId);
       setListLecturer(res.data);
+      setIsLoading(false);
     };
+
+    fetchCourse(id);
+    fetchStudents(id);
     fetchLecturers(id);
   }, []);
 
   return (
     <div className="CourseDetailPage">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 999 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box
         className="CourseDetailPageTop"
         sx={{ borderBottom: 1, borderColor: 'divider' }}
