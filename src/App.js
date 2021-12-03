@@ -22,10 +22,7 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  // let logoutTimer;
-  console.log(location, 'location');
-  console.log(history, 'history');
-  if (!auth.token && (location.pathname !== '/signin' && location.pathname !== '/signup')) {
+  if (!auth.token && (location.pathname !== '/signin' && location.pathname !== '/signup' && location.pathname !== '/courses' && location.pathname !== '/')) {
     console.log(location.pathname + location.search, 'inititate...');
     dispatch(startAt(location.pathname + location.search));
   }

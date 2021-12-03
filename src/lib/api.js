@@ -53,20 +53,17 @@ export async function addCourse(newCourse) {
   return data;
 }
 
-export async function checkExistCredential(credentials) {
-  const url = `${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_NEWCOURSE}`;
+export async function getUserProfile() {
+  const url = `${process.env.REACT_APP_BASE_URL}/user`;
+  const tokenNew = localStorage.getItem('token');
   const response = await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({
-      email: credentials.email,
-      password: credentials.password,
-      returnToken: true,
-    }),
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': token,
+      'x-access-token': tokenNew,
     },
   });
+  console.log(response);
   const data = await response.json();
   return data;
 }

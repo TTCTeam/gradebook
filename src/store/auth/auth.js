@@ -1,26 +1,34 @@
-import { LOGIN_SUCCESS_ACTION } from './auth-actions';
+import { LOGIN_SUCCESS_ACTION, FETCH_PROFILE_ACTION, RETRIEVE_TOKEN_ACTION } from './auth-actions';
 
-const initialState = { authError: null, token: null, isLoggedIn: false };
+const initialState = {
+  email: null, firstname: null, lastname: null, username: null, userId: null, token: null,
+};
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
   case LOGIN_SUCCESS_ACTION:
-    console.log(action);
+    return {
+      ...state,
+      token: action.user.token,
+      email: action.user.email,
+      firstname: action.user.firstname,
+      lastname: action.user.lastname,
+      username: action.user.username,
+      userId: action.user.id,
+    };
+  case FETCH_PROFILE_ACTION:
+    return {
+      ...state,
+      email: action.user.email,
+      firstname: action.user.firstname,
+      lastname: action.user.lastname,
+      username: action.user.username,
+      userId: action.user.id,
+    };
+  case RETRIEVE_TOKEN_ACTION:
     return {
       ...state,
       token: action.token,
-      isLoggedIn: true,
-    };
-  case 'LOGIN_ERROR':
-    return {
-      ...state,
-      authError: action.error,
-    };
-  case 'REGISTER_SUCCESS':
-    return {
-      ...state,
-      token: action.token,
-      isLoggedIn: true,
     };
   case 'LOGOUT':
     return {
