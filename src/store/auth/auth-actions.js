@@ -1,4 +1,3 @@
-// import { checkExistCredential } from '../lib/api';
 import { pending, showError, success } from '../ui/ui-actions';
 // eslint-disable-next-line import/no-cycle
 import { runLogoutTimer } from './auth-services';
@@ -7,12 +6,27 @@ import { arrivedStartLocation } from '../location/loc-actions';
 
 export const LOGOUT_ACTION = 'LOGOUT';
 export const LOGIN_SUCCESS_ACTION = 'LOGIN_SUCCESS';
-export const REGISTER_SUCCCESS_ACTION = 'REGISTER_SUCCESS';
+export const FETCH_PROFILE_ACTION = 'FETCH_PROFILE_ACTION';
+export const RETRIEVE_TOKEN_ACTION = 'RETRIEVE_TOKEN_ACTION';
 
-export function loginConfirmAction(token) {
+export function retrieveTokenAction(token) {
+  return {
+    type: RETRIEVE_TOKEN_ACTION,
+    token,
+  };
+}
+
+export function loginConfirmAction(user) {
   return {
     type: LOGIN_SUCCESS_ACTION,
-    token,
+    user,
+  };
+}
+
+export function fetchProfileInfo(user) {
+  return {
+    type: FETCH_PROFILE_ACTION,
+    user,
   };
 }
 
@@ -28,8 +42,7 @@ export function signOut(history) {
 export function signIn(credentials, history, preLocation) {
   return async (dispatch) => {
     dispatch(pending());
-    // check pass and username from request to BE
-    // const data = await checkExistCredential(credentials);
+
     const url = `${process.env.REACT_APP_BASE_URL}/auth/signin`;
 
     const cre = `username=${credentials.username}&password=${credentials.password}`;
@@ -41,19 +54,17 @@ export function signIn(credentials, history, preLocation) {
       },
     });
 
-    console.log(response);
-
     if (response.ok) {
       const data = await response.json();
       const expirationTime = new Date(
         new Date().getTime() + +data.expiresIn * 1000,
       );
-
+      console.log(data);
       localStorage.setItem('token', data.token);
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
       runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
-      dispatch(loginConfirmAction(data.token));
+      dispatch(loginConfirmAction(data));
       dispatch(success());
       if (preLocation) {
         dispatch(arrivedStartLocation());
@@ -97,7 +108,7 @@ export function signUp(credentials, history, preLocation) {
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
       runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
-      dispatch(loginConfirmAction(data.token));
+      dispatch(loginConfirmAction(data));
       dispatch(success());
       if (preLocation) {
         dispatch(arrivedStartLocation());
@@ -116,8 +127,6 @@ export function signInByGoogle(idToken, history, preLocation) {
   return async (dispatch) => {
     dispatch(pending());
 
-    // check pass and username from request to BE
-    // const data = await checkExistCredential(credentials);
     const url = `${process.env.REACT_APP_BASE_URL}/auth/signin_google`;
 
     const respone = await fetch(url, {
@@ -144,7 +153,7 @@ export function signInByGoogle(idToken, history, preLocation) {
       localStorage.setItem('expirationTime', expirationTime.toISOString());
 
       runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
-      dispatch(loginConfirmAction(data.token));
+      dispatch(loginConfirmAction(data));
       dispatch(success());
       if (preLocation) {
         dispatch(arrivedStartLocation());
@@ -152,6 +161,54 @@ export function signInByGoogle(idToken, history, preLocation) {
       } else {
         history.replace('/');
       }
+    }
+  };
+}
+
+export function getUserProfile() {
+  return async (dispatch) => {
+    dispatch(pending());
+    const url = `${process.env.REACT_APP_BASE_URL}/user`;
+    const tokenNew = localStorage.getItem('token');
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': tokenNew,
+      },
+    });
+
+    const data = await response.json();
+    console.log(data, 'user profile');
+    if (response.ok) {
+      dispatch(fetchProfileInfo(data));
+    } else {
+      dispatch(showError(data.message));
+    }
+    dispatch(success());
+  };
+}
+
+export function updateUserProfile(userInfo) {
+  return async (dispatch) => {
+    dispatch(pending());
+    const url = `${process.env.REACT_APP_BASE_URL}/user`;
+    const tokenNew = localStorage.getItem('token');
+    const response = await fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(userInfo),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': tokenNew,
+      },
+    });
+
+    if (response.ok) {
+      dispatch(fetchProfileInfo(userInfo));
+      dispatch(success());
+    } else {
+      const data = await response.json();
+      dispatch(showError(data.message));
     }
   };
 }

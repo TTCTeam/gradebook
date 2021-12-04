@@ -1,36 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useSelector, useDispatch } from 'react-redux';
+import { CircularProgress, FormHelperText } from '@mui/material';
 import styles from './ManageProfilePage.module.css';
-
-const profile = {
-  name: 'Ha Minh Cuong',
-  username: 'haminhcuong2k',
-  avt: '',
-  studentID: '18120297',
-  gmail: 'cuongha2k@gmail.com',
-};
+import { getUserProfile, updateUserProfile } from '../../store/auth/auth-actions';
 
 export default function ManageProfilePage() {
-  const [student, setStudent] = React.useState(profile);
+  const profile = useSelector((state) => state.auth);
+  const ui = useSelector((state) => state.ui);
+  const dispatch = useDispatch();
   const [isEdit, setIsEdit] = React.useState(false);
-  const [name, setName] = React.useState(student.name);
-  const [username, setUsername] = React.useState(student.username);
-  const [studentID, setStudentID] = React.useState(student.studentID);
-  const [gmail, setGmail] = React.useState(student.gmail);
+  const [firstname, setFirstName] = React.useState(profile.firstname);
+  const [lastname, setLastName] = React.useState(profile.lastname);
+  const [username, setStudentID] = React.useState(profile.username);
+  const [email, setEmail] = React.useState(profile.email);
+
+  useEffect(() => {
+    if (!profile.firstname) {
+      dispatch(getUserProfile());
+    }
+  }, []);
+  useEffect(() => {
+    if (profile.firstname) {
+      setFirstName(profile.firstname);
+      setLastName(profile.lastname);
+      setStudentID(profile.username);
+      setEmail(profile.email);
+    }
+  }, [profile]);
 
   const submitUpdate = () => {
     const updated = {
-      name,
+      firstname,
+      lastname,
       username,
-      studentID,
-      gmail,
+      email,
     };
 
-    console.log(updated);
-    setStudent(profile);
-    setIsEdit(false);
+    console.log(updated, 'final');
+    dispatch(updateUserProfile(updated));
   };
 
   const openChange = () => {
@@ -42,60 +52,65 @@ export default function ManageProfilePage() {
       <div className={styles.title}>Your Profile</div>
       <Avatar
         className={styles.avatar}
-        alt={student.name}
-        src={student.avt}
-        sx={{ width: 200, height: 200 }}
-      />
+        alt={`${firstname} ${lastname}`}
+        sx={{ width: 200, height: 200, fontSize: 80 }}
+      >
+        {firstname ? `${firstname[0]}${lastname[0]}` : ''}
+
+      </Avatar>
 
       <div className={styles.form}>
         <div className={styles.field}>
-          <div className={styles.fieldTitle}>Name</div>
+          <div className={styles.fieldTitle}>First Name</div>
           <TextField
             hiddenLabel
-            defaultValue={name}
+            value={firstname || ''}
             variant="outlined"
             disabled
             size="small"
             sx={{ width: 700, height: 40 }}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className={styles.field}>
-          <div className={styles.fieldTitle}>Username</div>
+          <div className={styles.fieldTitle}>Last Name</div>
           <TextField
             hiddenLabel
-            defaultValue={username}
+            value={lastname || ''}
             variant="outlined"
             disabled
             size="small"
             sx={{ width: 700, height: 40 }}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
+
         <div className={styles.field}>
           <div className={styles.fieldTitle}>Student ID</div>
           <TextField
             hiddenLabel
-            defaultValue={studentID}
+            value={username || ''}
             variant="outlined"
             disabled={!isEdit}
             size="small"
+            error={ui.request === 'error'}
             sx={{ width: 700, height: 40 }}
             onChange={(e) => setStudentID(e.target.value)}
           />
         </div>
         <div className={styles.field}>
-          <div className={styles.fieldTitle}>Gmail</div>
+          <div className={styles.fieldTitle}>Email</div>
           <TextField
             hiddenLabel
-            defaultValue={gmail}
+            value={email || ''}
             variant="outlined"
-            disabled={!isEdit}
+            disabled
             size="small"
             sx={{ width: 700, height: 40 }}
-            onChange={(e) => setGmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+        <FormHelperText error={ui.request === 'error'}>{ui.message}</FormHelperText>
       </div>
 
       {isEdit ? (
@@ -114,7 +129,7 @@ export default function ManageProfilePage() {
             onClick={submitUpdate}
             variant="contained"
           >
-            Save changes
+            {ui.request === 'pending' ? <CircularProgress /> : 'Save changes'}
           </Button>
         </div>
       ) : (

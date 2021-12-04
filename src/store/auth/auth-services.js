@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { retrieveStoredToken } from '../../utils/calc';
-import { loginConfirmAction, signOut } from './auth-actions';
+import { retrieveTokenAction, signOut } from './auth-actions';
 
 let logoutTimer;
 
@@ -12,9 +12,7 @@ export function runLogoutTimer(dispatch, timer, history) {
 export function checkAutoLogin(dispatch, history, location) {
   const tokenData = retrieveStoredToken();
   if (tokenData) {
-    const user = {};
-    user.token = tokenData.token;
-    dispatch(loginConfirmAction(user));
+    dispatch(retrieveTokenAction(tokenData.token));
     runLogoutTimer(dispatch, tokenData.duration, history);
     history.replace(location.pathname + location.search);
   }
