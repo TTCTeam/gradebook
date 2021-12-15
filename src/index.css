@@ -36,3 +36,7 @@ a {
 .link {
   color: black;
 }
+
+* {
+  box-sizing: border-box;
+}

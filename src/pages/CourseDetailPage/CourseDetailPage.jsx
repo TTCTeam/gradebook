@@ -8,6 +8,7 @@ import './CourseDetailPage.css';
 import Stream from '../../components/Stream/Stream';
 import People from '../../components/People/People';
 import { getCourse, getLecturers, getStudents } from '../../api/courseAPI';
+import Grades from '../../components/Grades/Grades';
 
 export default function CourseDetailPage() {
   const [course, setCourse] = useState({});
@@ -49,11 +50,13 @@ export default function CourseDetailPage() {
           <TabList className="tabList" onChange={handleChange}>
             <Tab className="tab" label="Stream" value="stream" />
             <Tab className="tab" label="People" value="people" />
+            <Tab className="tab" label="Grades" value="grades" />
           </TabList>
         </TabContext>
       </Box>
 
       <div className="subPage">
+        {value === 'stream' && <Stream classroom={course} />}
         {value === 'people' && (
           <People
             classroom={course}
@@ -61,7 +64,8 @@ export default function CourseDetailPage() {
             listLecturer={listLecturer}
           />
         )}
-        {value === 'stream' && <Stream classroom={course} />}
+
+        {value === 'grades' && <Grades />}
       </div>
     </div>
   );

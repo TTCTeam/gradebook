@@ -38,7 +38,7 @@ const AllCourses = () => {
   }
   return (
     <>
-      <Typography gutterBottom variant="h4" component="div" fontWeight="500">
+      <Typography gutterBottom variant="h4" component="div" fontWeight="500" align="center">
         All Courses
       </Typography>
       <CoursesList courses={loadedCourses} onAddedCourse={addedCourseHandler} />
