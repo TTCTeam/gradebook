@@ -1,13 +1,13 @@
-/* eslint-disable object-curly-newline */
-import React from 'react';
-import './GradeTitle.css';
+import React, { useRef } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { readCSV, writeCSV } from '../../../service/csvFile';
+import './GradeTitle.css';
 
 function cut(name) {
-  let newName = '';
+  let newName;
   if (name.length > 13) {
     newName = name.substr(0, 13);
     newName += '...';
@@ -26,6 +26,8 @@ function GradeTitle({
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const csvInputRef = useRef();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -36,6 +38,26 @@ function GradeTitle({
   let nameofclass = 'grade-title';
   if (isName) nameofclass = 'grade-title-name';
   if (isID) nameofclass = 'grade-title-id';
+
+  const openChooseFileDialog = () => {
+    handleClose();
+    csvInputRef.current.click();
+  };
+
+  const exportData = () => {
+    handleClose();
+    const data = [{ cot1: 'Đoàn Minh Tân', cot2: 1 }, { cot1: 0, cot2: 1 }, { cot1: 0, cot2: 1 }];
+    const f = ['Student ID', 'Full name'];
+    writeCSV('ten file.csv', data, f);
+  };
+
+  const handleOnImport = async () => {
+    if (csvInputRef) {
+      const file = csvInputRef.current.files[0];
+      const data = await readCSV(file, ['hehe', 'haha']);
+      console.log(data);
+    }
+  };
 
   console.log(assignmentId);
   return (
@@ -71,9 +93,10 @@ function GradeTitle({
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Import CSV</MenuItem>
-        <MenuItem onClick={handleClose}>Export CSV</MenuItem>
+        <MenuItem onClick={openChooseFileDialog}>Import CSV</MenuItem>
+        <MenuItem onClick={exportData}>Export CSV</MenuItem>
       </Menu>
+      <input ref={csvInputRef} type="file" accept=".csv" style={{ display: 'none' }} onInput={handleOnImport} />
     </div>
   );
 }
