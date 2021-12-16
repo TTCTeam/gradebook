@@ -26,6 +26,10 @@ const students = [
         assignmentId: 3,
         point: 100,
       },
+      {
+        assignmentId: 4,
+        point: 100,
+      },
     ],
   },
   {
@@ -34,7 +38,7 @@ const students = [
     points: [
       {
         assignmentId: 1,
-        point: 100,
+        point: 90,
       },
       {
         assignmentId: 2,
@@ -42,7 +46,11 @@ const students = [
       },
       {
         assignmentId: 3,
-        point: 90,
+        point: 100,
+      },
+      {
+        assignmentId: 4,
+        point: 100,
       },
     ],
   },
@@ -52,15 +60,19 @@ const students = [
     points: [
       {
         assignmentId: 1,
-        point: 100,
+        point: 90,
       },
       {
         assignmentId: 2,
-        point: 70,
+        point: 80,
       },
       {
         assignmentId: 3,
-        point: 50,
+        point: 100,
+      },
+      {
+        assignmentId: 4,
+        point: 100,
       },
     ],
   },
@@ -70,15 +82,19 @@ const students = [
     points: [
       {
         assignmentId: 1,
-        point: 100,
+        point: 90,
       },
       {
         assignmentId: 2,
-        point: 70,
+        point: 80,
       },
       {
         assignmentId: 3,
-        point: 50,
+        point: 100,
+      },
+      {
+        assignmentId: 4,
+        point: 100,
       },
     ],
   },
@@ -112,13 +128,8 @@ export default function Grades() {
       </Backdrop>
       <div className="gradesboard">
         <div className="gradesboard__titles">
-          <GradeTitle
-            className="title"
-            name="Student ID"
-            width={150}
-            isID={true}
-          />
-          <GradeTitle className="title" name="Name" width={260} />
+          <GradeTitle className="title" name="Student ID" isID={true} />
+          <GradeTitle isName={true} className="title" name="Name" />
           {sortByField(assignments, 'order').map((assignment) => (
             <GradeTitle
               key={assignment.id}
@@ -126,33 +137,21 @@ export default function Grades() {
               name={assignment.name}
               point={assignment.point}
               assignmentId={assignment.id}
-              width={170}
             />
           ))}
-          <GradeTitle className="title" name="Tổng kết" width={170} />
+          <GradeTitle className="title" name="Tổng kết" />
         </div>
 
         {students.map((student) => (
           <div key={student.id} className="gradesboard__row">
-            <PointBox
-              className="title"
-              content={student.id}
-              width={150}
-              isID={true}
-            />
-            <PointBox
-              isName={true}
-              className="title"
-              content={student.name}
-              width={260}
-            />
+            <PointBox className="title" content={student.id} isID={true} />
+            <PointBox isName={true} className="title" content={student.name} />
             {student.points.map((point) => (
               <PointBox
                 studentId={student.id}
                 key={point.assignmentId}
                 className="title"
                 content={point.point}
-                width={170}
               />
             ))}
           </div>

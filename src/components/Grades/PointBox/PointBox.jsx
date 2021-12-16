@@ -37,14 +37,16 @@ function stringAvatar(name) {
 function PointBox({
   content,
   assignmentId = '',
-  width,
   isName = false,
   isID = false,
 }) {
   console.log(assignmentId);
   const [point, setPoint] = useState(content);
+  let nameofclass = 'point-box';
+  if (isName) nameofclass = 'point-box-name';
+  if (isID) nameofclass = 'point-box-id';
   return (
-    <div className="point-box" style={{ width }}>
+    <div className={nameofclass}>
       <div className="container">
         {isName && (
           <Avatar className="avatar" alt="avt" {...stringAvatar(content)} />
@@ -54,7 +56,7 @@ function PointBox({
         ) : (
           <div className="title">
             <TextField
-              id="input-with-icon-textfield"
+              className="textfield"
               label=""
               variant="standard"
               value={point}

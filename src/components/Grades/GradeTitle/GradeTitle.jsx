@@ -21,7 +21,7 @@ function GradeTitle({
   name,
   point = '',
   assignmentId = '',
-  width,
+  isName = false,
   isID = false,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,9 +33,13 @@ function GradeTitle({
     setAnchorEl(null);
   };
 
+  let nameofclass = 'grade-title';
+  if (isName) nameofclass = 'grade-title-name';
+  if (isID) nameofclass = 'grade-title-id';
+
   console.log(assignmentId);
   return (
-    <div className="grade-title" style={{ width }}>
+    <div className={nameofclass}>
       <div className="container">
         <div className="title">{`${cut(name)}`}</div>
         {point ? (
