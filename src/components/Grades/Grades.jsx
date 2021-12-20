@@ -100,7 +100,7 @@ const students = [
   },
 ];
 
-export default function Grades() {
+export default function Grades({ course }) {
   const [assignments, setAssignments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
@@ -118,6 +118,8 @@ export default function Grades() {
     fetchAssignments(id);
   }, []);
 
+  console.log(course);
+
   return (
     <div className="grades">
       <Backdrop
@@ -128,10 +130,21 @@ export default function Grades() {
       </Backdrop>
       <div className="gradesboard">
         <div className="gradesboard__titles">
-          <GradeTitle className="title" name="Student ID" isID={true} />
-          <GradeTitle isName={true} className="title" name="Name" />
+          <GradeTitle
+            course={course}
+            className="title"
+            name="Student ID"
+            isID={true}
+          />
+          <GradeTitle
+            course={course}
+            isName={true}
+            className="title"
+            name="Name"
+          />
           {sortByField(assignments, 'order').map((assignment) => (
             <GradeTitle
+              course={course}
               key={assignment.id}
               className="title"
               name={assignment.name}
@@ -139,7 +152,7 @@ export default function Grades() {
               assignmentId={assignment.id}
             />
           ))}
-          <GradeTitle className="title" name="Tổng kết" />
+          <GradeTitle course={course} className="title" name="Tổng kết" />
         </div>
 
         {students.map((student) => (
