@@ -60,9 +60,7 @@ function GradeTitle({
   const handleOnImport = async () => {
     if (csvInputRef) {
       const file = csvInputRef.current.files[0];
-      const data = isName
-        ? await readCSV(file, ['studentId', 'fullName'])
-        : await readCSV(file, ['studentId', 'point']);
+      const data = await readCSV(file, isName ? ['studentId', 'fullName'] : ['studentId', 'point']);
       console.log(data);
     }
   };
