@@ -1,10 +1,12 @@
 import React, { useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { readCSV, writeCSV } from '../../../service/csvFile';
 import './GradeTitle.css';
+import { uploadAssignmentList } from '../../../api/assignmentAPI';
 
 function cut(name) {
   let newName;
@@ -27,6 +29,7 @@ function GradeTitle({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const csvInputRef = useRef();
+  const { id } = useParams();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,8 +57,10 @@ function GradeTitle({
   const handleOnImport = async () => {
     if (csvInputRef) {
       const file = csvInputRef.current.files[0];
-      const data = await readCSV(file, ['hehe', 'haha']);
-      console.log(data);
+      const data = await readCSV(file, isID ? ['studentId', 'fullname'] : ['point', 'studentId']);
+      console.log(data, 'data');
+      const response = await uploadAssignmentList(assignmentId, id, data);
+      console.log(response, 'response');
     }
   };
 

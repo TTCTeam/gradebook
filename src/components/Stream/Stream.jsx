@@ -24,12 +24,16 @@ function Stream({ classroom }) {
 
   useEffect(() => {
     const fetchAssignments = async (courseId) => {
+      console.log(isLoading, 'sdfsd');
       setIsLoading(true);
       const res = await getAllAssignment(courseId);
       if (res.status === 200) {
         setAssignments(res.data);
       }
+      console.log(isLoading, 'sdfsd');
+
       setIsLoading(false);
+      console.log(isLoading, 'sdfsd');
     };
 
     fetchAssignments(id);

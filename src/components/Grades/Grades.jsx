@@ -112,6 +112,7 @@ export default function Grades() {
       if (res.status === 200) {
         setAssignments(res.data);
       }
+
       setIsLoading(false);
     };
 

@@ -72,3 +72,48 @@ export async function reorderAssignment(courseId, assignments) {
 
   return response;
 }
+
+export async function uploadStudentList(courseId, studentList) {
+  const url = `${process.env.REACT_APP_BASE_URL}/assignments/${courseId}/studentlist`;
+  const token = localStorage.getItem('token');
+
+  const response = await axios.put(url, studentList, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  });
+
+  return response;
+}
+
+export async function getStudentList(courseId) {
+  const url = `${process.env.REACT_APP_BASE_URL}/assignments/${courseId}/studentlist`;
+  const token = localStorage.getItem('token');
+
+  const response = await axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  });
+  if (response.status === 200) {
+    return response.data;
+  }
+
+  return [];
+}
+
+export async function uploadAssignmentList(assignmentId, courseId, studentList) {
+  const url = `${process.env.REACT_APP_BASE_URL}/assignments/${assignmentId}/${courseId}`;
+  const token = localStorage.getItem('token');
+
+  const response = await axios.put(url, studentList, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  });
+
+  return response;
+}
