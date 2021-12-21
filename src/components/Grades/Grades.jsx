@@ -59,7 +59,7 @@ export default function Grades({ course }) {
 
   const generateHandlers = (assignment, courseId, studentsData) => ({
     onImport: async (file) => {
-      const data = await readCSV(file, ['studentId', 'point']);
+      const data = await readCSV(file, [{ from: 'Student ID', to: 'studentId' }, { from: 'Point', to: 'point' }]);
       const response = await uploadAssignmentList(
         assignment.id,
         courseId,
@@ -67,7 +67,7 @@ export default function Grades({ course }) {
       );
     },
     onExport: async () => {
-      const fields = ['Student ID', 'Point'];
+      const fields = [{ from: 'studentId', to: 'Student ID' }, { from: 'point', to: 'Point' }];
       const nameFile = `${courseId}_${assignment.name}.csv`;
       const data = studentsData.map((student) => ({
         studentId: student.studentId,
