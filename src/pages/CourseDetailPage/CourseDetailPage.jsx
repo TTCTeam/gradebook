@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import { useEffect, useState } from 'react';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -5,10 +6,12 @@ import Box from '@mui/material/Box';
 import TabList from '@mui/lab/TabList';
 import { useParams } from 'react-router-dom';
 import './CourseDetailPage.css';
+import StudentGradeBoard from '../../components/StudentGradeboard/StudentGradeboard';
 import Stream from '../../components/Stream/Stream';
 import People from '../../components/People/People';
 import { getCourse, getLecturers, getStudents } from '../../api/courseAPI';
 import Grades from '../../components/Grades/Grades';
+import MemberRoles from '../../constant/course';
 
 export default function CourseDetailPage() {
   const [course, setCourse] = useState({});
@@ -65,7 +68,12 @@ export default function CourseDetailPage() {
           />
         )}
 
-        {value === 'grades' && <Grades course={course} />}
+        {value === 'grades' &&
+          (course.role === MemberRoles.STUDENT ? (
+            <StudentGradeBoard course={course} />
+          ) : (
+            <Grades course={course} />
+          ))}
       </div>
     </div>
   );

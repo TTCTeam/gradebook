@@ -59,7 +59,7 @@ function PointBox({
               className="textfield"
               label=""
               variant="standard"
-              value={point}
+              value={point || ''}
               onChange={(e) => setPoint(e.target.value)}
             />
           </div>

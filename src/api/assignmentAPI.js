@@ -104,6 +104,23 @@ export async function getStudentList(courseId) {
   return [];
 }
 
+export async function getGradeBoard(courseId) {
+  const url = `${process.env.REACT_APP_BASE_URL}/assignments/${courseId}`;
+  const token = localStorage.getItem('token');
+
+  const response = await axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  });
+  if (response.status === 200) {
+    return response;
+  }
+
+  return [];
+}
+
 export async function uploadAssignmentList(assignmentId, courseId, studentList) {
   const url = `${process.env.REACT_APP_BASE_URL}/assignments/${assignmentId}/${courseId}`;
   const token = localStorage.getItem('token');

@@ -1,12 +1,11 @@
+/* eslint-disable comma-dangle */
 import React, { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { readCSV, writeCSV } from '../../../service/csvFile';
 import './GradeTitle.css';
-import { uploadAssignmentList } from '../../../api/assignmentAPI';
 
 function cut(name) {
   let newName;
@@ -21,16 +20,18 @@ function cut(name) {
 
 function GradeTitle({
   name,
-  point = '',
-  assignmentId = '',
+  assignment,
   isName = false,
   isID = false,
-  course,
+  handlers,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const csvInputRef = useRef();
   const { id } = useParams();
+
+  console.log(id);
+  console.log('Assignment ', assignment);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,33 +51,22 @@ function GradeTitle({
 
   const exportData = () => {
     handleClose();
-    const data = [
-      { cot1: 'Đoàn Minh Tân', cot2: 1 },
-      { cot1: 0, cot2: 1 },
-      { cot1: 0, cot2: 1 },
-    ];
-    const f = isName ? ['Student ID', 'Full name'] : ['Student ID', 'Point'];
-    const nameFile = `${course.course.id}-${name}.csv`;
-    writeCSV(nameFile, data, f);
+    handlers.onExport();
   };
 
   const handleOnImport = async () => {
     if (csvInputRef) {
       const file = csvInputRef.current.files[0];
-      const data = await readCSV(file, isID ? ['studentId', 'fullname'] : ['point', 'studentId']);
-      console.log(data, 'data');
-      const response = await uploadAssignmentList(assignmentId, id, data);
-      console.log(response, 'response');
+      handlers.onImport(file);
     }
   };
 
-  console.log(assignmentId);
   return (
     <div className={nameofclass}>
       <div className="container">
         <div className="title">{`${cut(name)}`}</div>
-        {point ? (
-          <div className="point">{`${point}`}</div>
+        {assignment?.point ? (
+          <div className="point">{`${assignment?.point}`}</div>
         ) : (
           <div className="point"> </div>
         )}
