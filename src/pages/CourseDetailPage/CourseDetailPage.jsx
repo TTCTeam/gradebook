@@ -65,7 +65,7 @@ export default function CourseDetailPage() {
           />
         )}
 
-        {value === 'grades' && <Grades />}
+        {value === 'grades' && <Grades course={course} />}
       </div>
     </div>
   );

@@ -25,6 +25,7 @@ function GradeTitle({
   assignmentId = '',
   isName = false,
   isID = false,
+  course,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -49,9 +50,14 @@ function GradeTitle({
 
   const exportData = () => {
     handleClose();
-    const data = [{ cot1: 'Đoàn Minh Tân', cot2: 1 }, { cot1: 0, cot2: 1 }, { cot1: 0, cot2: 1 }];
-    const f = ['Student ID', 'Full name'];
-    writeCSV('ten file.csv', data, f);
+    const data = [
+      { cot1: 'Đoàn Minh Tân', cot2: 1 },
+      { cot1: 0, cot2: 1 },
+      { cot1: 0, cot2: 1 },
+    ];
+    const f = isName ? ['Student ID', 'Full name'] : ['Student ID', 'Point'];
+    const nameFile = `${course.course.id}-${name}.csv`;
+    writeCSV(nameFile, data, f);
   };
 
   const handleOnImport = async () => {
@@ -100,8 +106,15 @@ function GradeTitle({
       >
         <MenuItem onClick={openChooseFileDialog}>Import CSV</MenuItem>
         <MenuItem onClick={exportData}>Export CSV</MenuItem>
+        <MenuItem>Public for student</MenuItem>
       </Menu>
-      <input ref={csvInputRef} type="file" accept=".csv" style={{ display: 'none' }} onInput={handleOnImport} />
+      <input
+        ref={csvInputRef}
+        type="file"
+        accept=".csv"
+        style={{ display: 'none' }}
+        onInput={handleOnImport}
+      />
     </div>
   );
 }
