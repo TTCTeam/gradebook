@@ -105,9 +105,6 @@ export default function Grades({ course }) {
         studentId: student.studentId,
         fullname: student.fullname,
       }));
-
-      console.log(data, 'data');
-
       writeCSV(nameFile, data, fields);
     },
   };
@@ -142,7 +139,6 @@ export default function Grades({ course }) {
         ...studentAssignments,
         finalPoint,
       };
-      console.log(object);
       return object;
     });
 

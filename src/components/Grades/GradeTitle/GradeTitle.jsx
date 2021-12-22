@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AssignmentStatus from '../../../constant/gradeboard';
 import './GradeTitle.css';
 
 function cut(name) {
@@ -46,14 +47,18 @@ function GradeTitle({
 
   const exportData = () => {
     handleClose();
-    handlers.onExport();
+    handlers?.onExport();
   };
 
   const handleOnImport = async () => {
     if (csvInputRef) {
       const file = csvInputRef.current.files[0];
-      handlers.onImport(file);
+      handlers?.onImport(file);
     }
+  };
+
+  const onPublicGradeColumn = () => {
+    handleClose();
   };
 
   return (
@@ -91,7 +96,9 @@ function GradeTitle({
       >
         <MenuItem onClick={openChooseFileDialog}>Import CSV</MenuItem>
         <MenuItem onClick={exportData}>Export CSV</MenuItem>
-        <MenuItem>Public for student</MenuItem>
+        {assignment?.status === AssignmentStatus.DRAFT && (
+          <MenuItem onClick={onPublicGradeColumn}>Mark as finalized</MenuItem>
+        )}
       </Menu>
       <input
         ref={csvInputRef}
