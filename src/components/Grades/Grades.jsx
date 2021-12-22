@@ -151,9 +151,16 @@ export default function Grades({ course }) {
 
   return (
     <div>
-      <Button onClick={exportFullGradeBoard} variant="contained">
-        Export Full Gradeboard
-      </Button>
+      <div className="export-full-btn">
+        <Button
+          sx={{ marginBottom: 2, marginLeft: 'auto' }}
+          onClick={exportFullGradeBoard}
+          variant="contained"
+        >
+          Export Full Gradeboard
+        </Button>
+      </div>
+
       <div className="grades">
         <Backdrop
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
