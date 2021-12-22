@@ -147,3 +147,17 @@ export async function getAllAssignmentByUser(courseId) {
 
   return response;
 }
+
+export async function updatePoint(courseId, userAssignmentId, point) {
+  const url = `${process.env.REACT_APP_BASE_URL}/user/${courseId}/assignments/${userAssignmentId}`;
+  const token = localStorage.getItem('token');
+
+  const response = await axios.put(url, { point }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  });
+
+  return response;
+}

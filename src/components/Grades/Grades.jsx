@@ -1,17 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable comma-dangle */
 /* eslint-disable react/jsx-boolean-value */
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Grades.css';
 import Backdrop from '@mui/material/Backdrop';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useParams } from 'react-router-dom';
 import {
-  getAllAssignment,
-  getGradeBoard,
-  uploadAssignmentList,
-  uploadStudentList,
+  getAllAssignment, getGradeBoard, uploadAssignmentList, uploadStudentList,
 } from '../../api/assignmentAPI';
 import { sortByField } from '../../utils/common';
 import GradeTitle from './GradeTitle/GradeTitle';
@@ -133,13 +130,12 @@ export default function Grades({ course }) {
         (acc, cur) => acc + cur.point,
         0
       );
-      const object = {
+      return {
         studentId: student.studentId,
         fullname: student.fullname,
         ...studentAssignments,
         finalPoint,
       };
-      return object;
     });
 
     writeCSV(nameFile, data, fields);
@@ -184,7 +180,7 @@ export default function Grades({ course }) {
 
           {students.map((student) => (
             <div key={student.id} className="gradesboard__row">
-              <PointBox content={student.id} isID={true} />
+              <PointBox content={student.studentId} isID={true} />
               <PointBox isName={true} content={student.fullname} />
               {sortByField(assignments, 'order').map((assignment) => {
                 const studentAssignment = student.assignments.find(
@@ -194,6 +190,7 @@ export default function Grades({ course }) {
                   <PointBox
                     key={assignment.id}
                     content={studentAssignment?.point}
+                    assignmentId={studentAssignment?.id}
                   />
                 );
               })}

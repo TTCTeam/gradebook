@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable object-curly-newline */
 import React, { useState } from 'react';
 import './PointBox.css';
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router-dom';
+import { updatePoint } from '../../../api/assignmentAPI';
 
 function stringToColor(string) {
   let hash = 0;
@@ -40,11 +41,20 @@ function PointBox({
   isName = false,
   isID = false,
 }) {
+  const { id } = useParams();
   console.log(assignmentId);
   const [point, setPoint] = useState(content);
   let nameofclass = 'point-box';
   if (isName) nameofclass = 'point-box-name';
   if (isID) nameofclass = 'point-box-id';
+
+  const handleUpdatePoint = async () => {
+    if (!point) {
+      return;
+    }
+    await updatePoint(id, assignmentId, point);
+  };
+
   return (
     <div className={nameofclass}>
       <div className="container">
@@ -61,6 +71,7 @@ function PointBox({
               variant="standard"
               value={point || ''}
               onChange={(e) => setPoint(e.target.value)}
+              onBlur={handleUpdatePoint}
             />
           </div>
         )}
