@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable comma-dangle */
 import React, { useRef, useState } from 'react';
 import Menu from '@mui/material/Menu';
@@ -26,13 +27,12 @@ function GradeTitle({
   isName = false,
   isID = false,
   handlers,
+  updateStudents,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const csvInputRef = useRef();
   const [status, setStatus] = useState(assignment?.status);
-
-  console.log(status);
 
   const { id } = useParams();
 
@@ -70,11 +70,12 @@ function GradeTitle({
     const res = await updateAssignment(id, assignmentId, item);
     if (res.status === 200) {
       setStatus(AssignmentStatus.PUBLIC);
+      handleClose();
+      alert('Mark as finalized');
     } else {
-      // eslint-disable-next-line
       alert('Edit failed!');
     }
-    handleClose();
+    updateStudents();
   };
 
   return (

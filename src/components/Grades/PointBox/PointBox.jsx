@@ -40,9 +40,10 @@ function PointBox({
   assignmentId = '',
   isName = false,
   isID = false,
+  disabled = false,
+  loading,
 }) {
   const { id } = useParams();
-  console.log(assignmentId);
   const [point, setPoint] = useState(content);
   let nameofclass = 'point-box';
   if (isName) nameofclass = 'point-box-name';
@@ -53,6 +54,7 @@ function PointBox({
       return;
     }
     await updatePoint(id, assignmentId, point);
+    loading();
   };
 
   return (
@@ -72,6 +74,7 @@ function PointBox({
               value={point || ''}
               onChange={(e) => setPoint(e.target.value)}
               onBlur={handleUpdatePoint}
+              disabled={disabled}
             />
           </div>
         )}

@@ -54,7 +54,7 @@ export default function StudentGradeBoard() {
         <div className="title">Your Point</div>
       </div>
 
-      {student.assignments?.map((assignment) => (
+      {student?.map((assignment) => (
         <Row
           key={assignment.assignmentId}
           assignment={assignment}

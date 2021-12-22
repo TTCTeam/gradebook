@@ -8,7 +8,10 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useParams } from 'react-router-dom';
 import {
-  getAllAssignment, getGradeBoard, uploadAssignmentList, uploadStudentList,
+  getAllAssignment,
+  getGradeBoard,
+  uploadAssignmentList,
+  uploadStudentList,
 } from '../../api/assignmentAPI';
 import { sortByField } from '../../utils/common';
 import GradeTitle from './GradeTitle/GradeTitle';
@@ -31,19 +34,24 @@ export default function Grades({ course }) {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    const fetchAssignments = async (courseId) => {
-      setIsLoading(true);
-      const res = await getAllAssignment(courseId);
-      if (res.status === 200) {
-        setAssignments(res.data);
-      }
-      setIsLoading(false);
-    };
+  const fetchAssignments = async (courseId) => {
+    setIsLoading(true);
+    const res = await getAllAssignment(courseId);
+    if (res.status === 200) {
+      setAssignments(res.data);
+    }
+    setIsLoading(false);
+  };
 
+  useEffect(() => {
     fetchAssignments(id);
     fetchStudents(id);
   }, []);
+
+  const updateStudents = () => {
+    fetchAssignments(id);
+    fetchStudents(id);
+  };
 
   if (assignments.length > 0) {
     totalAssignmentPoint = assignments.reduce((acc, cur) => acc + cur.point, 0);
@@ -169,6 +177,7 @@ export default function Grades({ course }) {
                 name={assignment.name}
                 assignment={assignment}
                 handlers={generateHandlers(assignment, id, students)}
+                updateStudents={updateStudents}
               />
             ))}
             <GradeTitle
@@ -188,13 +197,16 @@ export default function Grades({ course }) {
                 );
                 return (
                   <PointBox
+                    disabled={assignment.status}
                     key={assignment.id}
                     content={studentAssignment?.point}
                     assignmentId={studentAssignment?.id}
+                    loading={updateStudents}
                   />
                 );
               })}
               <PointBox
+                disabled={true}
                 studentId={student.id}
                 content={student.assignments.reduce(
                   (acc, cur) => acc + cur.point,
