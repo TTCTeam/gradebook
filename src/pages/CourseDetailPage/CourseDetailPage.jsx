@@ -26,7 +26,6 @@ export default function CourseDetailPage() {
   useEffect(() => {
     const fetchCourse = async (courseId) => {
       const res = await getCourse(courseId);
-      console.log(res.data);
       setCourse(res.data);
     };
     const fetchStudents = async (courseId) => {

@@ -5,12 +5,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 5px solid #1976d2;
 }
 
 .student-gradeboard .header {
   display: flex;
-  width: 100%;
+  width: 50%;
   align-items: center;
 }
 

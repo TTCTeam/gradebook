@@ -68,6 +68,7 @@ export default function Grades({ course }) {
         courseId,
         data
       );
+      fetchStudents(id);
     },
     onExport: async () => {
       const fields = [
@@ -196,7 +197,7 @@ export default function Grades({ course }) {
                 return (
                   <PointBox
                     key={assignment.id}
-                    content={studentAssignment.point}
+                    content={studentAssignment?.point}
                   />
                 );
               })}

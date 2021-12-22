@@ -3,25 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getAllAssignment } from '../../api/assignmentAPI';
+import {
+  getAllAssignment,
+  getAllAssignmentByUser,
+} from '../../api/assignmentAPI';
 import './StudentGradeboard.css';
 import Row from './Row';
-
-const initData = {
-  studentId: 1,
-  assignments: [
-    {
-      assignmentId: 11,
-      point: 90,
-      status: 1,
-    },
-    {
-      assignmentId: 12,
-      point: 80,
-      status: 1,
-    },
-  ],
-};
 
 export default function StudentGradeBoard() {
   const [student, setStudent] = useState([]);
@@ -39,12 +26,18 @@ export default function StudentGradeBoard() {
       setIsLoading(false);
     };
 
-    const fetchStudent = () => {
-      setStudent(initData);
+    const fetchStudent = async (courseId) => {
+      setIsLoading(true);
+      const res = await getAllAssignmentByUser(courseId);
+      if (res.status === 200) {
+        setStudent(res.data);
+        console.log(res.data);
+      }
+      setIsLoading(false);
     };
 
     fetchAssignments(id);
-    fetchStudent();
+    fetchStudent(id);
   }, []);
 
   return (
