@@ -59,7 +59,10 @@ export default function Grades({ course }) {
 
   const generateHandlers = (assignment, courseId, studentsData) => ({
     onImport: async (file) => {
-      const data = await readCSV(file, [{ from: 'Student ID', to: 'studentId' }, { from: 'Point', to: 'point' }]);
+      const data = await readCSV(file, [
+        { from: 'Student ID', to: 'studentId' },
+        { from: 'Point', to: 'point' },
+      ]);
       const response = await uploadAssignmentList(
         assignment.id,
         courseId,
@@ -67,12 +70,15 @@ export default function Grades({ course }) {
       );
     },
     onExport: async () => {
-      const fields = [{ from: 'studentId', to: 'Student ID' }, { from: 'point', to: 'Point' }];
+      const fields = [
+        { from: 'studentId', to: 'Student ID' },
+        { from: 'point', to: 'Point' },
+      ];
       const nameFile = `${courseId}_${assignment.name}.csv`;
       const data = studentsData.map((student) => ({
         studentId: student.studentId,
-        point: student.points.find(
-          (point) => point.assignmentId === assignment.id
+        point: student.assignments.find(
+          (item) => item.assignmentId === assignment.id
         ).point,
       }));
 
@@ -82,32 +88,46 @@ export default function Grades({ course }) {
 
   const nameHandlers = {
     onImport: async (file) => {
-      const data = await readCSV(file, ['studentId', 'fullname']);
+      const data = await readCSV(file, [
+        { from: 'Student ID', to: 'studentId' },
+        { from: 'Full Name', to: 'fullname' },
+      ]);
       onUploadStudentList(data);
     },
     onExport: async () => {
-      const fields = ['Student ID', 'Full Name'];
+      const fields = [
+        { from: 'studentId', to: 'Student ID' },
+        { from: 'fullname', to: 'Full Name' },
+      ];
       const nameFile = `${id}_Students.csv`;
       const data = students.map((student) => ({
         studentId: student.studentId,
-        fullName: student.fullname,
+        fullname: student.fullname,
       }));
+
+      console.log(data, 'data');
 
       writeCSV(nameFile, data, fields);
     },
   };
 
   const exportFullGradeBoard = () => {
-    const fields = ['Student ID', 'Full Name'];
-    const assignmentNames = assignments.map((assignment) => assignment.name);
+    const fields = [
+      { from: 'studentId', to: 'Student ID' },
+      { from: 'fullname', to: 'Full Name' },
+    ];
+    const assignmentNames = assignments.map((assignment) => ({
+      from: `${assignment.id}`,
+      to: `${assignment.name}`,
+    }));
     fields.push(...assignmentNames);
-    fields.push('Final');
+    fields.push({ from: 'finalPoint', to: 'Final' });
     const nameFile = `${id}_FullGradeBoard.csv`;
     const data = students.map((student) => {
       const studentAssignments = {};
       student.assignments.forEach((assignment) => {
         Object.assign(studentAssignments, {
-          [assignment.id]: assignment.point,
+          [assignment.assignmentId]: assignment.point,
         });
       });
 
@@ -117,7 +137,7 @@ export default function Grades({ course }) {
       );
       const object = {
         studentId: student.studentId,
-        fullName: student.fullname,
+        fullname: student.fullname,
         ...studentAssignments,
         finalPoint,
       };
@@ -169,13 +189,17 @@ export default function Grades({ course }) {
             <div key={student.id} className="gradesboard__row">
               <PointBox content={student.id} isID={true} />
               <PointBox isName={true} content={student.fullname} />
-              {student.assignments.map((point) => (
-                <PointBox
-                  studentId={student.id}
-                  key={point.assignmentId}
-                  content={point.point}
-                />
-              ))}
+              {sortByField(assignments, 'order').map((assignment) => {
+                const studentAssignment = student.assignments.find(
+                  (item) => item.assignmentId === assignment.id
+                );
+                return (
+                  <PointBox
+                    key={assignment.id}
+                    content={studentAssignment.point}
+                  />
+                );
+              })}
               <PointBox
                 studentId={student.id}
                 content={student.assignments.reduce(

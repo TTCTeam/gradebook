@@ -5,39 +5,29 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getAllAssignment } from '../../api/assignmentAPI';
 import './StudentGradeboard.css';
+import Row from './Row';
 
-const student = {
+const initData = {
   studentId: 1,
-  points: [
+  assignments: [
     {
-      assignmentId: 1,
+      assignmentId: 11,
       point: 90,
       status: 1,
     },
     {
-      assignmentId: 2,
+      assignmentId: 12,
       point: 80,
-      status: 1,
-    },
-    {
-      assignmentId: 3,
-      point: 100,
-      status: 1,
-    },
-    {
-      assignmentId: 4,
-      point: 100,
       status: 1,
     },
   ],
 };
 
 export default function StudentGradeBoard() {
+  const [student, setStudent] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
-
-  console.log(student, assignments);
 
   useEffect(() => {
     const fetchAssignments = async (courseId) => {
@@ -49,7 +39,12 @@ export default function StudentGradeBoard() {
       setIsLoading(false);
     };
 
+    const fetchStudent = () => {
+      setStudent(initData);
+    };
+
     fetchAssignments(id);
+    fetchStudent();
   }, []);
 
   return (
@@ -65,6 +60,14 @@ export default function StudentGradeBoard() {
         <div className="title">Grade Point</div>
         <div className="title">Your Point</div>
       </div>
+
+      {student.assignments?.map((assignment) => (
+        <Row
+          key={assignment.assignmentId}
+          assignment={assignment}
+          assignments={assignments}
+        />
+      ))}
     </div>
   );
 }

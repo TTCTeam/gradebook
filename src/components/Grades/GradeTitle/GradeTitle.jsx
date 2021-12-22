@@ -1,6 +1,5 @@
 /* eslint-disable comma-dangle */
 import React, { useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
@@ -28,10 +27,6 @@ function GradeTitle({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const csvInputRef = useRef();
-  const { id } = useParams();
-
-  console.log(id);
-  console.log('Assignment ', assignment);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

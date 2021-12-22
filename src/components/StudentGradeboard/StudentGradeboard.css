@@ -5,19 +5,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 5px solid #1976d2;
 }
 
 .student-gradeboard .header {
   display: flex;
-  width: 80%;
+  width: 100%;
+  align-items: center;
 }
 
 .student-gradeboard .header .title {
   flex: 1;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: bold;
   text-align: center;
   border: 1px solid rgb(105, 105, 105);
-  padding: 20px;
+  padding: 5px;
   background-color: #ccc;
 }
