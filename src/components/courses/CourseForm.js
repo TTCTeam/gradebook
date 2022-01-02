@@ -21,13 +21,13 @@ const CourseForm = ({ onAddedCourse }) => {
     onChangeHandler: nameOnChangeHandler,
   } = useInput(nameValidate);
 
-  const {
+  /* const {
     value: lecturer,
     valueIsValid: lecturerIsValid,
     valueHasError: lecturerHasError,
     onBlurHandler: lecturerOnBlurHandler,
     onChangeHandler: lecturerOnChangeHandler,
-  } = useInput(nameValidate);
+  } = useInput(nameValidate); */
 
   const {
     value: description,
@@ -45,7 +45,7 @@ const CourseForm = ({ onAddedCourse }) => {
     }
   }, [status, error, onAddedCourse]);
 
-  const formIsValid = nameIsValid && lecturerIsValid && descriptionIsValid;
+  const formIsValid = nameIsValid && descriptionIsValid;
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -53,7 +53,7 @@ const CourseForm = ({ onAddedCourse }) => {
       return;
     }
 
-    sendRequest({ name, lecturer, description });
+    sendRequest({ name, description });
   };
   const formContent = (
     <Box
@@ -74,7 +74,7 @@ const CourseForm = ({ onAddedCourse }) => {
         value={name}
         helperText={nameHasError ? 'Name must be not empty.' : ''}
       />
-      <TextField
+      {/* <TextField
         label="Owner"
         color="primary"
         type="teacher"
@@ -83,7 +83,7 @@ const CourseForm = ({ onAddedCourse }) => {
         onChange={lecturerOnChangeHandler}
         value={lecturer}
         helperText={lecturerHasError ? 'Owner must be not empty.' : ''}
-      />
+      /> */}
       <TextField
         label="Description"
         color="primary"

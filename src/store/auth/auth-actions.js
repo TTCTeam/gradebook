@@ -73,8 +73,7 @@ export function signIn(credentials, history, preLocation) {
         history.replace('/');
       }
     } else {
-      console.log('ạkfbklhfdbsd');
-      dispatch(showError('Your account has not been registered!'));
+      dispatch(showError('Your account has not been registered! If you did please contact admin.'));
     }
   };
 }
@@ -142,8 +141,8 @@ export function signInByGoogle(idToken, history, preLocation) {
     console.log(data, 'data response');
 
     if (!respone.ok) {
-      dispatch(showModal(data.message));
       dispatch(success());
+      dispatch(showError(data.message ? data.message : 'Your account has not been registered! If you did please contact admin.'));
     } else {
       const expirationTime = new Date(
         new Date().getTime() + +data.expiresIn * 1000,
