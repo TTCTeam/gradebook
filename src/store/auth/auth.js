@@ -1,7 +1,13 @@
 import { LOGIN_SUCCESS_ACTION, FETCH_PROFILE_ACTION, RETRIEVE_TOKEN_ACTION } from './auth-actions';
 
 const initialState = {
-  email: null, firstname: null, lastname: null, username: null, userId: null, token: null,
+  email: null,
+  firstname: null,
+  lastname: null,
+  username: null,
+  userId: null,
+  token: null,
+  status: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -15,6 +21,7 @@ const authReducer = (state = initialState, action) => {
       lastname: action.user.lastname,
       username: action.user.username,
       userId: action.user.id,
+      status: action.user.status,
     };
   case FETCH_PROFILE_ACTION:
     return {
@@ -24,6 +31,7 @@ const authReducer = (state = initialState, action) => {
       lastname: action.user.lastname,
       username: action.user.username,
       userId: action.user.id,
+      status: action.user.status,
     };
   case RETRIEVE_TOKEN_ACTION:
     return {

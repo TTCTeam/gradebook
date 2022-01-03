@@ -53,7 +53,7 @@ export async function addCourse(newCourse) {
   return data;
 }
 
-export async function getUserProfile() {
+/* export async function getUserProfile() {
   const url = `${process.env.REACT_APP_BASE_URL}/user`;
   const tokenNew = localStorage.getItem('token');
   const response = await fetch(url, {
@@ -67,3 +67,4 @@ export async function getUserProfile() {
   const data = await response.json();
   return data;
 }
+ */
