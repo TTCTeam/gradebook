@@ -1,61 +1,26 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-// import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-// import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import Divider from '@mui/material/Divider';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-
-import InputBase from '@mui/material/InputBase';
 import { Menu, MenuItem } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
+import ListNotification from '../ListNotification/ListNotification';
 import { logoutHandlerAction } from '../../store/auth/auth-services';
 import classes from './MainNavigation.module.css';
 
 const drawerWidth = 240;
-
-// const openedMixin = (theme) => ({
-//   width: drawerWidth,
-//   transition: theme.transitions.create('width', {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.enteringScreen,
-//   }),
-//   overflowX: 'hidden',
-// });
-
-// const closedMixin = (theme) => ({
-//   transition: theme.transitions.create('width', {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   overflowX: 'hidden',
-//   width: `calc(${theme.spacing(7)} + 1px)`,
-//   [theme.breakpoints.up('sm')]: {
-//     width: `calc(${theme.spacing(9)} + 1px)`,
-//   },
-// });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -77,75 +42,14 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-// const Drawer = styled(MuiDrawer, {
-//   shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, open }) => ({
-//   width: drawerWidth,
-//   flexShrink: 0,
-//   whiteSpace: 'nowrap',
-//   boxSizing: 'border-box',
-//   ...(open && {
-//     ...openedMixin(theme),
-//     '& .MuiDrawer-paper': openedMixin(theme),
-//   }),
-//   ...(!open && {
-//     ...closedMixin(theme),
-//     '& .MuiDrawer-paper': closedMixin(theme),
-//   }),
-// }));
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
-
 const MainNavigation = (props) => {
-  // const theme = useTheme();
-  // const [open, setOpen] = React.useState(false);
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    /* handleMobileMenuClose(); */
   };
 
   const logoutHandler = () => {
@@ -156,14 +60,6 @@ const MainNavigation = (props) => {
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
-  // const handleDrawerOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -195,35 +91,13 @@ const MainNavigation = (props) => {
       <CssBaseline />
       <AppBar position="fixed">
         <Toolbar>
-          {/* <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Link to="/" className={classes['home-link']}>
             <Typography variant="h6" noWrap component="div">
               GRADE BOOK
             </Typography>
           </Link>
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
-          </Box>
           <Box sx={{ flexGrow: 1 }} />
+          <ListNotification />
           <IconButton
             size="large"
             edge="end"
@@ -238,39 +112,6 @@ const MainNavigation = (props) => {
         </Toolbar>
       </AppBar>
       {renderMenu}
-      {/* <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer> */}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {props.children}
