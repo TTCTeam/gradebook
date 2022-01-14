@@ -37,7 +37,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (auth.status === 2 && !query) {
+    if (auth.status === 2 && !query.has('activateId')) {
       history.push('/activate');
     }
   }, [auth.status]);
