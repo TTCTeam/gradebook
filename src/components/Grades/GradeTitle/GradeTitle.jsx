@@ -83,7 +83,7 @@ function GradeTitle({
     const item = { ...assignment, status: AssignmentStatus.DRAFT };
     const res = await updateAssignment(id, assignmentId, item);
     if (res.status === 200) {
-      setStatus(AssignmentStatus.PUBLIC);
+      setStatus(AssignmentStatus.DRAFT);
       handleClose();
       alert('You can edit this grade');
     } else {
