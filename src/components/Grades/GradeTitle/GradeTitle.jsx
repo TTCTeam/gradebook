@@ -78,6 +78,20 @@ function GradeTitle({
     updateStudents();
   };
 
+  const onDraftGradeColumn = async () => {
+    const assignmentId = assignment.id;
+    const item = { ...assignment, status: AssignmentStatus.DRAFT };
+    const res = await updateAssignment(id, assignmentId, item);
+    if (res.status === 200) {
+      setStatus(AssignmentStatus.DRAFT);
+      handleClose();
+      alert('You can edit this grade');
+    } else {
+      alert('Edit failed!');
+    }
+    updateStudents();
+  };
+
   return (
     <div className={nameofclass}>
       <div className="container">
@@ -113,8 +127,10 @@ function GradeTitle({
       >
         <MenuItem onClick={openChooseFileDialog}>Import CSV</MenuItem>
         <MenuItem onClick={exportData}>Export CSV</MenuItem>
-        {status === AssignmentStatus.DRAFT && (
+        {status === AssignmentStatus.DRAFT ? (
           <MenuItem onClick={onPublicGradeColumn}>Mark as finalized</MenuItem>
+        ) : (
+          <MenuItem onClick={onDraftGradeColumn}>Edit</MenuItem>
         )}
       </Menu>
       <input
