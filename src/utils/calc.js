@@ -1,3 +1,5 @@
+export const unrecordRoute = ['/signin', '/signup', '/change-password', '/courses', '/'];
+
 export const calculateRemainingTime = (expirationTime) => {
   const currentTime = new Date().getTime();
   const expiredTime = new Date(expirationTime).getTime();

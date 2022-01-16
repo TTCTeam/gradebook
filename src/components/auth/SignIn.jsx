@@ -15,6 +15,10 @@ import useInput from '../../hooks/use-input';
 import { nameValidate, passwordValidate } from '../../utils/inputValidate';
 import { signIn } from '../../store/auth/auth-actions';
 import GoogleSignin from './GoogleSignin';
+import classes from './SignIn.module.css';
+import useHttp from '../../hooks/use-http';
+import { sendChangePasswordEmail } from '../../api/password';
+import { showModal } from '../../store/modal/modal-action';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -39,9 +43,26 @@ const SignIn = () => {
     onChangeHandler: passwordOnChangeHandler,
   } = useInput(passwordValidate);
 
-  /* if (auth.token) {
-    return <Redirect to="/" />;
-  } */
+  const {
+    data,
+    status,
+    error,
+    sendRequest: sendReuestRenewPassword,
+  } = useHttp(sendChangePasswordEmail);
+
+  React.useEffect(() => {
+    if (status === 'completed') {
+      if (data === 200 && !error) {
+        dispatch(
+          showModal(
+            'The email reset your password has been seen. Check your email! ',
+          ),
+        );
+      } else {
+        dispatch(showModal(error || 'Please check your input email first.'));
+      }
+    }
+  }, [data, status, error]);
 
   const formIsValid = emailIsValid && passwordIsValid;
 
@@ -53,9 +74,14 @@ const SignIn = () => {
     }
 
     dispatch(signIn({ username: email, password }, history, preLocation));
+  };
 
-    /* emailResetValue();
-    passwordResetValue(); */
+  const forgotPasswordHandler = () => {
+    if (!email && email.trim() === '') {
+      dispatch(showModal('You need to provide your email first!.'));
+      return;
+    }
+    sendReuestRenewPassword({ email });
   };
 
   return (
@@ -104,7 +130,9 @@ const SignIn = () => {
               onChange={emailOnChangeHandler}
               value={email}
               helperText={
-                emailHasError ? 'Username must not be empty and include \'@\' if it is email and is a number if it is your studentID' : ''
+                emailHasError
+                  ? 'Username must not be empty and include \'@\' if it is email and is a number if it is your studentID'
+                  : ''
               }
             />
             <TextField
@@ -124,7 +152,9 @@ const SignIn = () => {
                 passwordHasError ? 'Pass must has more than 8 characters.' : ''
               }
             />
-            <FormHelperText error={ui.request === 'error'}>{ui.message}</FormHelperText>
+            <FormHelperText error={ui.request === 'error'}>
+              {ui.message}
+            </FormHelperText>
             <Grid
               sx={{
                 display: 'flex',
@@ -154,14 +184,18 @@ const SignIn = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link to="/">
+                  <div
+                    className={classes['forgot-password']}
+                    aria-hidden="true"
+                    onClick={forgotPasswordHandler}
+                  >
                     Forgot password?
-                  </Link>
+                    {' '}
+                    {status === 'pending' ? <CircularProgress size={15} /> : ''}
+                  </div>
                 </Grid>
                 <Grid item>
-                  <Link to="/signup">
-                    Don&apos;t have an account? Sign Up
-                  </Link>
+                  <Link to="/signup">Don&apos;t have an account? Sign Up</Link>
                 </Grid>
               </Grid>
 
@@ -184,7 +218,6 @@ const SignIn = () => {
                   '& > :not(style)': { m: 2 },
                 }}
               >
-
                 <GoogleSignin />
               </Grid>
             </Grid>
