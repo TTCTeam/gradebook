@@ -6,7 +6,7 @@ import './Grades.css';
 import Backdrop from '@mui/material/Backdrop';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   getAllAssignment,
   getGradeBoard,
@@ -153,12 +153,17 @@ export default function Grades({ course }) {
     <div>
       <div className="export-full-btn">
         <Button
-          sx={{ marginBottom: 2, marginLeft: 'auto' }}
+          sx={{ marginBottom: 2 }}
           onClick={exportFullGradeBoard}
           variant="contained"
         >
           Export Full Gradeboard
         </Button>
+        <Link to={`/courses/${id}/grade-review`}>
+          <Button sx={{ marginBottom: 2 }} variant="contained">
+            View All Grade Review
+          </Button>
+        </Link>
       </div>
 
       <div className="grades">

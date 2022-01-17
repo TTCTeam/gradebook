@@ -26,6 +26,9 @@ const Activation = () => {
             your email before your starting with Gradebook.
           </p>
           <p>
+            If you have actived your account, please reload to start your journey.
+          </p>
+          <p>
             If you don&apos;t recieve the activate email:
             <Button color="secondary" onClick={onResendActivateLinkHandle}>
               {status === 'pending' ? <CircularProgress /> : 'Resend email.'}

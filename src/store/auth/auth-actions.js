@@ -47,34 +47,38 @@ export function signIn(credentials, history, preLocation) {
     const url = `${process.env.REACT_APP_BASE_URL}/auth/signin`;
 
     const cre = `username=${credentials.username}&password=${credentials.password}`;
-    const response = await fetch(url, {
-      method: 'POST',
-      body: cre,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      },
-    });
 
-    if (response.ok) {
-      const data = await response.json();
-      const expirationTime = new Date(
-        new Date().getTime() + +data.expiresIn * 1000,
-      );
-      console.log(data);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('expirationTime', expirationTime.toISOString());
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: cre,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        },
+      });
 
-      runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
-      dispatch(loginConfirmAction(data));
-      dispatch(success());
-      if (preLocation) {
-        dispatch(arrivedStartLocation());
-        history.replace(preLocation);
+      if (response.ok) {
+        const data = await response.json();
+        const expirationTime = new Date(
+          new Date().getTime() + +data.expiresIn * 1000,
+        );
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('expirationTime', expirationTime.toISOString());
+
+        runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
+        dispatch(loginConfirmAction(data));
+        dispatch(success());
+        if (preLocation) {
+          dispatch(arrivedStartLocation());
+          history.replace(preLocation);
+        } else {
+          history.replace('/');
+        }
       } else {
-        history.replace('/');
+        dispatch(showError('Your account has not been registered! If you did please contact admin.'));
       }
-    } else {
-      dispatch(showError('Your account has not been registered! If you did please contact admin.'));
+    } catch (error) {
+      dispatch(showError('Can not connect to server. Please try again later.'));
     }
   };
 }
@@ -88,38 +92,42 @@ export function signUp(credentials, history, preLocation) {
 
     const url = `${process.env.REACT_APP_BASE_URL}/auth/signup`;
 
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const { status } = response;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const { status } = response;
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (status === 200) {
-      const expirationTime = new Date(
-        new Date().getTime() + +data.expiresIn * 1000,
-      );
+      if (status === 200) {
+        const expirationTime = new Date(
+          new Date().getTime() + +data.expiresIn * 1000,
+        );
 
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('expirationTime', expirationTime.toISOString());
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('expirationTime', expirationTime.toISOString());
 
-      runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
-      dispatch(loginConfirmAction(data));
-      dispatch(success());
-      if (preLocation) {
-        dispatch(arrivedStartLocation());
-        history.replace(preLocation);
+        runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
+        dispatch(loginConfirmAction(data));
+        dispatch(success());
+        if (preLocation) {
+          dispatch(arrivedStartLocation());
+          history.replace(preLocation);
+        } else {
+          history.replace('/');
+        }
       } else {
-        history.replace('/');
+        dispatch(showModal(data.message));
       }
-    } else {
-      dispatch(showModal(data.message));
+      dispatch(success());
+    } catch (error) {
+      dispatch(showError('Can not connect to server. Please try again later.'));
     }
-    dispatch(success());
   };
 }
 
@@ -129,63 +137,69 @@ export function signInByGoogle(idToken, history, preLocation) {
 
     const url = `${process.env.REACT_APP_BASE_URL}/auth/signin_google`;
 
-    const respone = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'x-goog-iap-jwt-assertion': idToken,
-      },
-    });
+    try {
+      const respone = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'x-goog-iap-jwt-assertion': idToken,
+        },
+      });
 
-    console.log(respone, 'google login respone');
+      const data = await respone.json();
 
-    const data = await respone.json();
-    console.log(data, 'data response');
-
-    if (!respone.ok) {
-      dispatch(success());
-      dispatch(showError(data.message ? data.message : 'Your account has not been registered! If you did please contact admin.'));
-    } else {
-      const expirationTime = new Date(
-        new Date().getTime() + +data.expiresIn * 1000,
-      );
-
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('expirationTime', expirationTime.toISOString());
-
-      runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
-      dispatch(loginConfirmAction(data));
-      dispatch(success());
-      if (preLocation) {
-        dispatch(arrivedStartLocation());
-        history.replace(preLocation);
+      if (!respone.ok) {
+        dispatch(success());
+        dispatch(showError(data.message ? data.message : 'Your account has not been registered! If you did please contact admin.'));
       } else {
-        history.replace('/');
+        const expirationTime = new Date(
+          new Date().getTime() + +data.expiresIn * 1000,
+        );
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('expirationTime', expirationTime.toISOString());
+
+        runLogoutTimer(dispatch, +data.expiresIn * 1000, history);
+        dispatch(loginConfirmAction(data));
+        dispatch(success());
+        if (preLocation) {
+          dispatch(arrivedStartLocation());
+          history.replace(preLocation);
+        } else {
+          history.replace('/');
+        }
       }
+    } catch (error) {
+      dispatch(showError('Can not connect to server. Please try again later.'));
     }
   };
 }
 
 export function getUserProfile() {
   return async (dispatch) => {
-    dispatch(pending());
     const url = `${process.env.REACT_APP_BASE_URL}/user`;
     const tokenNew = localStorage.getItem('token');
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': tokenNew,
-      },
-    });
+    try {
+      if (tokenNew) {
+        dispatch(pending());
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': tokenNew,
+          },
+        });
 
-    const data = await response.json();
-    console.log(data, 'user profile');
-    if (response.ok) {
-      dispatch(fetchProfileInfo(data));
-    } else {
-      dispatch(showError(data.message));
+        const data = await response.json();
+        if (response.ok) {
+          dispatch(fetchProfileInfo(data));
+        } else {
+          dispatch(showError(data.message));
+        }
+      }
+      dispatch(success());
+    } catch (error) {
+      dispatch(showError('Can not connect to server. Please try again later.'));
     }
-    dispatch(success());
   };
 }
 
@@ -193,22 +207,27 @@ export function updateUserProfile(userInfo) {
   return async (dispatch) => {
     dispatch(pending());
     const url = `${process.env.REACT_APP_BASE_URL}/user`;
-    const tokenNew = localStorage.getItem('token');
-    const response = await fetch(url, {
-      method: 'PUT',
-      body: JSON.stringify(userInfo),
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': tokenNew,
-      },
-    });
 
-    if (response.ok) {
-      dispatch(fetchProfileInfo(userInfo));
-      dispatch(success());
-    } else {
-      const data = await response.json();
-      dispatch(showError(data.message));
+    try {
+      const tokenNew = localStorage.getItem('token');
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(userInfo),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': tokenNew,
+        },
+      });
+
+      if (response.ok) {
+        dispatch(fetchProfileInfo(userInfo));
+        dispatch(success());
+      } else {
+        const data = await response.json();
+        dispatch(showError(data.message));
+      }
+    } catch (error) {
+      dispatch(showError('Can not connect to server. Please try again later.'));
     }
   };
 }

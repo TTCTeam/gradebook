@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import {
-  Switch, Route, Redirect, useHistory, useLocation,
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+  useLocation,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CourseForm from './components/courses/CourseForm';
@@ -18,6 +22,10 @@ import { startAt } from './store/location/loc-actions';
 import Activation from './components/activation/Activation';
 import ActivationProgess from './components/activation/ActivationProgess';
 import { getUserProfile } from './store/auth/auth-actions';
+import NewPassword from './components/password-remake/NewPassword';
+import { unrecordRoute } from './utils/calc';
+import GradeReviewList from './components/GradeReviewList/GradeReviewList';
+import GradeReviewDetail from './components/GradeReviewDetail/GradeReviewDetail';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -28,7 +36,7 @@ function App() {
   const query = new URLSearchParams(location.search);
   const dispatch = useDispatch();
 
-  if (!auth.token && (location.pathname !== '/signin' && location.pathname !== '/signup' && location.pathname !== '/courses' && location.pathname !== '/')) {
+  if (!auth.token && !unrecordRoute.includes(location.pathname)) {
     dispatch(startAt(location.pathname + location.search));
   }
   useEffect(() => {
@@ -37,7 +45,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (auth.status === 2 && !query) {
+    if (auth.status && auth.status === 2 && !query.has('activateId')) {
       history.push('/activate');
     }
   }, [auth.status]);
@@ -49,6 +57,9 @@ function App() {
       </Route>
       <Route path="/signup">
         <SignUp />
+      </Route>
+      <Route path="/change-password">
+        <NewPassword />
       </Route>
       <Route path="*">
         <Redirect to="/signin" />
@@ -80,18 +91,23 @@ function App() {
         <Route exact path="/courses/:id">
           <CourseDetailPage />
         </Route>
-        <Route path="/courses/:id/join">
+        <Route exact path="/courses/:id/join">
           <JoinCourse />
         </Route>
-        <Route path="/courses/:id/assignment/edit">
+        <Route exact path="/courses/:id/assignment/edit">
           <AssignmentPage />
+        </Route>
+        <Route exact path="/courses/:id/grade-review">
+          <GradeReviewList />
+        </Route>
+        <Route exact path="/courses/:courseId/grade-review/:gradeReivewId">
+          <GradeReviewDetail />
         </Route>
         <Route>
           <div>Page not found</div>
         </Route>
       </Switch>
     </MainNavigation>
-
   );
 
   const routeContent = auth.token ? routerWithSignIn : routeWithoutSignIn;

@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-boolean-value */
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
 import {
   getAllAssignment,
   getAllAssignmentByUser,
@@ -31,7 +32,6 @@ export default function StudentGradeBoard() {
       const res = await getAllAssignmentByUser(courseId);
       if (res.status === 200) {
         setStudent(res.data);
-        console.log(res.data);
       }
       setIsLoading(false);
     };
@@ -42,6 +42,11 @@ export default function StudentGradeBoard() {
 
   return (
     <div className="student-gradeboard">
+      <Link to={`/courses/${id}/grade-review`}>
+        <Button sx={{ marginBottom: 2 }} variant="contained">
+          View All Grade Review
+        </Button>
+      </Link>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}
