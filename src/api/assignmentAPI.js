@@ -72,6 +72,20 @@ export async function reorderAssignment(courseId, assignments) {
   return response;
 }
 
+export async function publicAssignment(assignmentId) {
+  const url = `${process.env.REACT_APP_BASE_URL}/assignments/${assignmentId}/public`;
+  const token = localStorage.getItem('token');
+
+  const response = await axios.put(url, {}, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  });
+
+  return response;
+}
+
 export async function uploadStudentList(courseId, studentList) {
   const url = `${process.env.REACT_APP_BASE_URL}/assignments/${courseId}/studentlist`;
   const token = localStorage.getItem('token');

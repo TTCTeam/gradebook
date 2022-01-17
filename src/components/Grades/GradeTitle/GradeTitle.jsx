@@ -2,12 +2,11 @@
 /* eslint-disable comma-dangle */
 import React, { useRef, useState } from 'react';
 import Menu from '@mui/material/Menu';
-import { useParams } from 'react-router';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AssignmentStatus from '../../../constant/gradeboard';
-import { updateAssignment } from '../../../api/assignmentAPI';
+import { publicAssignment } from '../../../api/assignmentAPI';
 import './GradeTitle.css';
 
 function cut(name) {
@@ -33,8 +32,6 @@ function GradeTitle({
   const open = Boolean(anchorEl);
   const csvInputRef = useRef();
   const [status, setStatus] = useState(assignment?.status);
-
-  const { id } = useParams();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,8 +63,7 @@ function GradeTitle({
 
   const onPublicGradeColumn = async () => {
     const assignmentId = assignment.id;
-    const item = { ...assignment, status: AssignmentStatus.PUBLIC };
-    const res = await updateAssignment(id, assignmentId, item);
+    const res = await publicAssignment(assignmentId);
     if (res.status === 200) {
       setStatus(AssignmentStatus.PUBLIC);
       handleClose();

@@ -34,6 +34,7 @@ export function signOut(history) {
   return (dispatch) => {
     localStorage.removeItem('token');
     localStorage.removeItem('expirationTime');
+    localStorage.removeItem('socketSession');
     history.replace('/signin');
     dispatch({ type: 'LOGOUT' });
   };
