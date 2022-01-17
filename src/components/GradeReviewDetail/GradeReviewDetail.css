@@ -1,0 +1,148 @@
+.grade-review-detail {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.grade-review-detail .container {
+  width: 80%;
+}
+
+.grade-review-detail .container .title {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.grade-review-detail .container .title .link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #1976d2;
+}
+
+.grade-review-detail .container .title .link:hover {
+  color: #111;
+}
+
+.grade-review-detail .container .information {
+  margin-top: 20px;
+  padding: 20px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
+  position: relative;
+}
+
+.grade-review-detail .container .information .change-point {
+  position: absolute;
+  top: 90px;
+  right: 20px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 20px;
+}
+
+.grade-review-detail .container .information .change-point-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.grade-review-detail .container .information .change-point .field {
+  border: solid 1px #1976d2;
+  width: 100px;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.grade-review-detail .container hr {
+  border: 1px solid #1976d2;
+}
+
+.grade-review-detail .container .information .infor__title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.grade-review-detail .container .information .information__row {
+  display: flex;
+  grid-gap: 5px;
+}
+
+.grade-review-detail .container .information .information__row .title {
+  font-weight: bold;
+}
+
+.grade-review-detail .container .add-comment {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  grid-gap: 20px;
+}
+
+.grade-review-detail .container .comment-box {
+  width: 100%;
+  border: 1px solid #1976d2;
+  padding: 5px 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  grid-gap: 10px;
+}
+
+.grade-review-detail .container .comment-list {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+}
+
+.grade-review-detail .container .comment-item {
+  padding: 20px;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;
+  border-radius: 5px;
+}
+
+.grade-review-detail .container .comment-item__content {
+  display: flex;
+  align-items: center;
+  grid-gap: 10px;
+}
+
+.comment-item__content__user {
+  font-weight: bold;
+}
+
+.comment-item__content__comment {
+  max-width: 100%;
+  margin-left: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grade-review-detail .container .comment-box .field {
+  width: 100%;
+}
+
+.grade-review-detail .container .comment-box .icon {
+  cursor: pointer;
+}

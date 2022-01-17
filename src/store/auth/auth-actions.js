@@ -61,7 +61,6 @@ export function signIn(credentials, history, preLocation) {
         const expirationTime = new Date(
           new Date().getTime() + +data.expiresIn * 1000,
         );
-        console.log(data);
         localStorage.setItem('token', data.token);
         localStorage.setItem('expirationTime', expirationTime.toISOString());
 
@@ -145,10 +144,7 @@ export function signInByGoogle(idToken, history, preLocation) {
         },
       });
 
-      console.log(respone, 'google login respone');
-
       const data = await respone.json();
-      console.log(data, 'data response');
 
       if (!respone.ok) {
         dispatch(success());
@@ -193,7 +189,6 @@ export function getUserProfile() {
         });
 
         const data = await response.json();
-        console.log(data, 'user profile');
         if (response.ok) {
           dispatch(fetchProfileInfo(data));
         } else {

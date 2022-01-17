@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import {
-  Switch, Route, Redirect, useHistory, useLocation,
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+  useLocation,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CourseForm from './components/courses/CourseForm';
@@ -21,6 +25,7 @@ import { getUserProfile } from './store/auth/auth-actions';
 import NewPassword from './components/password-remake/NewPassword';
 import { unrecordRoute } from './utils/calc';
 import GradeReviewList from './components/GradeReviewList/GradeReviewList';
+import GradeReviewDetail from './components/GradeReviewDetail/GradeReviewDetail';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -86,21 +91,23 @@ function App() {
         <Route exact path="/courses/:id">
           <CourseDetailPage />
         </Route>
-        <Route path="/courses/:id/join">
+        <Route exact path="/courses/:id/join">
           <JoinCourse />
         </Route>
-        <Route path="/courses/:id/assignment/edit">
+        <Route exact path="/courses/:id/assignment/edit">
           <AssignmentPage />
         </Route>
-        <Route path="/courses/:id/grade-review">
+        <Route exact path="/courses/:id/grade-review">
           <GradeReviewList />
+        </Route>
+        <Route exact path="/courses/:courseId/grade-review/:gradeReivewId">
+          <GradeReviewDetail />
         </Route>
         <Route>
           <div>Page not found</div>
         </Route>
       </Switch>
     </MainNavigation>
-
   );
 
   const routeContent = auth.token !== null ? routerWithSignIn : routeWithoutSignIn;
