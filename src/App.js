@@ -100,7 +100,7 @@ function App() {
         <Route exact path="/courses/:id/grade-review">
           <GradeReviewList />
         </Route>
-        <Route exact path="/courses/:courseId/grade-review/:gradeReivewId">
+        <Route exact path="/courses/:courseId/grade-review/:gradeReviewId">
           <GradeReviewDetail />
         </Route>
         <Route>

@@ -11,6 +11,11 @@ import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import { getUserProfile } from '../../store/auth/auth-actions';
 import { getCourse } from '../../api/courseAPI';
+import {
+  createComment,
+  getGradeReview,
+  getAllComment,
+} from '../../api/gradeReview';
 import './GradeReviewDetail.css';
 import MemberRoles from '../../constant/course';
 
@@ -43,18 +48,6 @@ function stringAvatar(name) {
   };
 }
 
-const data = {
-  id: 1,
-  title: 'Review 1',
-  date: '2020-01-01',
-  student: 'Hà Minh Cường',
-  studentId: '18120297',
-  gradeCompisition: 'Cột 1',
-  currentPoint: '10',
-  expectedPoint: '50',
-  explanation: 'Em đã làm đủ rồi',
-};
-
 export default function GradeReviewDetail() {
   const [review, setReview] = useState({});
   const [classroom, setClassroom] = useState({});
@@ -68,26 +61,38 @@ export default function GradeReviewDetail() {
 
   const profile = useSelector((state) => state.auth);
 
-  const { courseId, gradeReivewId } = useParams();
+  const { courseId, gradeReviewId } = useParams();
+
+  const fetchReview = async (courseID, gradeReviewID) => {
+    const res = await getGradeReview(courseID, gradeReviewID);
+    setReview(res);
+  };
+
+  const fetchComments = async (courseID, gradeReviewID) => {
+    const res = await getAllComment(courseID, gradeReviewID);
+    setComments(res);
+  };
 
   useEffect(() => {
     const fetchClassroom = async (id) => {
       const res = await getCourse(id);
       setClassroom(res.data);
     };
+
     if (!profile.firstname) {
       dispatch(getUserProfile());
     }
 
     fetchClassroom(courseId);
-    setReview(data);
+    fetchReview(courseId, gradeReviewId);
+    fetchComments(courseId, gradeReviewId);
   }, []);
 
   useEffect(() => {
     setPoint(review.currentPoint);
   }, [review]);
 
-  const addNewComment = () => {
+  const addNewComment = async () => {
     if (comment !== '') {
       const newData = {
         id: comments.length + 1,
@@ -96,8 +101,11 @@ export default function GradeReviewDetail() {
         createdAt: new Date().toJSON(),
       };
 
-      console.log(gradeReivewId);
-      setComments([...comments, newData]);
+      const res = await createComment(courseId, gradeReviewId, newData);
+      if (res.status === 201) {
+        fetchComments(courseId, gradeReviewId);
+      }
+
       setComment('');
     }
   };
@@ -130,12 +138,8 @@ export default function GradeReviewDetail() {
           <div className="infor__title">Information</div>
           <hr />
           <div className="information__row">
-            <div className="title">Title:</div>
-            <div className="content">{review.title}</div>
-          </div>
-          <div className="information__row">
             <div className="title">Student Name:</div>
-            <div className="content">{review.student}</div>
+            <div className="content">{review.studentFullName}</div>
           </div>
           <div className="information__row">
             <div className="title">Student ID:</div>
@@ -143,7 +147,7 @@ export default function GradeReviewDetail() {
           </div>
           <div className="information__row">
             <div className="title">Grade Composition:</div>
-            <div className="content">{review.gradeCompisition}</div>
+            <div className="content">{review.assignmentName}</div>
           </div>
           <div className="information__row">
             <div className="title">Current Point:</div>

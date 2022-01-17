@@ -10,13 +10,13 @@ import Modal from '@mui/material/Modal';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
+import { createGradeReview } from '../../api/gradeReview';
 
 export default function Row({ assignment, assignments }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [point, setPoint] = useState(0);
   const [explanation, setExplanation] = useState('');
-  const [title, setTitle] = useState('');
 
   const { id } = useParams();
 
@@ -39,16 +39,18 @@ export default function Row({ assignment, assignments }) {
     setAnchorEl(null);
   };
 
-  const handleSendReview = () => {
+  const handleSendReview = async () => {
     const review = {
       courseId: id,
       assignmentId: assignment.id,
       point,
       explanation,
     };
+
+    const res = await createGradeReview(id, review);
+    console.log(res);
     setPoint(0);
     setExplanation('');
-    setTitle('');
     handleClose();
     handleCloseModal();
     console.log(review);
@@ -88,18 +90,6 @@ export default function Row({ assignment, assignments }) {
       <Modal open={openModal}>
         <Box className="create-review-modal">
           <div className="modal-title">Create Grade Review</div>
-
-          <div className="field">
-            <div className="label">Title</div>
-            <div className="content input">
-              <InputBase
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Title of your review"
-              />
-            </div>
-          </div>
           <div className="field">
             <div className="label">Grade Name</div>
             <div className="content">{data?.name}</div>
