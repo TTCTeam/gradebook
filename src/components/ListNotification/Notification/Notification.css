@@ -1,9 +1,14 @@
 .notification {
-    position: absolute;
-    left: 1.5rem;
-    bottom: 2rem;
-    padding: 1rem;
-    background-color: #1976d2;
-    width: 300px;
-    height: 100px;
+  position: absolute;
+  left: 1.5rem;
+  bottom: 2rem;
+  padding: 1rem;
+  background-color: #1976d2;
+  width: 300px;
+  height: 100px;
+  color: white;
+}
+
+.notification.off {
+  display: none;
 }

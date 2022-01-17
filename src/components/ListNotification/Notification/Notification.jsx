@@ -5,6 +5,7 @@ import { addNotification } from '../../../store/notification/notification-action
 import './Notification.css';
 
 function Notification() {
+  const [className, setClassName] = useState('notification off');
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [noti, setNoti] = useState();
@@ -28,9 +29,13 @@ function Notification() {
     });
 
     socket.on('notification', (notification) => {
+      setClassName('notification');
       setNoti(notification);
       console.log(notification);
       dispatch(addNotification(notification));
+      setTimeout(() => {
+        setClassName('notification off');
+      }, 5000);
     });
 
     return () => {
@@ -38,8 +43,9 @@ function Notification() {
     };
   });
   return (
-    <div className="notification">
+    <div className={className}>
       <div>
+        <h3>{noti?.title}</h3>
         <div>{noti?.content}</div>
       </div>
     </div>

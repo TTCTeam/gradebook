@@ -23,13 +23,10 @@ export default function ListNotification() {
     setOpen('container');
   };
 
-  console.log(notifications);
-
   useEffect(() => {
     const fetchNotifications = async () => {
       const res = await getNotifications();
       if (res.status === 200) {
-        console.log(res.data);
         dispatch(setNotifications(res.data));
       }
     };
@@ -54,12 +51,14 @@ export default function ListNotification() {
         <div className="box">
           <div className="title">Notifications</div>
           <div className="content">
-            {!notifications.length
-            && <div style={{ color: 'black' }}>There is no notification.</div>}
+            {!notifications.length && (
+              <div style={{ color: 'black' }}>There is no notification.</div>
+            )}
             {notifications.map((notification, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <div className="item" key={index}>
                 <div className="left">
+                  <div className="item__title">{notification.title}</div>
                   <div className="item__content">{notification.content}</div>
                 </div>
                 <div className="createdAt">
