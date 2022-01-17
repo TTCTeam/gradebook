@@ -31,7 +31,6 @@ export default function StudentGradeBoard() {
       const res = await getAllAssignmentByUser(courseId);
       if (res.status === 200) {
         setStudent(res.data);
-        console.log(res.data);
       }
       setIsLoading(false);
     };

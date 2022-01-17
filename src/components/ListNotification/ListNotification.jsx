@@ -11,8 +11,6 @@ const haveNewNotifications = true;
 export default function ListNotification() {
   const [open, setOpen] = useState('container');
 
-  console.log(open);
-
   const Open = () => {
     if (open === 'container') {
       setOpen('open');

@@ -20,6 +20,7 @@ import ActivationProgess from './components/activation/ActivationProgess';
 import { getUserProfile } from './store/auth/auth-actions';
 import NewPassword from './components/password-remake/NewPassword';
 import { unrecordRoute } from './utils/calc';
+import GradeReviewList from './components/GradeReviewList/GradeReviewList';
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -90,6 +91,9 @@ function App() {
         </Route>
         <Route path="/courses/:id/assignment/edit">
           <AssignmentPage />
+        </Route>
+        <Route path="/courses/:id/grade-review">
+          <GradeReviewList />
         </Route>
         <Route>
           <div>Page not found</div>
