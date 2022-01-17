@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+/* eslint-disable operator-linebreak */
+/* eslint-disable prefer-template */
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
@@ -6,13 +9,42 @@ import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Menu, MenuItem } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Menu, MenuItem, Avatar } from '@mui/material';
 import { useHistory, Link } from 'react-router-dom';
 import ListNotification from '../ListNotification/ListNotification';
 import { logoutHandlerAction } from '../../store/auth/auth-services';
+import { getUserProfile } from '../../store/auth/auth-actions';
 import classes from './MainNavigation.module.css';
+
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.substr(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+  };
+}
 
 const drawerWidth = 240;
 
@@ -48,9 +80,17 @@ const MainNavigation = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const profile = useSelector((state) => state.auth);
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (!profile.firstname) {
+      dispatch(getUserProfile());
+    }
+  });
 
   const logoutHandler = () => {
     logoutHandlerAction(dispatch, history);
@@ -107,7 +147,10 @@ const MainNavigation = (props) => {
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            <AccountCircle />
+            <Avatar
+              {...(stringAvatar(profile?.firstname + ' ' + profile?.lastname) ||
+                'Undefined User')}
+            />
           </IconButton>
         </Toolbar>
       </AppBar>
