@@ -62,7 +62,7 @@ export default function StudentGradeBoard() {
       {student?.map((assignment) => (
         <Row
           key={assignment.assignmentId}
-          assignment={assignment}
+          userAssignment={assignment}
           assignments={assignments}
         />
       ))}

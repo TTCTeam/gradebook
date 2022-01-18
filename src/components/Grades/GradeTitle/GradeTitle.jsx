@@ -1,8 +1,8 @@
 /* eslint-disable no-alert */
 /* eslint-disable comma-dangle */
 import React, { useRef, useState } from 'react';
-import Menu from '@mui/material/Menu';
 import { useParams } from 'react-router-dom';
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -33,6 +33,7 @@ function GradeTitle({
   const open = Boolean(anchorEl);
   const csvInputRef = useRef();
   const [status, setStatus] = useState(assignment?.status);
+  const { id } = useParams();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -44,8 +45,6 @@ function GradeTitle({
   let nameofclass = 'grade-title';
   if (isName) nameofclass = 'grade-title-name';
   if (isID) nameofclass = 'grade-title-id';
-
-  const { id } = useParams();
 
   const openChooseFileDialog = () => {
     handleClose();

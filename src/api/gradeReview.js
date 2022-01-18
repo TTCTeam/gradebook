@@ -17,32 +17,18 @@ export async function getAllGradeReview(courseId) {
 }
 
 export async function getGradeReview(courseId, gradeReviewId) {
-  // const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/reviews/${gradeReviewId}`;
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/reviews/${gradeReviewId}`;
 
-  // const tokenNew = localStorage.getItem('token');
+  const tokenNew = localStorage.getItem('token');
 
-  // const response = await axios.get(url, {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'x-access-token': tokenNew,
-  //   },
-  // });
+  const response = await axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': tokenNew,
+    },
+  });
 
-  // return response;
-  console.log(courseId, gradeReviewId);
-  const data = {
-    id: 1,
-    date: '2020-01-01',
-    studentFullName: 'Hà Minh Cường',
-    studentId: '18120297',
-    assignmentId: 1,
-    assignmentName: 'Cột 1',
-    currentPoint: '10',
-    expectedPoint: '50',
-    explanation: 'Em đã làm đủ rồi',
-  };
-
-  return data;
+  return response;
 }
 
 export async function createGradeReview(courseId, gradeReview) {

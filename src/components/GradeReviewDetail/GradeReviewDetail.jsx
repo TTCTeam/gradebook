@@ -49,7 +49,27 @@ function stringAvatar(name) {
 }
 
 export default function GradeReviewDetail() {
-  const [review, setReview] = useState({});
+  const reviewInit = {
+    expectedPoint: 0,
+    explanation: 'ahihihihih đồ ngốc',
+    createdAt: '2022-01-18T05:32:29.000Z',
+    updatedAt: '2022-01-18T05:32:29.000Z',
+    userAssignmentId: 1,
+    courseId: 1,
+    student: {
+      studentId: 0,
+      fullname: 'Student name',
+    },
+    assignment: {
+      name: 'Assignment name',
+      point: 0,
+    },
+    userAssignment: {
+      id: 0,
+      point: 0,
+    },
+  };
+  const [review, setReview] = useState(reviewInit);
   const [classroom, setClassroom] = useState({});
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
@@ -65,12 +85,13 @@ export default function GradeReviewDetail() {
 
   const fetchReview = async (courseID, gradeReviewID) => {
     const res = await getGradeReview(courseID, gradeReviewID);
-    setReview(res);
+    console.log(res.data);
+    setReview(res.data);
   };
 
   const fetchComments = async (courseID, gradeReviewID) => {
     const res = await getAllComment(courseID, gradeReviewID);
-    setComments(res);
+    setComments(res.data);
   };
 
   useEffect(() => {
@@ -89,16 +110,14 @@ export default function GradeReviewDetail() {
   }, []);
 
   useEffect(() => {
-    setPoint(review.currentPoint);
+    setPoint(review.userAssignment.point);
   }, [review]);
 
   const addNewComment = async () => {
     if (comment !== '') {
       const newComment = {
-        id: comments.length + 1,
-        comment: comment.trim(),
-        user: profile.firstname + ' ' + profile.lastname,
-        createdAt: new Date().toJSON(),
+        content: comment.trim(),
+        fullname: profile.firstname + ' ' + profile.lastname,
       };
 
       const res = await createComment(courseId, gradeReviewId, newComment);
@@ -139,19 +158,23 @@ export default function GradeReviewDetail() {
           <hr />
           <div className="information__row">
             <div className="title">Student Name:</div>
-            <div className="content">{review.studentFullName}</div>
+            <div className="content">{review.student.fullname}</div>
           </div>
           <div className="information__row">
             <div className="title">Student ID:</div>
-            <div className="content">{review.studentId}</div>
+            <div className="content">{review.student.studentId}</div>
           </div>
           <div className="information__row">
             <div className="title">Grade Composition:</div>
-            <div className="content">{review.assignmentName}</div>
+            <div className="content">{review.assignment.name}</div>
+          </div>
+          <div className="information__row">
+            <div className="title">Max Point:</div>
+            <div className="content">{review.assignment.point}</div>
           </div>
           <div className="information__row">
             <div className="title">Current Point:</div>
-            <div className="content">{review.currentPoint}</div>
+            <div className="content">{review.userAssignment.point}</div>
           </div>
           <div className="information__row">
             <div className="title">Expected Point:</div>
@@ -171,15 +194,15 @@ export default function GradeReviewDetail() {
               <div className="comment-item" key={item.id}>
                 <div className="comment-item__content">
                   <div className="comment-item__avatar">
-                    <Avatar {...stringAvatar(item.user)} />
+                    <Avatar {...stringAvatar(item.fullname)} />
                   </div>
-                  <div className="comment-item__content__user">{item.user}</div>
+                  <div className="comment-item__content__user">{item.fullname}</div>
                   <div className="comment-item__content__date">
                     {moment(item?.createdAt).format('DD/MM/YYYY')}
                   </div>
                 </div>
                 <div className="comment-item__content__comment">
-                  {item.comment}
+                  {item.content}
                 </div>
               </div>
             ))}

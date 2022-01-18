@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
 import { createGradeReview } from '../../api/gradeReview';
 
-export default function Row({ assignment, assignments }) {
+export default function Row({ userAssignment, assignments }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [point, setPoint] = useState(0);
@@ -28,7 +28,7 @@ export default function Row({ assignment, assignments }) {
   };
 
   const openMenu = Boolean(anchorEl);
-  const data = assignments?.find((item) => item.id === assignment.assignmentId);
+  const data = assignments?.find((item) => item.id === userAssignment.assignmentId);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,9 +41,8 @@ export default function Row({ assignment, assignments }) {
 
   const handleSendReview = async () => {
     const review = {
-      courseId: id,
-      assignmentId: assignment.id,
-      point,
+      userAssignmentId: userAssignment.id,
+      expectedPoint: point,
       explanation,
     };
 
@@ -62,7 +61,7 @@ export default function Row({ assignment, assignments }) {
         <div className="grade-name">{data?.name}</div>
         <div className="grade-point">{data?.point}</div>
         <div className="your-grade">
-          {assignment.point}
+          {userAssignment.point}
           <IconButton
             aria-label="more"
             id="long-button"
