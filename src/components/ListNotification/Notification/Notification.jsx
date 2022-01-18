@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import socket from '../../../socket';
 import { addNotification } from '../../../store/notification/notification-actions';
 import './Notification.css';
 
 function Notification() {
-  const [className, setClassName] = useState('notification off');
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [noti, setNoti] = useState();
+  const ref = useRef();
 
   useEffect(() => {
     const { userId } = auth;
@@ -29,21 +29,21 @@ function Notification() {
     });
 
     socket.on('notification', (notification) => {
-      setClassName('notification');
       setNoti(notification);
       console.log(notification);
       dispatch(addNotification(notification));
+      ref.current.classList.add('notification--on');
       setTimeout(() => {
-        setClassName('notification off');
-      }, 5000);
+        ref.current.classList.remove('notification--on');
+      }, 10000);
     });
 
     return () => {
       socket.removeAllListeners();
     };
-  });
+  }, []);
   return (
-    <div className={className}>
+    <div ref={ref} className="notification">
       <div>
         <h3>{noti?.title}</h3>
         <div>{noti?.content}</div>

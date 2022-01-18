@@ -1,5 +1,6 @@
 .notification {
-  position: absolute;
+  display: none;
+  position: fixed;
   left: 1.5rem;
   bottom: 2rem;
   padding: 1rem;
@@ -9,6 +10,6 @@
   color: white;
 }
 
-.notification.off {
-  display: none;
+.notification--on {
+  display: block;
 }

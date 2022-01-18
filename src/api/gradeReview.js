@@ -72,3 +72,17 @@ export async function createComment(courseId, gradeReviewId, comment) {
 
   return response;
 }
+
+export async function finalizePoint(courseId, gradeReviewId, point) {
+  const url = `${process.env.REACT_APP_BASE_URL}/courses/${courseId}/reviews/${gradeReviewId}/finalize`;
+  const tokenNew = localStorage.getItem('token');
+
+  const response = await axios.put(url, { point }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': tokenNew,
+    },
+  });
+
+  return response;
+}

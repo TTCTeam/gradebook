@@ -14,7 +14,7 @@ import { getCourse } from '../../api/courseAPI';
 import {
   createComment,
   getGradeReview,
-  getAllComment,
+  getAllComment, finalizePoint,
 } from '../../api/gradeReview';
 import './GradeReviewDetail.css';
 import MemberRoles from '../../constant/course';
@@ -94,6 +94,13 @@ export default function GradeReviewDetail() {
     setComments(res.data);
   };
 
+  const handleClick = async () => {
+    const res = await finalizePoint(courseId, gradeReviewId, point);
+    if (res.status === 200) {
+      alert('Update successful');
+    }
+  };
+
   useEffect(() => {
     const fetchClassroom = async (id) => {
       const res = await getCourse(id);
@@ -151,7 +158,7 @@ export default function GradeReviewDetail() {
                 type="number"
                 className="field"
               />
-              <Button variant="contained">Update</Button>
+              <Button variant="contained" onClick={handleClick}>Update</Button>
             </div>
           )}
           <div className="infor__title">Information</div>
