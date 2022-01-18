@@ -94,14 +94,14 @@ export default function GradeReviewDetail() {
 
   const addNewComment = async () => {
     if (comment !== '') {
-      const newData = {
+      const newComment = {
         id: comments.length + 1,
         comment: comment.trim(),
         user: profile.firstname + ' ' + profile.lastname,
         createdAt: new Date().toJSON(),
       };
 
-      const res = await createComment(courseId, gradeReviewId, newData);
+      const res = await createComment(courseId, gradeReviewId, newComment);
       if (res.status === 201) {
         fetchComments(courseId, gradeReviewId);
       }
