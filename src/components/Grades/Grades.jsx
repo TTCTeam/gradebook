@@ -30,7 +30,9 @@ export default function Grades({ course }) {
     const res = await getGradeBoard(courseId);
     if (res.status === 200) {
       setStudents(res.data);
+      setIsLoading(false);
     }
+    setIsLoading(true);
     setIsLoading(false);
   };
 
@@ -39,8 +41,8 @@ export default function Grades({ course }) {
     const res = await getAllAssignment(courseId);
     if (res.status === 200) {
       setAssignments(res.data);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -74,9 +76,10 @@ export default function Grades({ course }) {
         data
       );
       if (response.status === 200) {
-        updateStudents();
+        setTimeout(() => {
+          fetchStudents(id);
+        }, 2000);
       }
-      fetchStudents(id);
     },
     onExport: async () => {
       const fields = [

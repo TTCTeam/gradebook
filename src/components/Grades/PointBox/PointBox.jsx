@@ -53,8 +53,10 @@ function PointBox({
     if (!point) {
       return;
     }
-    await updatePoint(id, assignmentId, point);
-    loading();
+    const res = await updatePoint(id, assignmentId, point);
+    if (res.status === 200) {
+      loading();
+    }
   };
 
   return (

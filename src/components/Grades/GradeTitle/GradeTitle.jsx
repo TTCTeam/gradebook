@@ -124,7 +124,7 @@ function GradeTitle({
         }}
       >
         <MenuItem onClick={exportData}>Export CSV</MenuItem>
-        {status === AssignmentStatus.DRAFT && (
+        {(status === AssignmentStatus.DRAFT || isName) && (
           <MenuItem onClick={openChooseFileDialog}>Import CSV</MenuItem>
         )}
         {status === AssignmentStatus.DRAFT ? (
