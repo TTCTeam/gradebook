@@ -74,7 +74,7 @@ function PointBox({
               value={point || ''}
               onChange={(e) => setPoint(e.target.value)}
               onBlur={handleUpdatePoint}
-              disabled={disabled}
+              disabled={disabled || false}
             />
           </div>
         )}

@@ -41,7 +41,7 @@ function Notification() {
     return () => {
       socket.removeAllListeners();
     };
-  }, []);
+  }, [auth]);
   return (
     <div ref={ref} className="notification">
       <div>

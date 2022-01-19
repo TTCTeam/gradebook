@@ -123,10 +123,14 @@ function GradeTitle({
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={openChooseFileDialog}>Import CSV</MenuItem>
         <MenuItem onClick={exportData}>Export CSV</MenuItem>
+        {status === AssignmentStatus.DRAFT && (
+          <MenuItem onClick={openChooseFileDialog}>Import CSV</MenuItem>
+        )}
         {status === AssignmentStatus.DRAFT ? (
-          <MenuItem onClick={onPublicGradeColumn}>Mark as finalized</MenuItem>
+          <div>
+            <MenuItem onClick={onPublicGradeColumn}>Mark as finalized</MenuItem>
+          </div>
         ) : (
           <MenuItem onClick={onDraftGradeColumn}>Edit</MenuItem>
         )}

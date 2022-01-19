@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable operator-linebreak */
 /* eslint-disable prefer-template */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -14,7 +15,8 @@ import { getCourse } from '../../api/courseAPI';
 import {
   createComment,
   getGradeReview,
-  getAllComment, finalizePoint,
+  getAllComment,
+  finalizePoint,
 } from '../../api/gradeReview';
 import './GradeReviewDetail.css';
 import MemberRoles from '../../constant/course';
@@ -158,7 +160,9 @@ export default function GradeReviewDetail() {
                 type="number"
                 className="field"
               />
-              <Button variant="contained" onClick={handleClick}>Update</Button>
+              <Button variant="contained" onClick={handleClick}>
+                Update
+              </Button>
             </div>
           )}
           <div className="infor__title">Information</div>
@@ -203,7 +207,9 @@ export default function GradeReviewDetail() {
                   <div className="comment-item__avatar">
                     <Avatar {...stringAvatar(item.fullname)} />
                   </div>
-                  <div className="comment-item__content__user">{item.fullname}</div>
+                  <div className="comment-item__content__user">
+                    {item.fullname}
+                  </div>
                   <div className="comment-item__content__date">
                     {moment(item?.createdAt).format('DD/MM/YYYY')}
                   </div>

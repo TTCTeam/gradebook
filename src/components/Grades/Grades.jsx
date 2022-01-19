@@ -73,6 +73,9 @@ export default function Grades({ course }) {
         courseId,
         data
       );
+      if (response.status === 200) {
+        updateStudents();
+      }
       fetchStudents(id);
     },
     onExport: async () => {
