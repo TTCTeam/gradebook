@@ -3,9 +3,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useSelector, useDispatch } from 'react-redux';
-import { CircularProgress, FormHelperText } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import styles from './ManageProfilePage.module.css';
-import { getUserProfile, updateUserProfile } from '../../store/auth/auth-actions';
+import {
+  getUserProfile,
+  updateUserProfile,
+} from '../../store/auth/auth-actions';
 
 export default function ManageProfilePage() {
   const profile = useSelector((state) => state.auth);
@@ -39,8 +42,8 @@ export default function ManageProfilePage() {
       email,
     };
 
-    console.log(updated, 'final');
     dispatch(updateUserProfile(updated));
+    setIsEdit(false);
   };
 
   const openChange = () => {
@@ -56,7 +59,6 @@ export default function ManageProfilePage() {
         sx={{ width: 200, height: 200, fontSize: 80 }}
       >
         {firstname ? `${firstname[0]}${lastname[0]}` : ''}
-
       </Avatar>
 
       <div className={styles.form}>
@@ -110,7 +112,6 @@ export default function ManageProfilePage() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <FormHelperText error={ui.request === 'error'}>{ui.message}</FormHelperText>
       </div>
 
       {isEdit ? (
@@ -139,6 +140,7 @@ export default function ManageProfilePage() {
             color="success"
             onClick={openChange}
             variant="contained"
+            disabled={username !== null}
           >
             Edit Your Profile
           </Button>

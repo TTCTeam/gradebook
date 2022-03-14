@@ -3,9 +3,9 @@ import moment from 'moment';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Tooltip from '@mui/material/Tooltip';
+import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useParams } from 'react-router-dom';
 import './InviteLinkModal.css';
 import { getInvitation } from '../../api/courseAPI';
@@ -36,7 +36,7 @@ export default function InviteLinkModal() {
   }, []);
 
   const handleClick = async () => {
-    await navigator.clipboard.writeText(invitation?.invitationLink);
+    await navigator.clipboard.writeText(invitation.invitationLink);
     setOpen(true);
   };
 
@@ -50,14 +50,16 @@ export default function InviteLinkModal() {
   return (
     <div className="InviteLinkModal">
       {progress ? (
-        <CircularProgress />
+        <div className="progress">
+          <CircularProgress />
+        </div>
       ) : (
         <>
           <div className="container">
             <TextField
               className="field"
-              hiddenLabel
               value={invitation.invitationLink}
+              label="Invite Link"
               variant="filled"
             />
 

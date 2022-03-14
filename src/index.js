@@ -6,12 +6,14 @@ import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
+import Notification from './components/ListNotification/Notification/Notification';
 
 ReactDOM.render(
   <Provider store={store}>
 
     <BrowserRouter>
       <App />
+      <Notification />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'),

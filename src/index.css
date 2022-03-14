@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 a {
   text-decoration: none;
 }
@@ -33,6 +38,14 @@ a {
   border-radius: 10px;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .link {
   color: black;
+}
+
+* {
+  box-sizing: border-box;
 }

@@ -1,0 +1,25 @@
+.grades {
+  margin: 0;
+  border: 4px solid #1976d2;
+}
+
+.gradesboard {
+  position: relative;
+}
+
+.gradesboard__titles {
+  display: flex;
+  border: 1px solid lightgray;
+}
+.gradesboard__row {
+  display: flex;
+  border: 1px solid lightgray;
+  border-top: none;
+}
+
+.export-full-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  grid-gap: 20px;
+}

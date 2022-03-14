@@ -45,7 +45,7 @@
 }
 
 .Stream .contentContainer .left {
-  flex: 2;
+  flex: 3;
 }
 
 .Stream .contentContainer .right {
@@ -61,11 +61,16 @@
   width: 100%;
   border: solid 1px rgb(211, 211, 211);
   margin-bottom: 20px;
-  height: 100px;
+  height: auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.Stream .Upcoming h4,
+p {
+  margin: 10px;
 }
 
 .Stream .classCode .code {

@@ -1,0 +1,97 @@
+.row {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.row .container {
+  display: flex;
+  width: 50%;
+}
+
+.row .container .grade-name,
+.row .container .grade-point {
+  flex: 1;
+  font-weight: bold;
+  border: 1px solid rgb(105, 105, 105);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.row .container .your-grade {
+  flex: 1;
+  font-weight: bold;
+  border: 1px solid rgb(105, 105, 105);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.create-review-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.create-review-modal:focus {
+  outline: none;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.create-review-modal .field {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+
+.create-review-modal .field.explan {
+  align-items: flex-start;
+}
+
+.create-review-modal .field .label {
+  flex: 1;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.create-review-modal .field .content {
+  flex: 2;
+  display: flex;
+  align-items: center;
+}
+
+.create-review-modal .field .content.input {
+  border: 1px solid rgb(105, 105, 105);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.create-review-modal .action {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  grid-gap: 20px;
+}

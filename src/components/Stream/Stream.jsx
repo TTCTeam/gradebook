@@ -1,52 +1,49 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
+import { Backdrop, Button } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import CreatePost from '../CreatePost/CreatePost';
-import Post from '../Post/Post';
 import './Stream.css';
 import BasicModal from '../layouts/BasicModal';
 import InviteLinkModal from '../InviteLinkModal/InviteLinkModal';
 import MemberRoles from '../../constant/course';
-
-const data = [
-  {
-    id: 1,
-    author: 'Ha Minh Cuong',
-    date: 'September 14, 2015',
-    content:
-      'This impressive paella is a perfect party dish and a fun meal to cook together',
-  },
-  {
-    id: 2,
-    author: 'Ha Minh Cuong',
-    date: 'September 14, 2015',
-    content:
-      'This impressive paella is a perfect party dish and a fun meal to cook together',
-  },
-];
+import { getAllAssignment } from '../../api/assignmentAPI';
+import { sortByField } from '../../utils/common';
 
 function Stream({ classroom }) {
-  const [listPost, setListPost] = React.useState(data);
-  const [openModal, setOpenModal] = React.useState(false);
-
+  const [assignments, setAssignments] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { id } = useParams();
+  const { url } = useRouteMatch();
   const { course, role } = classroom;
-  console.log('role: ', role);
 
   const handleCloseModal = () => setOpenModal(false);
   const handleOpenModal = () => setOpenModal(true);
 
-  React.useEffect(() => {
-    console.log('render');
-  }, [listPost]);
+  useEffect(() => {
+    const fetchAssignments = async (courseId) => {
+      setIsLoading(true);
+      const res = await getAllAssignment(courseId);
+      if (res.status === 200) {
+        setAssignments(res.data);
+      }
 
-  const createPostClick = (post) => {
-    console.log(post);
-    setListPost([...listPost, post]);
-  };
+      setIsLoading(false);
+    };
+
+    fetchAssignments(id);
+  }, []);
 
   return (
     <div className="Stream">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress />
+      </Backdrop>
       <div className="coverImgContainer">
         <img
           className="coverPhoto"
@@ -67,21 +64,40 @@ function Stream({ classroom }) {
               Create invite link
             </Button>
           )}
-
-          <Card className="Upcoming">
-            <Typography variant="h6" color="Black">
-              Upcoming
-            </Typography>
-            <Typography variant="body2" color="rgba(0,0,0,0.549)">
-              No work due soon
-            </Typography>
-          </Card>
+          {role === MemberRoles.STUDENT ? (
+            <Card className="Upcoming">
+              <h4>Assignment Structure</h4>
+              <div className="listStructure">
+                {sortByField(assignments, 'order').map((assignment) => (
+                  <div className="item" key={assignment.id}>
+                    <p>
+                      {`${assignment.name}: `}
+                      <span>{assignment.point}</span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          ) : (
+            <Link to={`${url}/assignment/edit`}>
+              <Card className="Upcoming">
+                <h4>Assignment Structure</h4>
+                <div className="listStructure">
+                  {sortByField(assignments, 'order').map((assignment) => (
+                    <div className="item" key={assignment.id}>
+                      <p>
+                        {`${assignment.name}: `}
+                        <span>{assignment.point}</span>
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </Link>
+          )}
         </div>
         <div className="right">
-          <CreatePost createPostClick={createPostClick} />
-          {listPost.reverse().map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
+          <CreatePost />
         </div>
       </div>
       <BasicModal open={openModal} handleClose={handleCloseModal}>

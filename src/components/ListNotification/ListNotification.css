@@ -1,0 +1,79 @@
+.list-notification {
+  position: relative;
+}
+
+.list-notification .open {
+  background-color: rgb(245, 245, 245);
+  border-radius: 5px;
+  position: absolute;
+  top: 35px;
+  left: -315px;
+  z-index: 9999999;
+  width: 350px;
+  max-height: 90vh;
+  overflow-y: scroll;
+}
+
+.list-notification .container {
+  display: none;
+}
+
+.list-notification .box {
+  position: relative;
+}
+
+.list-notification .box .title {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  position: fixed;
+  top: 45px;
+  background-color: rgb(51, 51, 51);
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.list-notification .content {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
+  padding: 20px;
+}
+
+.list-notification .content .item {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  grid-gap: 5px;
+  background-color: white;
+}
+
+.list-notification .content .item .item__title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #000;
+}
+
+.list-notification .content .item .item__content {
+  font-size: 13px;
+  color: #000;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list-notification .content .item .left {
+  flex: 8;
+}
+
+.list-notification .content .item .createdAt {
+  flex: 2;
+  font-size: 12px;
+  color: rgb(112, 112, 112);
+}
